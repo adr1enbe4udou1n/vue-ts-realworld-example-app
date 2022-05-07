@@ -1,21 +1,13 @@
+<script setup lang="ts">
+import { useUserStore } from "~/stores/user"
+
+const user = useUserStore()
+</script>
+
 <template>
   <div>
-    <div text-4xl>
-      <div i-carbon-campsite inline-block />
-    </div>
-    <p>
-      <a rel="noreferrer" href="https://github.com/antfu/vitesse" target="_blank">
-        Vitesse
-      </a>
-    </p>
-    <p>
-      <em text-sm opacity-75>SHOW</em>
-    </p>
+    <h1 text-sm opacity-75 pb-4>ABOUT {{ user.name }}</h1>
 
-    <div py-4 />
-
-    <router-link to="/">
-      Home
-    </router-link>
+    <router-link to="/"> Go to Home Page </router-link>
   </div>
 </template>
