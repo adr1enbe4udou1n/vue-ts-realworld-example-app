@@ -1,9 +1,6 @@
 <template>
-  <div>
-    <h1 text-sm opacity-75 mb-4>HOME</h1>
-
-    <CounterButton :initial="0" mb-4 />
-
-    <router-link to="/about"> Go to About Page </router-link>
+  <div bg-green text-white text-center py-8>
+    <h1 font-brand font-bold text-5xl mb-4>conduit</h1>
+    <p font-sans>A place to share your knowledge.</p>
   </div>
 </template>

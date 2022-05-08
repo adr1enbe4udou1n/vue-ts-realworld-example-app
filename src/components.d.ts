@@ -5,7 +5,8 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    CounterButton: typeof import('./components/CounterButton.vue')['default']
+    AppFooter: typeof import('./components/AppFooter.vue')['default']
+    AppHeader: typeof import('./components/AppHeader.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

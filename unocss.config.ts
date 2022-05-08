@@ -20,9 +20,10 @@ export default defineConfig({
     presetTypography(),
     presetWebFonts({
       fonts: {
-        sans: "DM Sans",
-        serif: "DM Serif Display",
-        mono: "DM Mono",
+        brand: "Titillium Web",
+        heading: "Merriweather Sans",
+        sans: "Source Sans Pro",
+        serif: "Source Serif Pro",
       },
     }),
   ],
