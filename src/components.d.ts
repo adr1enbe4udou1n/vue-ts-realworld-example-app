@@ -7,8 +7,12 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AppFooter: typeof import('./components/AppFooter.vue')['default']
     AppHeader: typeof import('./components/AppHeader.vue')['default']
+    ArticlesNav: typeof import('./components/ArticlesNav.vue')['default']
+    PostCard: typeof import('./components/PostCard.vue')['default']
+    PostsList: typeof import('./components/PostsList.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TagsList: typeof import('./components/TagsList.vue')['default']
   }
 }
 

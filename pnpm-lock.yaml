@@ -17,6 +17,7 @@ specifiers:
   eslint-plugin-vue: ^8.7.1
   jsdom: ^19.0.0
   nprogress: ^0.2.0
+  openapi-typescript-fetch: ^1.1.2
   pinia: ^2.0.14
   prettier: ^2.6.2
   typescript: ^4.5.4
@@ -35,6 +36,7 @@ dependencies:
   '@vueuse/core': 8.4.2_vue@3.2.33
   '@vueuse/head': 0.7.6_vue@3.2.33
   nprogress: 0.2.0
+  openapi-typescript-fetch: 1.1.2
   pinia: 2.0.14_ytvqwwdyss532bvoq2clv4ed5m
   vue: 3.2.33
   vue-router: 4.0.15_vue@3.2.33
@@ -3078,6 +3080,11 @@ packages:
     dependencies:
       mimic-fn: 2.1.0
     dev: true
+
+  /openapi-typescript-fetch/1.1.2:
+    resolution: {integrity: sha512-ojKpHX3DNcy7iBHlRAl2If8VBkhHI6hebHXyktNzFJlDRu6JCIUHR/hLXNwjD9WdDUB+gspzg3yLku3wOuhm0A==}
+    engines: {node: '>= 12.0.0', npm: '>= 7.0.0'}
+    dev: false
 
   /optionator/0.8.3:
     resolution: {integrity: sha512-+IW9pACdk3XWmmTXG8m3upGUJst5XRGzxMRjXzAuJ1XnIFNvfhjjIuYkDvysnPQ7qzqVzLt78BCruntqRhWQbA==}
