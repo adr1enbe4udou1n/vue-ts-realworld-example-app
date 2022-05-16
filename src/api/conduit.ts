@@ -71,51 +71,51 @@ export interface paths {
 export interface components {
   schemas: {
     SingleArticleResponse: {
-      article?: components["schemas"]["Article"]
+      article: components["schemas"]["Article"]
     }
     MultipleCommentsResponse: {
-      comments?: components["schemas"]["Comment"][]
+      comments: components["schemas"]["Comment"][]
     }
     NewUserRequest: {
-      user?: components["schemas"]["NewUser"]
+      user: components["schemas"]["NewUser"]
     }
     NewArticleRequest: {
-      article?: components["schemas"]["NewArticle"]
+      article: components["schemas"]["NewArticle"]
     }
     Profile: {
-      username?: string
-      bio?: string
-      image?: string
-      following?: boolean
+      username: string
+      bio: string
+      image: string
+      following: boolean
     }
     Article: {
-      title?: string
-      slug?: string
-      description?: string
-      body?: string
+      title: string
+      slug: string
+      description: string
+      body: string
       /** Format: date-time */
-      createdAt?: string
+      createdAt: string
       /** Format: date-time */
-      updatedAt?: string
-      tagList?: string[]
-      author?: components["schemas"]["Profile"]
-      favorited?: boolean
-      favoritesCount?: number
+      updatedAt: string
+      tagList: string[]
+      author: components["schemas"]["Profile"]
+      favorited: boolean
+      favoritesCount: number
     }
     UpdateUserRequest: {
-      user?: components["schemas"]["UpdateUser"]
+      user: components["schemas"]["UpdateUser"]
     }
     NewComment: {
-      body?: string
+      body: string
     }
     SingleCommentResponse: {
-      comment?: components["schemas"]["Comment"]
+      comment: components["schemas"]["Comment"]
     }
     ProfileResponse: {
-      profile?: components["schemas"]["Profile"]
+      profile: components["schemas"]["Profile"]
     }
     LoginUserRequest: {
-      user?: components["schemas"]["LoginUser"]
+      user: components["schemas"]["LoginUser"]
     }
     UpdateArticle: {
       title?: string
@@ -123,22 +123,22 @@ export interface components {
       body?: string
     }
     Comment: {
-      id?: number
-      body?: string
+      id: number
+      body: string
       /** Format: date-time */
-      createdAt?: string
+      createdAt: string
       /** Format: date-time */
-      updatedAt?: string
-      author?: components["schemas"]["Profile"]
+      updatedAt: string
+      author: components["schemas"]["Profile"]
     }
     NewUser: {
-      email?: string
-      password?: string
-      username?: string
+      email: string
+      password: string
+      username: string
     }
     MultipleArticlesResponse: {
-      articles?: components["schemas"]["Article"][]
-      articlesCount?: number
+      articles: components["schemas"]["Article"][]
+      articlesCount: number
     }
     UpdateUser: {
       username?: string
@@ -147,33 +147,33 @@ export interface components {
       image?: string
     }
     NewArticle: {
-      title?: string
-      description?: string
-      body?: string
+      title: string
+      description: string
+      body: string
       tagList?: string[]
     }
     User: {
-      username?: string
-      email?: string
-      bio?: string
-      image?: string
-      token?: string
+      username: string
+      email: string
+      bio: string
+      image: string
+      token: string
     }
     UserResponse: {
-      user?: components["schemas"]["User"]
+      user: components["schemas"]["User"]
     }
     UpdateArticleRequest: {
-      article?: components["schemas"]["UpdateArticle"]
+      article: components["schemas"]["UpdateArticle"]
     }
     NewCommentRequest: {
-      comment?: components["schemas"]["NewComment"]
+      comment: components["schemas"]["NewComment"]
     }
     LoginUser: {
-      email?: string
-      password?: string
+      email: string
+      password: string
     }
     TagsResponse: {
-      tags?: string[]
+      tags: string[]
     }
   }
   responses: {

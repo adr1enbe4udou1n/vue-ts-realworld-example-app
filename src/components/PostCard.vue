@@ -18,7 +18,7 @@ const getDate = (date: string) => {
     <div>
       <header flex mb-2>
         <router-link
-          :to="`/author/${article.author!.username!}`"
+          :to="`/author/${article.author.username}`"
           flex
           items-center
         >
@@ -27,12 +27,12 @@ const getDate = (date: string) => {
             w-10
             h-10
             mr-2
-            :src="article.author!.image!"
-            :alt="article.author!.username!"
+            :src="article.author.image"
+            :alt="article.author.username"
           />
           <div>
             <h2 font-sans text-green class="-mb-1">
-              {{ article.author!.username }}
+              {{ article.author.username }}
             </h2>
             <time text-xs>{{ getDate(article.createdAt) }}</time>
           </div>
@@ -78,7 +78,7 @@ const getDate = (date: string) => {
             </button>
           </div>
         </footer>
-        <router-link :to="`/article/${article.slug!}`" absolute inset-0>
+        <router-link :to="`/article/${article.slug}`" absolute inset-0>
         </router-link>
       </div>
     </div>

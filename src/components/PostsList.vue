@@ -7,8 +7,8 @@ let articles = ref<Article[]>([])
 
 const { data } = await getArticles({ limit })
 
-articles.value = data.articles!
-const total = data.articlesCount!
+articles.value = data.articles
+const total = data.articlesCount
 
 const fetchData = async ({
   currentPage,
@@ -22,14 +22,14 @@ const fetchData = async ({
     offset: Math.floor(currentPageSize * (currentPage - 1)),
   })
 
-  articles.value = data.articles!
+  articles.value = data.articles
 }
 </script>
 
 <template>
   <PostCard
     v-for="article in articles"
-    :key="article.slug!"
+    :key="article.slug"
     :article="article"
   />
 
