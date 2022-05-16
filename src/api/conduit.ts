@@ -6,340 +6,65 @@
 export interface paths {
   "/tags": {
     /** Get tags. Auth not required */
-    get: {
-      responses: {
-        /** Success */
-        200: {
-          content: {
-            "application/json": components["schemas"]["TagsResponse"]
-          }
-        }
-      }
-    }
+    get: operations["GetTags"]
   }
   "/users": {
     /** Register a new user */
-    post: {
-      responses: {
-        200: components["responses"]
-        422: components["responses"]["ErrorValidation"]
-      }
-      /** Details of the new user to register */
-      requestBody: {
-        content: {
-          "application/json": components["schemas"]["NewUserRequest"]
-        }
-      }
-    }
+    post: operations["CreateUser"]
   }
   "/users/login": {
     /** Login for existing user */
-    post: {
-      responses: {
-        200: components["responses"]
-        422: components["responses"]["ErrorValidation"]
-      }
-      /** Details of the new user to register */
-      requestBody: {
-        content: {
-          "application/json": components["schemas"]["LoginUserRequest"]
-        }
-      }
-    }
+    post: operations["Login"]
   }
   "/user": {
     /** Gets the currently logged-in user */
-    get: {
-      responses: {
-        200: components["responses"]
-      }
-    }
+    get: operations["GetCurrentUser"]
     /** Updated user information for current user */
-    put: {
-      responses: {
-        200: components["responses"]
-        422: components["responses"]["ErrorValidation"]
-      }
-      /** User details to update. At least one field is required. */
-      requestBody: {
-        content: {
-          "application/json": components["schemas"]["UpdateUserRequest"]
-        }
-      }
-    }
+    put: operations["UpdateCurrentUser"]
   }
   "/profiles/celeb_{username}": {
     /** Get a profile of a user of the system. Auth is optional */
-    get: {
-      parameters: {
-        path: {
-          /** Username of the profile to get */
-          username: string
-        }
-      }
-      responses: {
-        /** Success */
-        200: {
-          content: {
-            "application/json": components["schemas"]["ProfileResponse"]
-          }
-        }
-      }
-    }
+    get: operations["GetProfileByUsername"]
   }
   "/profiles/celeb_{username}/follow": {
     /** Follow a user by username */
-    post: {
-      parameters: {
-        path: {
-          /** Username of the profile you want to follow */
-          username: string
-        }
-      }
-      responses: {
-        /** Success */
-        200: {
-          content: {
-            "application/json": components["schemas"]["ProfileResponse"]
-          }
-        }
-      }
-    }
+    post: operations["FollowUserByUsername"]
     /** Unfollow a user by username */
-    delete: {
-      parameters: {
-        path: {
-          /** Username of the profile you want to unfollow */
-          username: string
-        }
-      }
-      responses: {
-        /** Success */
-        200: {
-          content: {
-            "application/json": components["schemas"]["ProfileResponse"]
-          }
-        }
-      }
-    }
+    delete: operations["UnfollowUserByUsername"]
   }
   "/articles": {
     /** Get most recent articles globally. Use query parameters to filter results. Auth is optional */
-    get: {
-      parameters: {
-        query: {
-          /** Limit number of articles returned (default is 20) */
-          limit?: number
-          /** Offset/skip number of articles (default is 0) */
-          offset?: number
-          /** Filter by author (username) */
-          author?: string
-          /** Filter by favorites of a user (username) */
-          favorited?: string
-          /** Filter by tag */
-          tag?: string
-        }
-      }
-      responses: {
-        /** Success */
-        200: {
-          content: {
-            "application/json": components["schemas"]["MultipleArticlesResponse"]
-          }
-        }
-      }
-    }
+    get: operations["GetArticles"]
     /** Create an article. Auth is required */
-    post: {
-      responses: {
-        /** Success */
-        200: {
-          content: {
-            "application/json": components["schemas"]["SingleArticleResponse"]
-          }
-        }
-        422: components["responses"]["ErrorValidation"]
-      }
-      /** Article to create */
-      requestBody: {
-        content: {
-          "application/json": components["schemas"]["NewArticleRequest"]
-        }
-      }
-    }
+    post: operations["CreateArticle"]
   }
   "/articles/feed": {
     /** Get most recent articles from users you follow. Use query parameters to limit. Auth is required */
-    get: {
-      parameters: {
-        query: {
-          /** Limit number of articles returned (default is 20) */
-          limit?: number
-          /** Offset/skip number of articles (default is 0) */
-          offset?: number
-        }
-      }
-      responses: {
-        /** Success */
-        200: {
-          content: {
-            "application/json": components["schemas"]["MultipleArticlesResponse"]
-          }
-        }
-      }
-    }
+    get: operations["GetArticlesFeed"]
   }
   "/articles/{slug}": {
     /** Get an article. Auth not required */
-    get: {
-      parameters: {
-        path: {
-          /** Slug of the article to get */
-          slug: string
-        }
-      }
-      responses: {
-        /** Success */
-        200: {
-          content: {
-            "application/json": components["schemas"]["SingleArticleResponse"]
-          }
-        }
-      }
-    }
+    get: operations["GetArticle"]
     /** Update an article. Auth is required */
-    put: {
-      parameters: {
-        path: {
-          /** Slug of the article to update */
-          slug: string
-        }
-      }
-      responses: {
-        /** Success */
-        200: {
-          content: {
-            "application/json": components["schemas"]["SingleArticleResponse"]
-          }
-        }
-        422: components["responses"]["ErrorValidation"]
-      }
-      /** Article to update */
-      requestBody: {
-        content: {
-          "application/json": components["schemas"]["UpdateArticleRequest"]
-        }
-      }
-    }
+    put: operations["UpdateArticle"]
     /** Delete an article. Auth is required */
-    delete: {
-      parameters: {
-        path: {
-          /** Slug of the article to delete */
-          slug: string
-        }
-      }
-      responses: {
-        /** Success */
-        204: never
-      }
-    }
+    delete: operations["DeleteArticle"]
   }
   "/articles/{slug}/favorite": {
     /** Favorite an article. Auth is required */
-    post: {
-      parameters: {
-        path: {
-          /** Slug of the article that you want to favorite */
-          slug: string
-        }
-      }
-      responses: {
-        /** Success */
-        200: {
-          content: {
-            "application/json": components["schemas"]["SingleArticleResponse"]
-          }
-        }
-      }
-    }
+    post: operations["CreateArticleFavorite"]
     /** Unfavorite an article. Auth is required */
-    delete: {
-      parameters: {
-        path: {
-          /** Slug of the article that you want to unfavorite */
-          slug: string
-        }
-      }
-      responses: {
-        /** Success */
-        200: {
-          content: {
-            "application/json": components["schemas"]["SingleArticleResponse"]
-          }
-        }
-      }
-    }
+    delete: operations["DeleteArticleFavorite"]
   }
   "/articles/{slug}/comments": {
     /** Get the comments for an article. Auth is optional */
-    get: {
-      parameters: {
-        path: {
-          /** Slug of the article that you want to get comments for */
-          slug: string
-        }
-      }
-      responses: {
-        /** Success */
-        200: {
-          content: {
-            "application/json": components["schemas"]["MultipleCommentsResponse"]
-          }
-        }
-      }
-    }
+    get: operations["GetArticleComments"]
     /** Create a comment for an article. Auth is required */
-    post: {
-      parameters: {
-        path: {
-          /** Slug of the article that you want to create a comment for */
-          slug: string
-        }
-      }
-      responses: {
-        /** Success */
-        200: {
-          content: {
-            "application/json": components["schemas"]["SingleCommentResponse"]
-          }
-        }
-        422: components["responses"]["ErrorValidation"]
-      }
-      /** Comment you want to create */
-      requestBody: {
-        content: {
-          "application/json": components["schemas"]["NewCommentRequest"]
-        }
-      }
-    }
+    post: operations["CreateArticleComment"]
   }
   "/articles/{slug}/comments/{commentId}": {
     /** Delete a comment for an article. Auth is required */
-    delete: {
-      parameters: {
-        path: {
-          /** Slug of the article that you want to delete a comment for */
-          slug: string
-          /** ID of the comment you want to delete */
-          commentId: string
-        }
-      }
-      responses: {
-        /** Success */
-        204: never
-      }
-    }
+    delete: operations["DeleteArticleComment"]
   }
 }
 
@@ -472,6 +197,320 @@ export interface components {
   }
 }
 
-export interface operations {}
+export interface operations {
+  /** Get tags. Auth not required */
+  GetTags: {
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["TagsResponse"]
+        }
+      }
+    }
+  }
+  /** Register a new user */
+  CreateUser: {
+    responses: {
+      200: components["responses"]
+      422: components["responses"]["ErrorValidation"]
+    }
+    /** Details of the new user to register */
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["NewUserRequest"]
+      }
+    }
+  }
+  /** Login for existing user */
+  Login: {
+    responses: {
+      200: components["responses"]
+      422: components["responses"]["ErrorValidation"]
+    }
+    /** Details of the new user to register */
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["LoginUserRequest"]
+      }
+    }
+  }
+  /** Gets the currently logged-in user */
+  GetCurrentUser: {
+    responses: {
+      200: components["responses"]
+    }
+  }
+  /** Updated user information for current user */
+  UpdateCurrentUser: {
+    responses: {
+      200: components["responses"]
+      422: components["responses"]["ErrorValidation"]
+    }
+    /** User details to update. At least one field is required. */
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["UpdateUserRequest"]
+      }
+    }
+  }
+  /** Get a profile of a user of the system. Auth is optional */
+  GetProfileByUsername: {
+    parameters: {
+      path: {
+        /** Username of the profile to get */
+        username: string
+      }
+    }
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ProfileResponse"]
+        }
+      }
+    }
+  }
+  /** Follow a user by username */
+  FollowUserByUsername: {
+    parameters: {
+      path: {
+        /** Username of the profile you want to follow */
+        username: string
+      }
+    }
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ProfileResponse"]
+        }
+      }
+    }
+  }
+  /** Unfollow a user by username */
+  UnfollowUserByUsername: {
+    parameters: {
+      path: {
+        /** Username of the profile you want to unfollow */
+        username: string
+      }
+    }
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ProfileResponse"]
+        }
+      }
+    }
+  }
+  /** Get most recent articles globally. Use query parameters to filter results. Auth is optional */
+  GetArticles: {
+    parameters: {
+      query: {
+        /** Limit number of articles returned (default is 20) */
+        limit?: number
+        /** Offset/skip number of articles (default is 0) */
+        offset?: number
+        /** Filter by author (username) */
+        author?: string
+        /** Filter by favorites of a user (username) */
+        favorited?: string
+        /** Filter by tag */
+        tag?: string
+      }
+    }
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["MultipleArticlesResponse"]
+        }
+      }
+    }
+  }
+  /** Create an article. Auth is required */
+  CreateArticle: {
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["SingleArticleResponse"]
+        }
+      }
+      422: components["responses"]["ErrorValidation"]
+    }
+    /** Article to create */
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["NewArticleRequest"]
+      }
+    }
+  }
+  /** Get most recent articles from users you follow. Use query parameters to limit. Auth is required */
+  GetArticlesFeed: {
+    parameters: {
+      query: {
+        /** Limit number of articles returned (default is 20) */
+        limit?: number
+        /** Offset/skip number of articles (default is 0) */
+        offset?: number
+      }
+    }
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["MultipleArticlesResponse"]
+        }
+      }
+    }
+  }
+  /** Get an article. Auth not required */
+  GetArticle: {
+    parameters: {
+      path: {
+        /** Slug of the article to get */
+        slug: string
+      }
+    }
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["SingleArticleResponse"]
+        }
+      }
+    }
+  }
+  /** Update an article. Auth is required */
+  UpdateArticle: {
+    parameters: {
+      path: {
+        /** Slug of the article to update */
+        slug: string
+      }
+    }
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["SingleArticleResponse"]
+        }
+      }
+      422: components["responses"]["ErrorValidation"]
+    }
+    /** Article to update */
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["UpdateArticleRequest"]
+      }
+    }
+  }
+  /** Delete an article. Auth is required */
+  DeleteArticle: {
+    parameters: {
+      path: {
+        /** Slug of the article to delete */
+        slug: string
+      }
+    }
+    responses: {
+      /** Success */
+      204: never
+    }
+  }
+  /** Favorite an article. Auth is required */
+  CreateArticleFavorite: {
+    parameters: {
+      path: {
+        /** Slug of the article that you want to favorite */
+        slug: string
+      }
+    }
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["SingleArticleResponse"]
+        }
+      }
+    }
+  }
+  /** Unfavorite an article. Auth is required */
+  DeleteArticleFavorite: {
+    parameters: {
+      path: {
+        /** Slug of the article that you want to unfavorite */
+        slug: string
+      }
+    }
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["SingleArticleResponse"]
+        }
+      }
+    }
+  }
+  /** Get the comments for an article. Auth is optional */
+  GetArticleComments: {
+    parameters: {
+      path: {
+        /** Slug of the article that you want to get comments for */
+        slug: string
+      }
+    }
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["MultipleCommentsResponse"]
+        }
+      }
+    }
+  }
+  /** Create a comment for an article. Auth is required */
+  CreateArticleComment: {
+    parameters: {
+      path: {
+        /** Slug of the article that you want to create a comment for */
+        slug: string
+      }
+    }
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["SingleCommentResponse"]
+        }
+      }
+      422: components["responses"]["ErrorValidation"]
+    }
+    /** Comment you want to create */
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["NewCommentRequest"]
+      }
+    }
+  }
+  /** Delete a comment for an article. Auth is required */
+  DeleteArticleComment: {
+    parameters: {
+      path: {
+        /** Slug of the article that you want to delete a comment for */
+        slug: string
+        /** ID of the comment you want to delete */
+        commentId: string
+      }
+    }
+    responses: {
+      /** Success */
+      204: never
+    }
+  }
+}
 
 export interface external {}

@@ -1,6 +1,6 @@
 import { Fetcher } from "openapi-typescript-fetch"
 
-import { paths, components } from "./conduit"
+import { components, paths } from "./conduit"
 
 const fetcher = Fetcher.for<paths>()
 
