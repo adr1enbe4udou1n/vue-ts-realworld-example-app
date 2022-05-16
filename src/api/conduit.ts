@@ -4,34 +4,6 @@
  */
 
 export interface paths {
-  "/tags": {
-    /** Get tags. Auth not required */
-    get: operations["GetTags"]
-  }
-  "/users": {
-    /** Register a new user */
-    post: operations["CreateUser"]
-  }
-  "/users/login": {
-    /** Login for existing user */
-    post: operations["Login"]
-  }
-  "/user": {
-    /** Gets the currently logged-in user */
-    get: operations["GetCurrentUser"]
-    /** Updated user information for current user */
-    put: operations["UpdateCurrentUser"]
-  }
-  "/profiles/celeb_{username}": {
-    /** Get a profile of a user of the system. Auth is optional */
-    get: operations["GetProfileByUsername"]
-  }
-  "/profiles/celeb_{username}/follow": {
-    /** Follow a user by username */
-    post: operations["FollowUserByUsername"]
-    /** Unfollow a user by username */
-    delete: operations["UnfollowUserByUsername"]
-  }
   "/articles": {
     /** Get most recent articles globally. Use query parameters to filter results. Auth is optional */
     get: operations["GetArticles"]
@@ -50,12 +22,6 @@ export interface paths {
     /** Delete an article. Auth is required */
     delete: operations["DeleteArticle"]
   }
-  "/articles/{slug}/favorite": {
-    /** Favorite an article. Auth is required */
-    post: operations["CreateArticleFavorite"]
-    /** Unfavorite an article. Auth is required */
-    delete: operations["DeleteArticleFavorite"]
-  }
   "/articles/{slug}/comments": {
     /** Get the comments for an article. Auth is optional */
     get: operations["GetArticleComments"]
@@ -66,28 +32,44 @@ export interface paths {
     /** Delete a comment for an article. Auth is required */
     delete: operations["DeleteArticleComment"]
   }
+  "/articles/{slug}/favorite": {
+    /** Favorite an article. Auth is required */
+    post: operations["CreateArticleFavorite"]
+    /** Unfavorite an article. Auth is required */
+    delete: operations["DeleteArticleFavorite"]
+  }
+  "/profiles/celeb_{username}": {
+    /** Get a profile of a user of the system. Auth is optional */
+    get: operations["GetProfileByUsername"]
+  }
+  "/profiles/celeb_{username}/follow": {
+    /** Follow a user by username */
+    post: operations["FollowUserByUsername"]
+    /** Unfollow a user by username */
+    delete: operations["UnfollowUserByUsername"]
+  }
+  "/tags": {
+    /** Get tags. Auth not required */
+    get: operations["GetTags"]
+  }
+  "/user": {
+    /** Gets the currently logged-in user */
+    get: operations["GetCurrentUser"]
+    /** Updated user information for current user */
+    put: operations["UpdateCurrentUser"]
+  }
+  "/users": {
+    /** Register a new user */
+    post: operations["CreateUser"]
+  }
+  "/users/login": {
+    /** Login for existing user */
+    post: operations["Login"]
+  }
 }
 
 export interface components {
   schemas: {
-    SingleArticleResponse: {
-      article: components["schemas"]["Article"]
-    }
-    MultipleCommentsResponse: {
-      comments: components["schemas"]["Comment"][]
-    }
-    NewUserRequest: {
-      user: components["schemas"]["NewUser"]
-    }
-    NewArticleRequest: {
-      article: components["schemas"]["NewArticle"]
-    }
-    Profile: {
-      username: string
-      bio: string
-      image: string
-      following: boolean
-    }
     Article: {
       title: string
       slug: string
@@ -100,29 +82,11 @@ export interface components {
       tagList: string[]
       author: components["schemas"]["Profile"]
       favorited: boolean
+      /** Format: int32 */
       favoritesCount: number
     }
-    UpdateUserRequest: {
-      user: components["schemas"]["UpdateUser"]
-    }
-    NewComment: {
-      body: string
-    }
-    SingleCommentResponse: {
-      comment: components["schemas"]["Comment"]
-    }
-    ProfileResponse: {
-      profile: components["schemas"]["Profile"]
-    }
-    LoginUserRequest: {
-      user: components["schemas"]["LoginUser"]
-    }
-    UpdateArticle: {
-      title?: string
-      description?: string
-      body?: string
-    }
     Comment: {
+      /** Format: int32 */
       id: number
       body: string
       /** Format: date-time */
@@ -131,30 +95,82 @@ export interface components {
       updatedAt: string
       author: components["schemas"]["Profile"]
     }
-    NewUser: {
+    LoginUser: {
       email: string
       password: string
-      username: string
+    }
+    LoginUserRequest: {
+      user: components["schemas"]["LoginUser"]
     }
     MultipleArticlesResponse: {
       articles: components["schemas"]["Article"][]
+      /** Format: int32 */
       articlesCount: number
     }
-    UpdateUser: {
-      username?: string
-      email?: string
-      bio?: string
-      image?: string
+    MultipleCommentsResponse: {
+      comments: components["schemas"]["Comment"][]
     }
     NewArticle: {
       title: string
       description: string
       body: string
-      tagList?: string[]
+      tagList?: string[] | null
+    }
+    NewArticleRequest: {
+      article: components["schemas"]["NewArticle"]
+    }
+    NewComment: {
+      body: string
+    }
+    NewCommentRequest: {
+      comment: components["schemas"]["NewComment"]
+    }
+    NewUser: {
+      email: string
+      password: string
+      username: string
+    }
+    NewUserRequest: {
+      user: components["schemas"]["NewUser"]
+    }
+    Profile: {
+      username: string
+      bio: string
+      image: string
+      following: boolean
+    }
+    ProfileResponse: {
+      profile: components["schemas"]["Profile"]
+    }
+    SingleArticleResponse: {
+      article: components["schemas"]["Article"]
+    }
+    SingleCommentResponse: {
+      comment: components["schemas"]["Comment"]
+    }
+    TagsResponse: {
+      tags: string[]
+    }
+    UpdateArticle: {
+      title?: string | null
+      description?: string | null
+      body?: string | null
+    }
+    UpdateArticleRequest: {
+      article: components["schemas"]["UpdateArticle"]
+    }
+    UpdateUser: {
+      username?: string | null
+      email?: string | null
+      bio?: string | null
+      image?: string | null
+    }
+    UpdateUserRequest: {
+      user: components["schemas"]["UpdateUser"]
     }
     User: {
-      username: string
       email: string
+      username: string
       bio: string
       image: string
       token: string
@@ -162,170 +178,33 @@ export interface components {
     UserResponse: {
       user: components["schemas"]["User"]
     }
-    UpdateArticleRequest: {
-      article: components["schemas"]["UpdateArticle"]
-    }
-    NewCommentRequest: {
-      comment: components["schemas"]["NewComment"]
-    }
-    LoginUser: {
-      email: string
-      password: string
-    }
-    TagsResponse: {
-      tags: string[]
-    }
-  }
-  responses: {
-    /** Validation errors */
-    ErrorValidation: {
-      content: {
-        "application/json": {
-          /** @example The given data was invalid. */
-          message?: string
-          /** @example [object Object] */
-          errors?: { [key: string]: string[] }
-        }
-      }
-    }
-    /** Success */
-    "": {
-      content: {
-        "application/json": components["schemas"]["UserResponse"]
-      }
-    }
   }
 }
 
 export interface operations {
-  /** Get tags. Auth not required */
-  GetTags: {
-    responses: {
-      /** Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["TagsResponse"]
-        }
-      }
-    }
-  }
-  /** Register a new user */
-  CreateUser: {
-    responses: {
-      200: components["responses"]
-      422: components["responses"]["ErrorValidation"]
-    }
-    /** Details of the new user to register */
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["NewUserRequest"]
-      }
-    }
-  }
-  /** Login for existing user */
-  Login: {
-    responses: {
-      200: components["responses"]
-      422: components["responses"]["ErrorValidation"]
-    }
-    /** Details of the new user to register */
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["LoginUserRequest"]
-      }
-    }
-  }
-  /** Gets the currently logged-in user */
-  GetCurrentUser: {
-    responses: {
-      200: components["responses"]
-    }
-  }
-  /** Updated user information for current user */
-  UpdateCurrentUser: {
-    responses: {
-      200: components["responses"]
-      422: components["responses"]["ErrorValidation"]
-    }
-    /** User details to update. At least one field is required. */
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["UpdateUserRequest"]
-      }
-    }
-  }
-  /** Get a profile of a user of the system. Auth is optional */
-  GetProfileByUsername: {
-    parameters: {
-      path: {
-        /** Username of the profile to get */
-        username: string
-      }
-    }
-    responses: {
-      /** Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["ProfileResponse"]
-        }
-      }
-    }
-  }
-  /** Follow a user by username */
-  FollowUserByUsername: {
-    parameters: {
-      path: {
-        /** Username of the profile you want to follow */
-        username: string
-      }
-    }
-    responses: {
-      /** Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["ProfileResponse"]
-        }
-      }
-    }
-  }
-  /** Unfollow a user by username */
-  UnfollowUserByUsername: {
-    parameters: {
-      path: {
-        /** Username of the profile you want to unfollow */
-        username: string
-      }
-    }
-    responses: {
-      /** Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["ProfileResponse"]
-        }
-      }
-    }
-  }
   /** Get most recent articles globally. Use query parameters to filter results. Auth is optional */
   GetArticles: {
     parameters: {
       query: {
-        /** Limit number of articles returned (default is 20) */
-        limit?: number
-        /** Offset/skip number of articles (default is 0) */
-        offset?: number
         /** Filter by author (username) */
         author?: string
         /** Filter by favorites of a user (username) */
         favorited?: string
         /** Filter by tag */
         tag?: string
+        /** Limit number of articles returned (default is 20) */
+        limit?: number
+        /** Offset/skip number of articles (default is 0) */
+        offset?: number
       }
     }
     responses: {
       /** Success */
       200: {
         content: {
+          "text/plain": components["schemas"]["MultipleArticlesResponse"]
           "application/json": components["schemas"]["MultipleArticlesResponse"]
+          "text/json": components["schemas"]["MultipleArticlesResponse"]
         }
       }
     }
@@ -336,15 +215,22 @@ export interface operations {
       /** Success */
       200: {
         content: {
+          "text/plain": components["schemas"]["SingleArticleResponse"]
           "application/json": components["schemas"]["SingleArticleResponse"]
+          "text/json": components["schemas"]["SingleArticleResponse"]
         }
       }
-      422: components["responses"]["ErrorValidation"]
+      /** Unauthorized */
+      401: unknown
+      /** Forbidden */
+      403: unknown
     }
     /** Article to create */
     requestBody: {
       content: {
         "application/json": components["schemas"]["NewArticleRequest"]
+        "text/json": components["schemas"]["NewArticleRequest"]
+        "application/*+json": components["schemas"]["NewArticleRequest"]
       }
     }
   }
@@ -362,9 +248,15 @@ export interface operations {
       /** Success */
       200: {
         content: {
+          "text/plain": components["schemas"]["MultipleArticlesResponse"]
           "application/json": components["schemas"]["MultipleArticlesResponse"]
+          "text/json": components["schemas"]["MultipleArticlesResponse"]
         }
       }
+      /** Unauthorized */
+      401: unknown
+      /** Forbidden */
+      403: unknown
     }
   }
   /** Get an article. Auth not required */
@@ -379,7 +271,9 @@ export interface operations {
       /** Success */
       200: {
         content: {
+          "text/plain": components["schemas"]["SingleArticleResponse"]
           "application/json": components["schemas"]["SingleArticleResponse"]
+          "text/json": components["schemas"]["SingleArticleResponse"]
         }
       }
     }
@@ -396,15 +290,22 @@ export interface operations {
       /** Success */
       200: {
         content: {
+          "text/plain": components["schemas"]["SingleArticleResponse"]
           "application/json": components["schemas"]["SingleArticleResponse"]
+          "text/json": components["schemas"]["SingleArticleResponse"]
         }
       }
-      422: components["responses"]["ErrorValidation"]
+      /** Unauthorized */
+      401: unknown
+      /** Forbidden */
+      403: unknown
     }
     /** Article to update */
     requestBody: {
       content: {
         "application/json": components["schemas"]["UpdateArticleRequest"]
+        "text/json": components["schemas"]["UpdateArticleRequest"]
+        "application/*+json": components["schemas"]["UpdateArticleRequest"]
       }
     }
   }
@@ -418,41 +319,11 @@ export interface operations {
     }
     responses: {
       /** Success */
-      204: never
-    }
-  }
-  /** Favorite an article. Auth is required */
-  CreateArticleFavorite: {
-    parameters: {
-      path: {
-        /** Slug of the article that you want to favorite */
-        slug: string
-      }
-    }
-    responses: {
-      /** Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["SingleArticleResponse"]
-        }
-      }
-    }
-  }
-  /** Unfavorite an article. Auth is required */
-  DeleteArticleFavorite: {
-    parameters: {
-      path: {
-        /** Slug of the article that you want to unfavorite */
-        slug: string
-      }
-    }
-    responses: {
-      /** Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["SingleArticleResponse"]
-        }
-      }
+      200: unknown
+      /** Unauthorized */
+      401: unknown
+      /** Forbidden */
+      403: unknown
     }
   }
   /** Get the comments for an article. Auth is optional */
@@ -467,7 +338,9 @@ export interface operations {
       /** Success */
       200: {
         content: {
+          "text/plain": components["schemas"]["MultipleCommentsResponse"]
           "application/json": components["schemas"]["MultipleCommentsResponse"]
+          "text/json": components["schemas"]["MultipleCommentsResponse"]
         }
       }
     }
@@ -484,15 +357,22 @@ export interface operations {
       /** Success */
       200: {
         content: {
+          "text/plain": components["schemas"]["SingleCommentResponse"]
           "application/json": components["schemas"]["SingleCommentResponse"]
+          "text/json": components["schemas"]["SingleCommentResponse"]
         }
       }
-      422: components["responses"]["ErrorValidation"]
+      /** Unauthorized */
+      401: unknown
+      /** Forbidden */
+      403: unknown
     }
     /** Comment you want to create */
     requestBody: {
       content: {
         "application/json": components["schemas"]["NewCommentRequest"]
+        "text/json": components["schemas"]["NewCommentRequest"]
+        "application/*+json": components["schemas"]["NewCommentRequest"]
       }
     }
   }
@@ -503,12 +383,224 @@ export interface operations {
         /** Slug of the article that you want to delete a comment for */
         slug: string
         /** ID of the comment you want to delete */
-        commentId: string
+        commentId: number
       }
     }
     responses: {
       /** Success */
-      204: never
+      200: unknown
+      /** Unauthorized */
+      401: unknown
+      /** Forbidden */
+      403: unknown
+    }
+  }
+  /** Favorite an article. Auth is required */
+  CreateArticleFavorite: {
+    parameters: {
+      path: {
+        /** Slug of the article that you want to favorite */
+        slug: string
+      }
+    }
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "text/plain": components["schemas"]["SingleArticleResponse"]
+          "application/json": components["schemas"]["SingleArticleResponse"]
+          "text/json": components["schemas"]["SingleArticleResponse"]
+        }
+      }
+      /** Unauthorized */
+      401: unknown
+      /** Forbidden */
+      403: unknown
+    }
+  }
+  /** Unfavorite an article. Auth is required */
+  DeleteArticleFavorite: {
+    parameters: {
+      path: {
+        /** Slug of the article that you want to unfavorite */
+        slug: string
+      }
+    }
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "text/plain": components["schemas"]["SingleArticleResponse"]
+          "application/json": components["schemas"]["SingleArticleResponse"]
+          "text/json": components["schemas"]["SingleArticleResponse"]
+        }
+      }
+      /** Unauthorized */
+      401: unknown
+      /** Forbidden */
+      403: unknown
+    }
+  }
+  /** Get a profile of a user of the system. Auth is optional */
+  GetProfileByUsername: {
+    parameters: {
+      path: {
+        /** Username of the profile to get */
+        username: string
+      }
+    }
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "text/plain": components["schemas"]["ProfileResponse"]
+          "application/json": components["schemas"]["ProfileResponse"]
+          "text/json": components["schemas"]["ProfileResponse"]
+        }
+      }
+    }
+  }
+  /** Follow a user by username */
+  FollowUserByUsername: {
+    parameters: {
+      path: {
+        /** Username of the profile you want to follow */
+        username: string
+      }
+    }
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "text/plain": components["schemas"]["ProfileResponse"]
+          "application/json": components["schemas"]["ProfileResponse"]
+          "text/json": components["schemas"]["ProfileResponse"]
+        }
+      }
+      /** Unauthorized */
+      401: unknown
+      /** Forbidden */
+      403: unknown
+    }
+  }
+  /** Unfollow a user by username */
+  UnfollowUserByUsername: {
+    parameters: {
+      path: {
+        /** Username of the profile you want to unfollow */
+        username: string
+      }
+    }
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "text/plain": components["schemas"]["ProfileResponse"]
+          "application/json": components["schemas"]["ProfileResponse"]
+          "text/json": components["schemas"]["ProfileResponse"]
+        }
+      }
+      /** Unauthorized */
+      401: unknown
+      /** Forbidden */
+      403: unknown
+    }
+  }
+  /** Get tags. Auth not required */
+  GetTags: {
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "text/plain": components["schemas"]["TagsResponse"]
+          "application/json": components["schemas"]["TagsResponse"]
+          "text/json": components["schemas"]["TagsResponse"]
+        }
+      }
+    }
+  }
+  /** Gets the currently logged-in user */
+  GetCurrentUser: {
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "text/plain": components["schemas"]["UserResponse"]
+          "application/json": components["schemas"]["UserResponse"]
+          "text/json": components["schemas"]["UserResponse"]
+        }
+      }
+      /** Unauthorized */
+      401: unknown
+      /** Forbidden */
+      403: unknown
+    }
+  }
+  /** Updated user information for current user */
+  UpdateCurrentUser: {
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "text/plain": components["schemas"]["UserResponse"]
+          "application/json": components["schemas"]["UserResponse"]
+          "text/json": components["schemas"]["UserResponse"]
+        }
+      }
+      /** Unauthorized */
+      401: unknown
+      /** Forbidden */
+      403: unknown
+    }
+    /** User details to update. At least <strong>one</strong> field is required. */
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["UpdateUserRequest"]
+        "text/json": components["schemas"]["UpdateUserRequest"]
+        "application/*+json": components["schemas"]["UpdateUserRequest"]
+      }
+    }
+  }
+  /** Register a new user */
+  CreateUser: {
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "text/plain": components["schemas"]["UserResponse"]
+          "application/json": components["schemas"]["UserResponse"]
+          "text/json": components["schemas"]["UserResponse"]
+        }
+      }
+    }
+    /** Details of the new user to register */
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["NewUserRequest"]
+        "text/json": components["schemas"]["NewUserRequest"]
+        "application/*+json": components["schemas"]["NewUserRequest"]
+      }
+    }
+  }
+  /** Login for existing user */
+  Login: {
+    responses: {
+      /** Success */
+      200: {
+        content: {
+          "text/plain": components["schemas"]["UserResponse"]
+          "application/json": components["schemas"]["UserResponse"]
+          "text/json": components["schemas"]["UserResponse"]
+        }
+      }
+    }
+    /** Credentials to use */
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["LoginUserRequest"]
+        "text/json": components["schemas"]["LoginUserRequest"]
+        "application/*+json": components["schemas"]["LoginUserRequest"]
+      }
     }
   }
 }

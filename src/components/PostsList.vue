@@ -27,11 +27,7 @@ const fetchData = async ({
 </script>
 
 <template>
-  <PostCard
-    v-for="article in articles"
-    :key="article.slug"
-    :article="article"
-  />
+  <PostCard v-for="(article, i) in articles" :key="i" :article="article" />
 
   <OffsetPagination :limit="limit" :total="total" :fetch-data="fetchData" />
 </template>
