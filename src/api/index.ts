@@ -10,9 +10,15 @@ fetcher.configure({
 
 type Article = components["schemas"]["Article"]
 type Profile = components["schemas"]["Profile"]
+type Comment = components["schemas"]["Comment"]
 
 const getArticles = fetcher.path("/articles").method("get").create()
+const getArticle = fetcher.path("/articles/{slug}").method("get").create()
+const getComments = fetcher
+  .path("/articles/{slug}/comments")
+  .method("get")
+  .create()
 const getTags = fetcher.path("/tags").method("get").create()
 
-export type { Article, Profile }
-export { getArticles, getTags }
+export type { Article, Profile, Comment }
+export { getArticles, getTags, getArticle, getComments }

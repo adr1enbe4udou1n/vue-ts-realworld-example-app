@@ -7,37 +7,13 @@ defineProps<{
 }>()
 
 defineEmits(["select-tag"])
-
-const getDate = (date: string) => {
-  const month = new Date(date).toLocaleString("en", { month: "long" })
-  return `${month} ${useDateFormat(date, "DD, YYYY").value}`
-}
 </script>
 
 <template>
   <div border-t border-gray-200 py-4>
     <div>
       <header flex mb-2>
-        <router-link
-          :to="`/profiles/${article.author.username}`"
-          flex
-          items-center
-        >
-          <img
-            rounded-full
-            w-10
-            h-10
-            mr-2
-            :src="article.author.image"
-            :alt="article.author.username"
-          />
-          <div>
-            <h2 font-sans text-green class="-mb-1">
-              {{ article.author.username }}
-            </h2>
-            <time text-xs>{{ getDate(article.createdAt) }}</time>
-          </div>
-        </router-link>
+        <ProfileCard :author="article.author" :date="article.createdAt" />
         <div ml-auto>
           <button
             border

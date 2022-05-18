@@ -2,7 +2,9 @@
   <div font-sans flex flex-col h-full>
     <AppHeader />
     <main flex-1>
-      <RouterView />
+      <Suspense>
+        <RouterView />
+      </Suspense>
     </main>
     <AppFooter />
   </div>
