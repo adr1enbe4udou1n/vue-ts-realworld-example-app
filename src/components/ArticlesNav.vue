@@ -1,14 +1,7 @@
 <script lang="ts" setup>
-const items = [
-  {
-    name: "You Feed",
-    link: "/feed",
-  },
-  {
-    name: "Global Feed",
-    link: "/",
-  },
-]
+defineProps<{
+  items: { link: string; name: string }[]
+}>()
 </script>
 
 <template>
@@ -27,7 +20,7 @@ const items = [
 </template>
 
 <style scoped>
-nav a.router-link-active {
+nav a.router-link-exact-active {
   @apply text-green border-b-2 border-green-500;
 }
 </style>

@@ -1,9 +1,20 @@
 <script lang="ts" setup>
-import { Article, getArticles } from "~/api"
+import { Article, getArticles, Profile } from "~/api"
 
-const props = defineProps<{
-  tag: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    author?: string
+    favorited?: string
+    tag?: string
+    hideTags: boolean
+  }>(),
+  {
+    author: undefined,
+    favorited: undefined,
+    hideTags: false,
+    tag: undefined,
+  }
+)
 
 const limit = 10
 
@@ -22,6 +33,8 @@ const fetchData = async ({
     limit,
     offset: Math.floor(currentPageSize * (currentPage - 1)),
     tag: props.tag,
+    author: props.author,
+    favorited: props.favorited,
   })
 
   articles.value = data.articles
@@ -47,6 +60,7 @@ defineEmits(["update:tag"])
     :key="i"
     :article="article"
     :tag="tag"
+    :hide-tags="hideTags"
     @select-tag="(t) => $emit('update:tag', t)"
   />
 

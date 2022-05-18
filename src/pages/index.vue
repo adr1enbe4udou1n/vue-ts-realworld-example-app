@@ -7,6 +7,17 @@ const currentTag = computed({
     tag.value = tag.value === value ? "" : value
   },
 })
+
+const menuItems = [
+  {
+    name: "You Feed",
+    link: "/feed",
+  },
+  {
+    name: "Global Feed",
+    link: "/",
+  },
+]
 </script>
 
 <template>
@@ -16,7 +27,7 @@ const currentTag = computed({
   </div>
   <div class="container" flex flex-col md:flex-row mb-8 gap-8>
     <div md:flex-1>
-      <ArticlesNav />
+      <ArticlesNav :items="menuItems" />
       <Suspense>
         <PostsList v-model:tag="currentTag" />
       </Suspense>

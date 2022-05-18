@@ -29,7 +29,7 @@ let pagination = computed(() =>
   <div flex flex-wrap gap-1>
     <button
       :disabled="pagination.isFirstPage.value"
-      class="btn"
+      class="pagination-link"
       @click="pagination.prev"
     >
       &lt;
@@ -43,7 +43,7 @@ let pagination = computed(() =>
       :disabled="
         pagination.currentPage.value === item || !Number.isInteger(item)
       "
-      class="btn"
+      class="pagination-link"
       :class="{ active: pagination.currentPage.value === item }"
       @click="pagination.currentPage.value = (item as number)"
     >
@@ -51,7 +51,7 @@ let pagination = computed(() =>
     </button>
     <button
       :disabled="pagination.isLastPage.value"
-      class="btn"
+      class="pagination-link"
       @click="pagination.next"
     >
       &gt;
@@ -60,15 +60,15 @@ let pagination = computed(() =>
 </template>
 
 <style scoped>
-.btn {
+.pagination-link {
   @apply flex items-center justify-center border rounded-1 text-sm font-sans text-gray-500 border-gray-500 w-8 h-8;
 }
 
-.btn:disabled:not(.active) {
+.pagination-link:disabled:not(.active) {
   @apply opacity-50;
 }
 
-.btn.active {
+.pagination-link.active {
   @apply text-white border-green bg-green;
 }
 </style>

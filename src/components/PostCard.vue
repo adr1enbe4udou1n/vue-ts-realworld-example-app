@@ -1,10 +1,17 @@
 <script lang="ts" setup>
 import { Article } from "~/api"
 
-defineProps<{
-  article: Article
-  tag: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    article: Article
+    tag?: string
+    hideTags: boolean
+  }>(),
+  {
+    tag: undefined,
+    hideTags: false,
+  }
+)
 
 defineEmits(["select-tag"])
 </script>
@@ -15,20 +22,7 @@ defineEmits(["select-tag"])
       <header flex mb-2>
         <ProfileCard :author="article.author" :date="article.createdAt" />
         <div ml-auto>
-          <button
-            border
-            border-green
-            flex
-            items-center
-            text-green
-            rounded-1
-            px-2
-            text-sm
-            font-sans
-          >
-            <i i-carbon-favorite-filled text-xs mr-1></i>
-            {{ article.favoritesCount }}
-          </button>
+          <FavoriteArticle :article="article" />
         </div>
       </header>
       <div flex flex-col gap-2 relative>
@@ -38,7 +32,7 @@ defineEmits(["select-tag"])
         </p>
         <footer flex items-center>
           <span text-xs text-gray-300> Read more... </span>
-          <div ml-auto z-10>
+          <div v-if="!hideTags" ml-auto z-10>
             <button
               v-for="(t, i) in article.tagList"
               :key="i"

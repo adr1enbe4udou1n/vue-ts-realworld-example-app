@@ -1,15 +1,16 @@
 <script lang="ts" setup>
 import { Profile } from "~/api"
 
-interface Props {
-  author: Profile
-  date: string
-  inline: boolean
-}
-
-withDefaults(defineProps<Props>(), {
-  inline: false,
-})
+withDefaults(
+  defineProps<{
+    author: Profile
+    date: string
+    inline: boolean
+  }>(),
+  {
+    inline: false,
+  }
+)
 
 const getDate = (date: string) => {
   const month = new Date(date).toLocaleString("en", { month: "long" })
