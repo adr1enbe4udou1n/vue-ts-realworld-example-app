@@ -41,7 +41,7 @@ const menuItems = [
   <div class="container" py-8>
     <ArticlesNav :items="menuItems" />
     <Suspense>
-      <PostsList :author="profile.username" :hide-tags="true" />
+      <PostsList :favorited="profile.username" :hide-tags="true" />
     </Suspense>
   </div>
 </template>
