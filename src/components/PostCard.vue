@@ -3,6 +3,7 @@ import { Article } from "~/api"
 
 defineProps<{
   article: Article
+  tag: string
 }>()
 
 defineEmits(["select-tag"])
@@ -63,7 +64,7 @@ const getDate = (date: string) => {
           <span text-xs text-gray-300> Read more... </span>
           <div ml-auto z-10>
             <button
-              v-for="(tag, i) in article.tagList"
+              v-for="(t, i) in article.tagList"
               :key="i"
               border
               border-gray-300
@@ -72,9 +73,10 @@ const getDate = (date: string) => {
               px-2
               ml-1
               text-xs
-              @click="$emit('select-tag', tag)"
+              :class="{ 'border-green text-green': t === tag }"
+              @click="$emit('select-tag', t)"
             >
-              {{ tag }}
+              {{ t }}
             </button>
           </div>
         </footer>

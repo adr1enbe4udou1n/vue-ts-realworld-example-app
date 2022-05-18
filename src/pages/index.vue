@@ -1,7 +1,12 @@
 <script lang="ts" setup>
-const filterByTag = (tag: string) => {
-  alert(tag)
-}
+const tag = ref("")
+
+const currentTag = computed({
+  get: () => tag.value,
+  set: (value) => {
+    tag.value = tag.value === value ? "" : value
+  },
+})
 </script>
 
 <template>
@@ -13,7 +18,7 @@ const filterByTag = (tag: string) => {
     <div md:flex-1>
       <ArticlesNav />
       <Suspense>
-        <PostsList />
+        <PostsList v-model:tag="currentTag" />
       </Suspense>
     </div>
 
@@ -21,7 +26,7 @@ const filterByTag = (tag: string) => {
       <div bg-gray-100 font-sans p-2>
         <h3 mb-2>Popular Tags</h3>
         <Suspense>
-          <TagsList @select="filterByTag" />
+          <TagsList v-model:tag="currentTag" />
         </Suspense>
       </div>
     </div>

@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { pagination } from "~/helpers/pagination-range"
+import { usePagesBuilder } from "~/helpers/pagination-range"
 
 const props = defineProps<{
   total: number
   limit: number
+  page: number
   fetchData: ({
     currentPage,
     currentPageSize,
@@ -13,30 +14,48 @@ const props = defineProps<{
   }) => Promise<void>
 }>()
 
-const { currentPage, pageCount, isFirstPage, isLastPage, prev, next } =
+let pagination = computed(() =>
   useOffsetPagination({
     total: props.total,
-    page: 1,
+    page: props.page,
     pageSize: props.limit,
     onPageChange: props.fetchData,
     onPageSizeChange: props.fetchData,
   })
+)
 </script>
 
 <template>
   <div flex flex-wrap gap-1>
-    <button :disabled="isFirstPage" class="btn" @click="prev">&lt;</button>
     <button
-      v-for="item in pagination(currentPage, pageCount)"
-      :key="item"
-      :disabled="currentPage === item || !Number.isInteger(item)"
+      :disabled="pagination.isFirstPage.value"
       class="btn"
-      :class="{ active: currentPage === item }"
-      @click="currentPage = (item as number)"
+      @click="pagination.prev"
+    >
+      &lt;
+    </button>
+    <button
+      v-for="item in usePagesBuilder(
+        pagination.currentPage.value,
+        pagination.pageCount.value
+      )"
+      :key="item"
+      :disabled="
+        pagination.currentPage.value === item || !Number.isInteger(item)
+      "
+      class="btn"
+      :class="{ active: pagination.currentPage.value === item }"
+      @click="pagination.currentPage.value = (item as number)"
     >
       {{ item }}
     </button>
-    <button :disabled="isLastPage" class="btn" @click="next">&gt;</button>
+    <button
+      :disabled="pagination.isLastPage.value"
+      class="btn"
+      @click="pagination.next"
+    >
+      &gt;
+    </button>
   </div>
 </template>
 

@@ -1,16 +1,20 @@
 <script lang="ts" setup>
 import { getTags } from "~/api"
 
+defineProps<{
+  tag: string
+}>()
+
 const { data } = await getTags({})
 
 const tags = data.tags
 
-defineEmits(["select"])
+defineEmits(["update:tag"])
 </script>
 
 <template>
   <ul>
-    <li v-for="(tag, i) in tags" :key="i" inline-flex>
+    <li v-for="(t, i) in tags" :key="i" inline-flex>
       <button
         bg-gray
         rounded-full
@@ -18,9 +22,10 @@ defineEmits(["select"])
         text-sm
         px-2
         mr-1
-        @click="$emit('select', tag)"
+        :class="{ 'bg-green': t === tag }"
+        @click="$emit('update:tag', t)"
       >
-        {{ tag }}
+        {{ t }}
       </button>
     </li>
   </ul>

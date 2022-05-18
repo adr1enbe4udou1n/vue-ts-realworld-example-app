@@ -4,7 +4,7 @@ const getRange = (start: number, end: number) => {
     .map((v, i) => i + start)
 }
 
-const pagination = (currentPage: number, pageCount: number) => {
+const usePagesBuilder = (currentPage: number, pageCount: number) => {
   let delta: number
 
   if (pageCount <= 7) {
@@ -45,4 +45,4 @@ const pagination = (currentPage: number, pageCount: number) => {
   return pages
 }
 
-export { pagination }
+export { usePagesBuilder }
