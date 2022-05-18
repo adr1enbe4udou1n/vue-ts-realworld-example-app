@@ -8,6 +8,7 @@ declare module '@vue/runtime-core' {
     AppFooter: typeof import('./components/AppFooter.vue')['default']
     AppHeader: typeof import('./components/AppHeader.vue')['default']
     ArticlesNav: typeof import('./components/ArticlesNav.vue')['default']
+    AuthorLayout: typeof import('./components/AuthorLayout.vue')['default']
     CommentCard: typeof import('./components/CommentCard.vue')['default']
     CommentNew: typeof import('./components/CommentNew.vue')['default']
     FavoriteArticle: typeof import('./components/Actions/FavoriteArticle.vue')['default']
