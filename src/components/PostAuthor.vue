@@ -11,6 +11,7 @@ const props = defineProps<{
     <ProfileCard :author="article.author" :date="article.createdAt" mr-4 />
     <div mr-2>
       <button
+        type="button"
         rounded
         bg-gray-300
         py-1
@@ -26,6 +27,7 @@ const props = defineProps<{
     </div>
     <div>
       <button
+        type="button"
         rounded
         bg-gray-300
         py-1

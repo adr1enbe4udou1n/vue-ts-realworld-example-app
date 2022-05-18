@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
     AppHeader: typeof import('./components/AppHeader.vue')['default']
     ArticlesNav: typeof import('./components/ArticlesNav.vue')['default']
     CommentCard: typeof import('./components/CommentCard.vue')['default']
+    CommentNew: typeof import('./components/CommentNew.vue')['default']
     MarkdownViewer: typeof import('./components/MarkdownViewer.vue')['default']
     OffsetPagination: typeof import('./components/OffsetPagination.vue')['default']
     PostAuthor: typeof import('./components/PostAuthor.vue')['default']
