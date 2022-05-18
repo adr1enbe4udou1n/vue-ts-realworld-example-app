@@ -19,7 +19,7 @@ const getDate = (date: string) => {
     <div>
       <header flex mb-2>
         <router-link
-          :to="`/author/${article.author.username}`"
+          :to="`/profiles/${article.author.username}`"
           flex
           items-center
         >
@@ -80,7 +80,7 @@ const getDate = (date: string) => {
             </button>
           </div>
         </footer>
-        <router-link :to="`/article/${article.slug}`" absolute inset-0>
+        <router-link :to="`/articles/${article.slug}`" absolute inset-0>
         </router-link>
       </div>
     </div>

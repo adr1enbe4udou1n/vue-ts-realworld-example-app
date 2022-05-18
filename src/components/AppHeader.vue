@@ -3,7 +3,7 @@ const menuItems = [
   {
     icon: "i-carbon-request-quote",
     name: "New Post",
-    link: "/posts/new",
+    link: "/articles/create",
   },
   {
     name: "Sign in",
