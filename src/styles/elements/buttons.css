@@ -1,0 +1,7 @@
+.btn {
+  @apply bg-gray text-white rounded p-4 text-xl;
+}
+
+.btn-primary {
+  @apply bg-green;
+}

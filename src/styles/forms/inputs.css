@@ -1,0 +1,11 @@
+.form-control {
+  @apply border w-full rounded border-gray-300 focus:border-gray-300 focus:ring-1 focus:ring-indigo-500 focus:ring-opacity-50 p-4 text-xl;
+}
+
+.form-control::placeholder {
+  @apply text-gray-300;
+}
+
+textarea.form-control {
+  @apply min-h-40;
+}

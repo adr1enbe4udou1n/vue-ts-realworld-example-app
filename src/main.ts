@@ -12,7 +12,7 @@ import NProgress from "nprogress"
 import App from "./App.vue"
 
 import "@unocss/reset/tailwind.css"
-import "./main.css"
+import "./styles/main.css"
 import "uno.css"
 
 const routes = setupLayouts(generatedRoutes)

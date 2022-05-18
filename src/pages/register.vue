@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import { useUserStore } from "~/stores/user"
-
-const user = useUserStore()
-
 const form = ref({
-  image: "",
   username: "",
-  bio: "",
   email: "",
+  password: "",
 })
 </script>
 
@@ -15,30 +10,18 @@ const form = ref({
   <div class="container" flex flex-col>
     <div lg:w-2xl mx-auto>
       <div text-center mb-8>
-        <h1 font-heading text-4xl>Your settings</h1>
+        <h1 font-heading text-4xl mb-2>Sign up</h1>
+        <router-link to="/login" text-green hover:underline>
+          Have an account ?
+        </router-link>
       </div>
       <form flex flex-col gap-4>
-        <div>
-          <input
-            v-model="form.image"
-            class="form-control"
-            type="text"
-            placeholder="URL of profile picture"
-          />
-        </div>
         <div>
           <input
             v-model="form.username"
             class="form-control"
             type="text"
             placeholder="Your Name"
-          />
-        </div>
-        <div>
-          <textarea
-            v-model="form.bio"
-            placeholder="Short bio about you"
-            class="form-control"
           />
         </div>
         <div>
@@ -49,9 +32,17 @@ const form = ref({
             class="form-control"
           />
         </div>
+        <div>
+          <input
+            v-model="form.password"
+            type="password"
+            placeholder="Password"
+            class="form-control"
+          />
+        </div>
 
         <div flex justify-end>
-          <button class="btn btn-primary" type="submit">Update Settings</button>
+          <button class="btn btn-primary" type="submit">Sign up</button>
         </div>
       </form>
     </div>

@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import { useUserStore } from "~/stores/user"
-
-const user = useUserStore()
-
 const form = ref({
-  image: "",
-  username: "",
-  bio: "",
-  email: "",
+  title: "",
+  description: "",
+  body: "",
+  tagList: [],
 })
 </script>
 
@@ -15,43 +11,45 @@ const form = ref({
   <div class="container" flex flex-col>
     <div lg:w-2xl mx-auto>
       <div text-center mb-8>
-        <h1 font-heading text-4xl>Your settings</h1>
+        <h1 font-heading text-4xl mb-2>Your new post</h1>
       </div>
       <form flex flex-col gap-4>
         <div>
           <input
-            v-model="form.image"
+            v-model="form.title"
+            type="email"
+            placeholder="Post Title"
             class="form-control"
-            type="text"
-            placeholder="URL of profile picture"
-          />
-        </div>
-        <div>
-          <input
-            v-model="form.username"
-            class="form-control"
-            type="text"
-            placeholder="Your Name"
           />
         </div>
         <div>
           <textarea
-            v-model="form.bio"
-            placeholder="Short bio about you"
+            v-model="form.body"
+            type="password"
+            placeholder="Short description"
             class="form-control"
           />
         </div>
         <div>
+          <textarea
+            v-model="form.body"
+            type="password"
+            placeholder="Write your post (in markdown)"
+            class="form-control"
+            h-100
+          />
+        </div>
+        <div>
           <input
-            v-model="form.email"
-            type="email"
-            placeholder="Email"
+            v-model="form.tagList"
+            type="text"
+            placeholder="Tags"
             class="form-control"
           />
         </div>
 
         <div flex justify-end>
-          <button class="btn btn-primary" type="submit">Update Settings</button>
+          <button class="btn btn-primary" type="submit">Create Post</button>
         </div>
       </form>
     </div>

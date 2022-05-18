@@ -1,3 +1,6 @@
+@import "forms/inputs.css";
+@import "elements/buttons.css";
+
 html,
 body,
 #app {

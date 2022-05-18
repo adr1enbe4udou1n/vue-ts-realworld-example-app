@@ -1,5 +1,5 @@
 <template>
-  <div font-serif flex flex-col h-full>
+  <div font-sans flex flex-col h-full>
     <AppHeader />
     <main flex-1>
       <RouterView />
