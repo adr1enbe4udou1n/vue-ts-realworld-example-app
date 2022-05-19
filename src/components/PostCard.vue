@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { Article } from "~/api"
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     article: Article
     tag?: string
-    hideTags: boolean
+    hideTags?: boolean
   }>(),
   {
     tag: undefined,
@@ -22,7 +22,7 @@ defineEmits(["select-tag"])
       <header flex mb-2>
         <ProfileCard :author="article.author" :date="article.createdAt" />
         <div ml-auto>
-          <FavoriteArticle :article="article" />
+          <FavoriteArticle :article="article" :full="false" />
         </div>
       </header>
       <div flex flex-col gap-2 relative>

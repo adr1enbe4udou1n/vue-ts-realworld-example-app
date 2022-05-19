@@ -11,9 +11,9 @@ const handleValidation = async <T>(request: () => Promise<ApiResponse<T>>) => {
     if (e instanceof register.Error) {
       const error = e.getActualType()
       if (error.status === 400) {
-        const forms = useFormsStore()
+        const formsStore = useFormsStore()
 
-        forms.errors = error.data
+        formsStore.errors = error.data
       }
     }
   }

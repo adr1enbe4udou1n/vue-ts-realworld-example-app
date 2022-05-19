@@ -2,7 +2,7 @@
 import { register, handleValidation } from "~/api"
 import { useUserStore } from "~/stores/user"
 
-const user = useUserStore()
+const userStore = useUserStore()
 
 const form = ref({
   username: "",
@@ -14,7 +14,7 @@ const submit = async () => {
   const response = await handleValidation(() => register({ user: form.value }))
 
   if (response) {
-    user.login(response.data.user)
+    userStore.login(response.data.user)
   }
 }
 </script>

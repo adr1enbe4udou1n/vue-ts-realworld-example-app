@@ -2,7 +2,7 @@
 import { handleValidation, login } from "~/api"
 import { useUserStore } from "~/stores/user"
 
-const user = useUserStore()
+const userStore = useUserStore()
 
 const form = ref({
   email: "",
@@ -13,7 +13,7 @@ const submit = async () => {
   const response = await handleValidation(() => login({ user: form.value }))
 
   if (response) {
-    user.login(response.data.user)
+    userStore.login(response.data.user)
   }
 }
 </script>

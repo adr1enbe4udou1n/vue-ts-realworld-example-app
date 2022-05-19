@@ -4,7 +4,7 @@ import { Article } from "~/api"
 withDefaults(
   defineProps<{
     article: Article
-    full: boolean
+    full?: boolean
   }>(),
   {
     full: false,

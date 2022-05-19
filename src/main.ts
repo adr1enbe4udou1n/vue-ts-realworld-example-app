@@ -15,6 +15,7 @@ import "@unocss/reset/tailwind.css"
 import "./styles/main.css"
 import "uno.css"
 import { useFormsStore } from "./stores/forms"
+import { useUserStore } from "./stores/user"
 
 const routes = setupLayouts(generatedRoutes)
 
@@ -23,10 +24,12 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach((to, from) => {
+router.beforeEach(async (to, from) => {
   if (to.path !== from.path) NProgress.start()
 
   useFormsStore().$reset()
+
+  await useUserStore().fetch()
 })
 router.afterEach(() => {
   NProgress.done()

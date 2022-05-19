@@ -5,7 +5,7 @@ withDefaults(
   defineProps<{
     author: Profile
     date: string
-    inline: boolean
+    inline?: boolean
   }>(),
   {
     inline: false,

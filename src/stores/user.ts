@@ -9,15 +9,23 @@ export const useUserStore = defineStore("user", () => {
     useLocalStorage("token", data.token)
   }
 
-  const logout = () => {
+  const logout = function () {
     user.value = null
-    useLocalStorage("token", null)
+    // useLocalStorage("token", null)
+
+    const router = useRouter()
+
+    router.push("/")
   }
 
-  const fetch = async () => {
-    const response = await getUser({})
+  const isLoggedIn = computed(() => !!user.value)
 
-    user.value = response.data.user
+  const fetch = async () => {
+    if (!isLoggedIn.value) {
+      const response = await getUser({})
+
+      user.value = response.data.user
+    }
   }
 
   return {
@@ -25,7 +33,7 @@ export const useUserStore = defineStore("user", () => {
     logout,
     fetch,
     user,
-    isLoggedIn: () => !!user.value,
+    isLoggedIn,
   }
 })
 

@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { Article, getArticles, Profile } from "~/api"
+import { Article, getArticles } from "~/api"
 
 const props = withDefaults(
   defineProps<{
     author?: string
     favorited?: string
     tag?: string
-    hideTags: boolean
+    hideTags?: boolean
   }>(),
   {
     author: undefined,
