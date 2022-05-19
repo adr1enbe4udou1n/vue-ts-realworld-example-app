@@ -44,6 +44,7 @@ type ValidationProblemDetails =
   components["schemas"]["ValidationProblemDetails"]
 
 const getArticles = fetcher.path("/articles").method("get").create()
+const getArticlesFeed = fetcher.path("/articles/feed").method("get").create()
 const getArticle = fetcher.path("/articles/{slug}").method("get").create()
 const getProfile = fetcher
   .path("/profiles/celeb_{username}")
@@ -62,6 +63,7 @@ export type { Article, Profile, Comment, User, ValidationProblemDetails }
 export {
   handleValidation,
   getArticles,
+  getArticlesFeed,
   getTags,
   getArticle,
   getComments,

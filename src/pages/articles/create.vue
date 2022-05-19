@@ -1,9 +1,6 @@
-<route>
-{
-  meta: {
-    auth: true
-  }
-}
+<route lang="yaml">
+meta:
+  auth: true
 </route>
 
 <script setup lang="ts">

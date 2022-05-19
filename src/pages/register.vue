@@ -1,9 +1,6 @@
 <route>
-{
-  meta: {
-    auth: false
-  }
-}
+meta:
+  auth: false
 </route>
 
 <script setup lang="ts">

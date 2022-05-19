@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Article, getArticles } from "~/api"
+import { Article, getArticles, getArticlesFeed } from "~/api"
 
 const props = withDefaults(
   defineProps<{
@@ -7,11 +7,13 @@ const props = withDefaults(
     favorited?: string
     tag?: string
     hideTags?: boolean
+    useFeed?: boolean
   }>(),
   {
     author: undefined,
     favorited: undefined,
     hideTags: false,
+    useFeed: false,
     tag: undefined,
   }
 )
@@ -29,13 +31,18 @@ const fetchData = async ({
   currentPage: number
   currentPageSize: number
 }) => {
-  const { data } = await getArticles({
-    limit,
-    offset: Math.floor(currentPageSize * (currentPage - 1)),
-    tag: props.tag,
-    author: props.author,
-    favorited: props.favorited,
-  })
+  const { data } = props.useFeed
+    ? await getArticlesFeed({
+        limit,
+        offset: Math.floor(currentPageSize * (currentPage - 1)),
+      })
+    : await getArticles({
+        limit,
+        offset: Math.floor(currentPageSize * (currentPage - 1)),
+        tag: props.tag,
+        author: props.author,
+        favorited: props.favorited,
+      })
 
   articles.value = data.articles
   total.value = data.articlesCount
@@ -65,6 +72,7 @@ defineEmits(["update:tag"])
   />
 
   <OffsetPagination
+    v-if="total > limit"
     :page="page"
     :limit="limit"
     :total="total"

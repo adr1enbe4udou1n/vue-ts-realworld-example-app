@@ -14,6 +14,7 @@ declare module '@vue/runtime-core' {
     CommentNew: typeof import('./components/CommentNew.vue')['default']
     FavoriteArticle: typeof import('./components/Actions/FavoriteArticle.vue')['default']
     FollowProfile: typeof import('./components/Actions/FollowProfile.vue')['default']
+    HomeLayout: typeof import('./components/HomeLayout.vue')['default']
     MarkdownViewer: typeof import('./components/MarkdownViewer.vue')['default']
     OffsetPagination: typeof import('./components/OffsetPagination.vue')['default']
     PostAuthor: typeof import('./components/PostAuthor.vue')['default']
