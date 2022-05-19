@@ -20,10 +20,11 @@ const handleValidation = async <T>(request: () => Promise<ApiResponse<T>>) => {
 }
 
 const authenticate: Middleware = async (url, init, next) => {
-  init.headers.set(
-    "Authorization",
-    `Token ${useLocalStorage("token", null).value}`
-  )
+  const token = useLocalStorage("token", null)
+
+  if (token.value) {
+    init.headers.set("Authorization", `Token ${token.value}`)
+  }
   const response = await next(url, init)
   return response
 }

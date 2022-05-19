@@ -1,3 +1,11 @@
+<route>
+{
+  meta: {
+    auth: false
+  }
+}
+</route>
+
 <script setup lang="ts">
 import { register, handleValidation } from "~/api"
 import { useUserStore } from "~/stores/user"

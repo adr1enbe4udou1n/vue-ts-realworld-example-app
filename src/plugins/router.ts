@@ -1,0 +1,39 @@
+import { createRouter, createWebHistory } from "vue-router"
+
+import NProgress from "nprogress"
+
+import { useFormsStore } from "../stores/forms"
+import { useUserStore } from "../stores/user"
+
+import { setupLayouts } from "virtual:generated-layouts"
+import generatedRoutes from "virtual:generated-pages"
+
+const routes = setupLayouts(generatedRoutes)
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+})
+
+router.beforeEach(async (to, from) => {
+  if (to.path !== from.path) NProgress.start()
+
+  const userStore = useUserStore()
+
+  await userStore.fetch()
+
+  if (to.meta.auth === false && userStore.isLoggedIn) {
+    return router.push("/")
+  }
+
+  if (to.meta.auth === true && !userStore.isLoggedIn) {
+    return router.push("/login")
+  }
+
+  useFormsStore().$reset()
+})
+router.afterEach(() => {
+  NProgress.done()
+})
+
+export { router }

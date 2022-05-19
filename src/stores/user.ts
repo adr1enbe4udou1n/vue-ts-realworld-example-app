@@ -1,19 +1,21 @@
 import { acceptHMRUpdate, defineStore } from "pinia"
 import { getUser, User } from "~/api"
+import { router } from "~/plugins/router"
 
 export const useUserStore = defineStore("user", () => {
   const user = ref<User | null>(null)
+  const token = useLocalStorage("token", "")
 
   const login = (data: User) => {
     user.value = data
-    useLocalStorage("token", data.token)
+    token.value = data.token
+
+    router.push("/")
   }
 
   const logout = function () {
     user.value = null
-    // useLocalStorage("token", null)
-
-    const router = useRouter()
+    token.value = null
 
     router.push("/")
   }
@@ -21,7 +23,7 @@ export const useUserStore = defineStore("user", () => {
   const isLoggedIn = computed(() => !!user.value)
 
   const fetch = async () => {
-    if (!isLoggedIn.value) {
+    if (!isLoggedIn.value && token.value) {
       const response = await getUser({})
 
       user.value = response.data.user

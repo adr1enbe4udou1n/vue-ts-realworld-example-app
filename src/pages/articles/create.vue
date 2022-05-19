@@ -1,3 +1,11 @@
+<route>
+{
+  meta: {
+    auth: true
+  }
+}
+</route>
+
 <script setup lang="ts">
 const form = ref({
   title: "",
