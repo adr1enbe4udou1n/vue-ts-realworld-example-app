@@ -1,5 +1,5 @@
-import { ApiResponse, Fetcher, TypedFetch } from "openapi-typescript-fetch"
-import { Ref } from "vue"
+import { ApiResponse, Fetcher } from "openapi-typescript-fetch"
+import { useFormsStore } from "~/stores/forms"
 
 import { components, paths } from "./conduit"
 
@@ -28,17 +28,16 @@ const getComments = fetcher
 const getTags = fetcher.path("/tags").method("get").create()
 const register = fetcher.path("/users").method("post").create()
 
-const handleValidation = async <T>(
-  request: () => Promise<ApiResponse<T>>,
-  errors: Ref<ValidationProblemDetails | undefined>
-) => {
+const handleValidation = async <T>(request: () => Promise<ApiResponse<T>>) => {
   try {
     return await request()
   } catch (e) {
     if (e instanceof register.Error) {
       const error = e.getActualType()
       if (error.status === 400) {
-        errors.value = error.data
+        const forms = useFormsStore()
+
+        forms.errors = error.data
       }
     }
   }

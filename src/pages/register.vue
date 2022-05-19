@@ -7,13 +7,8 @@ const form = ref({
   password: "",
 })
 
-const details = ref<ValidationProblemDetails>()
-
 const submit = async () => {
-  const response = await handleValidation(
-    () => register({ user: form.value }),
-    details
-  )
+  const response = await handleValidation(() => register({ user: form.value }))
 
   if (response) {
     // log the user
@@ -32,7 +27,7 @@ const submit = async () => {
         </router-link>
       </div>
       <form flex flex-col gap-4 @submit.prevent="submit">
-        <AlertMessage v-if="details" :details="details" />
+        <AlertMessage />
         <div>
           <input
             v-model="form.username"

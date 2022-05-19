@@ -14,6 +14,7 @@ import App from "./App.vue"
 import "@unocss/reset/tailwind.css"
 import "./styles/main.css"
 import "uno.css"
+import { useFormsStore } from "./stores/forms"
 
 const routes = setupLayouts(generatedRoutes)
 
@@ -24,6 +25,8 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
   if (to.path !== from.path) NProgress.start()
+
+  useFormsStore().$reset()
 })
 router.afterEach(() => {
   NProgress.done()
