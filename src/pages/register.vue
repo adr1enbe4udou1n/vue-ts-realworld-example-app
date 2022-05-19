@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import { register, ValidationProblemDetails, handleValidation } from "~/api"
+import { register, handleValidation } from "~/api"
 
-const form = ref({
+const initialForm = {
   username: "",
   email: "",
   password: "",
-})
+}
+
+const form = ref({ ...initialForm })
 
 const submit = async () => {
   const response = await handleValidation(() => register({ user: form.value }))
 
   if (response) {
-    // log the user
-    console.log(response.data.user.token)
+    Object.assign(form.value, initialForm)
   }
 }
 </script>
@@ -26,6 +27,7 @@ const submit = async () => {
           Have an account ?
         </router-link>
       </div>
+      {{ form.username }}
       <form flex flex-col gap-4 @submit.prevent="submit">
         <AlertMessage />
         <div>
