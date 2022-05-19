@@ -16,7 +16,7 @@ const form = ref({
 })
 
 const submit = async () => {
-  const response = await handleValidation(() => register({ user: form.value }))
+  const response = await handleValidation(register, { user: form.value })
 
   if (response) {
     userStore.login(response.data.user)
@@ -33,7 +33,6 @@ const submit = async () => {
           Have an account ?
         </router-link>
       </div>
-      {{ form.username }}
       <form flex flex-col gap-4 @submit.prevent="submit">
         <AlertMessage />
         <div>
