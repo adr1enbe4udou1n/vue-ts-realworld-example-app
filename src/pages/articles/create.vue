@@ -4,34 +4,47 @@ meta:
 </route>
 
 <script setup lang="ts">
+import { createArticle, handleValidation } from "~/api"
+
+const router = useRouter()
+
 const form = ref({
   title: "",
   description: "",
   body: "",
   tagList: [],
 })
+
+const submit = async () => {
+  const response = await handleValidation(createArticle, {
+    article: form.value,
+  })
+
+  if (response) {
+    router.push(`/articles/${response.data.article.slug}`)
+  }
+}
 </script>
 
 <template>
-  <div class="container" flex flex-col>
+  <div class="container" flex flex-col mb-8>
     <div lg:w-2xl mx-auto>
       <div text-center mb-8>
         <h1 font-heading text-4xl mb-2>Your new post</h1>
       </div>
-      <form flex flex-col gap-4>
+      <form flex flex-col gap-4 @submit.prevent="submit">
         <AlertMessage />
         <div>
           <input
             v-model="form.title"
-            type="email"
+            type="text"
             placeholder="Post Title"
             class="form-control"
           />
         </div>
         <div>
           <textarea
-            v-model="form.body"
-            type="password"
+            v-model="form.description"
             placeholder="Short description"
             class="form-control"
           />
@@ -39,19 +52,13 @@ const form = ref({
         <div>
           <textarea
             v-model="form.body"
-            type="password"
             placeholder="Write your post (in markdown)"
             class="form-control"
             h-100
           />
         </div>
         <div>
-          <input
-            v-model="form.tagList"
-            type="text"
-            placeholder="Tags"
-            class="form-control"
-          />
+          <TagInput v-model="form.tagList" />
         </div>
 
         <div flex justify-end>

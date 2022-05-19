@@ -16,6 +16,7 @@ defineEmits(["update:tag"])
   <ul>
     <li v-for="(t, i) in tags" :key="i" inline-flex>
       <button
+        type="button"
         bg-gray
         rounded-full
         text-white

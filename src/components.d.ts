@@ -24,6 +24,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SuccessMessage: typeof import('./components/SuccessMessage.vue')['default']
+    TagInput: typeof import('./components/Inputs/TagInput.vue')['default']
     TagsList: typeof import('./components/TagsList.vue')['default']
   }
 }

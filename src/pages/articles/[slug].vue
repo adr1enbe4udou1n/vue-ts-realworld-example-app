@@ -23,7 +23,7 @@ const comments = commentsResponse.data.comments
   </div>
   <div class="container" border-t border-gray-300 py-4 flex flex-col>
     <PostAuthor :article="article" mx-auto mb-8 />
-    <div mx-auto max-w-2xl flex flex-col gap-4>
+    <div mx-auto w-2xl flex flex-col gap-4>
       <CommentCard
         v-for="comment in comments"
         :key="comment.id"
