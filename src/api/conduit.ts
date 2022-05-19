@@ -178,6 +178,15 @@ export interface components {
     UserResponse: {
       user: components["schemas"]["User"]
     }
+    ValidationProblemDetails: {
+      type?: string | null
+      title?: string | null
+      /** Format: int32 */
+      status?: number | null
+      detail?: string | null
+      instance?: string | null
+      errors: { [key: string]: string[] }
+    } & { [key: string]: unknown }
   }
 }
 
@@ -218,6 +227,14 @@ export interface operations {
           "text/plain": components["schemas"]["SingleArticleResponse"]
           "application/json": components["schemas"]["SingleArticleResponse"]
           "text/json": components["schemas"]["SingleArticleResponse"]
+        }
+      }
+      /** Bad Request */
+      400: {
+        content: {
+          "text/plain": components["schemas"]["ValidationProblemDetails"]
+          "application/json": components["schemas"]["ValidationProblemDetails"]
+          "text/json": components["schemas"]["ValidationProblemDetails"]
         }
       }
       /** Unauthorized */
@@ -295,6 +312,14 @@ export interface operations {
           "text/json": components["schemas"]["SingleArticleResponse"]
         }
       }
+      /** Bad Request */
+      400: {
+        content: {
+          "text/plain": components["schemas"]["ValidationProblemDetails"]
+          "application/json": components["schemas"]["ValidationProblemDetails"]
+          "text/json": components["schemas"]["ValidationProblemDetails"]
+        }
+      }
       /** Unauthorized */
       401: unknown
       /** Forbidden */
@@ -360,6 +385,14 @@ export interface operations {
           "text/plain": components["schemas"]["SingleCommentResponse"]
           "application/json": components["schemas"]["SingleCommentResponse"]
           "text/json": components["schemas"]["SingleCommentResponse"]
+        }
+      }
+      /** Bad Request */
+      400: {
+        content: {
+          "text/plain": components["schemas"]["ValidationProblemDetails"]
+          "application/json": components["schemas"]["ValidationProblemDetails"]
+          "text/json": components["schemas"]["ValidationProblemDetails"]
         }
       }
       /** Unauthorized */
@@ -547,6 +580,14 @@ export interface operations {
           "text/json": components["schemas"]["UserResponse"]
         }
       }
+      /** Bad Request */
+      400: {
+        content: {
+          "text/plain": components["schemas"]["ValidationProblemDetails"]
+          "application/json": components["schemas"]["ValidationProblemDetails"]
+          "text/json": components["schemas"]["ValidationProblemDetails"]
+        }
+      }
       /** Unauthorized */
       401: unknown
       /** Forbidden */
@@ -572,6 +613,14 @@ export interface operations {
           "text/json": components["schemas"]["UserResponse"]
         }
       }
+      /** Bad Request */
+      400: {
+        content: {
+          "text/plain": components["schemas"]["ValidationProblemDetails"]
+          "application/json": components["schemas"]["ValidationProblemDetails"]
+          "text/json": components["schemas"]["ValidationProblemDetails"]
+        }
+      }
     }
     /** Details of the new user to register */
     requestBody: {
@@ -591,6 +640,14 @@ export interface operations {
           "text/plain": components["schemas"]["UserResponse"]
           "application/json": components["schemas"]["UserResponse"]
           "text/json": components["schemas"]["UserResponse"]
+        }
+      }
+      /** Bad Request */
+      400: {
+        content: {
+          "text/plain": components["schemas"]["ValidationProblemDetails"]
+          "application/json": components["schemas"]["ValidationProblemDetails"]
+          "text/json": components["schemas"]["ValidationProblemDetails"]
         }
       }
     }

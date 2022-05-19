@@ -10,7 +10,7 @@
     "lint:fix": "eslint src --ext .ts,.vue --fix",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "openapi": "openapi-typescript https://aspnetrealworld.okami101.io/api/v1/docs.json --output src/api/conduit.ts"
+    "openapi": "openapi-typescript http://localhost:5000/api/v1/docs.json --output src/api/conduit.ts"
   },
   "dependencies": {
     "@vueuse/core": "^8.5.0",

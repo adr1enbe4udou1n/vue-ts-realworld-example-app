@@ -1,9 +1,25 @@
 <script setup lang="ts">
+import { register, ValidationProblemDetails, handleValidation } from "~/api"
+
 const form = ref({
   username: "",
   email: "",
   password: "",
 })
+
+const details = ref<ValidationProblemDetails>()
+
+const submit = async () => {
+  const response = await handleValidation(
+    () => register({ user: form.value }),
+    details
+  )
+
+  if (response) {
+    // log the user
+    console.log(response.data.user.token)
+  }
+}
 </script>
 
 <template>
@@ -15,7 +31,8 @@ const form = ref({
           Have an account ?
         </router-link>
       </div>
-      <form flex flex-col gap-4>
+      <form flex flex-col gap-4 @submit.prevent="submit">
+        <AlertMessage v-if="details" :details="details" />
         <div>
           <input
             v-model="form.username"
