@@ -4,16 +4,31 @@ meta:
 </route>
 
 <script setup lang="ts">
+import { handleValidation, updateUser } from "~/api"
 import { useUserStore } from "~/stores/user"
 
 const userStore = useUserStore()
 
+const success = ref(false)
+
 const form = ref({
-  image: "",
-  username: "",
-  bio: "",
-  email: "",
+  image: userStore.user?.image,
+  username: userStore.user?.username,
+  bio: userStore.user?.bio,
+  email: userStore.user?.email,
 })
+
+const submit = async () => {
+  const response = await handleValidation(updateUser, {
+    user: form.value,
+  })
+
+  if (response) {
+    success.value = true
+
+    userStore.setUser(response.data.user)
+  }
+}
 </script>
 
 <template>
@@ -22,7 +37,11 @@ const form = ref({
       <div text-center mb-8>
         <h1 font-heading text-4xl>Your settings</h1>
       </div>
-      <form flex flex-col gap-4>
+      <form flex flex-col gap-4 @submit.prevent="submit">
+        <SuccessMessage v-if="success">
+          Your settings have been updated successfully
+        </SuccessMessage>
+        <AlertMessage />
         <div>
           <input
             v-model="form.image"

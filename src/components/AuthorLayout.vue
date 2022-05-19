@@ -23,6 +23,7 @@ const menuItems = [
   <div bg-gray-100 text-center py-8 mb-8>
     <div class="container">
       <img
+        v-if="profile.image"
         rounded-full
         :src="profile.image"
         :alt="profile.username"

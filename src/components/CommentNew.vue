@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 import { Article } from "~/api"
+import { useUserStore } from "~/stores/user"
+
+const userStore = useUserStore()
 
 defineProps<{
   article: Article
@@ -9,7 +12,7 @@ const body = ref("")
 </script>
 
 <template>
-  <form block rounded border border-gray-300>
+  <form v-if="userStore.user" block rounded border border-gray-300>
     <textarea
       v-model="body"
       w-full
@@ -30,11 +33,12 @@ const body = ref("")
       items-center
     >
       <img
+        v-if="userStore.user.image"
         rounded-full
         w-10
         h-10
-        src="https://randomuser.me/api/portraits/men/52.jpg"
-        alt="John Doe"
+        :src="userStore.user.image"
+        :alt="userStore.user.username"
       />
       <button ml-auto type="submit" class="btn btn-primary btn-sm">
         Post Comment

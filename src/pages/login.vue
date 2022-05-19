@@ -15,7 +15,7 @@ const form = ref({
 })
 
 const submit = async () => {
-  const response = await handleValidation(() => login({ user: form.value }))
+  const response = await handleValidation(login, { user: form.value })
 
   if (response) {
     userStore.login(response.data.user)
@@ -33,6 +33,7 @@ const submit = async () => {
         </router-link>
       </div>
       <form flex flex-col gap-4 @submit.prevent="submit">
+        <AlertMessage />
         <div>
           <input
             v-model="form.email"

@@ -51,6 +51,14 @@ const menuItems = computed(() =>
             {{ item.name }}
           </button>
         </template>
+        <img
+          v-if="userStore.user?.image"
+          rounded-full
+          w-8
+          h-8
+          :src="userStore.user.image"
+          :alt="userStore.user.username"
+        />
       </nav>
     </div>
   </header>

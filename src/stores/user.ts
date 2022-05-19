@@ -6,14 +6,18 @@ export const useUserStore = defineStore("user", () => {
   const user = ref<User | null>(null)
   const token = useLocalStorage("token", "")
 
-  const login = (data: User) => {
+  const setUser = (data: User) => {
     user.value = data
     token.value = data.token
+  }
+
+  const login = (data: User) => {
+    setUser(data)
 
     router.push("/")
   }
 
-  const logout = function () {
+  const logout = () => {
     user.value = null
     token.value = null
 
@@ -31,6 +35,7 @@ export const useUserStore = defineStore("user", () => {
   }
 
   return {
+    setUser,
     login,
     logout,
     fetch,

@@ -1,14 +1,23 @@
-import { ApiResponse, Fetcher, Middleware } from "openapi-typescript-fetch"
+import {
+  ApiResponse,
+  Fetcher,
+  Middleware,
+  OpArgType,
+  TypedFetch,
+} from "openapi-typescript-fetch"
 
 import { useFormsStore } from "~/stores/forms"
 
 import { components, paths } from "./conduit"
 
-const handleValidation = async <T>(request: () => Promise<ApiResponse<T>>) => {
+const handleValidation = async <T>(
+  operation: TypedFetch<T>,
+  arg: OpArgType<T>
+) => {
   try {
-    return await request()
+    return await operation(arg)
   } catch (e) {
-    if (e instanceof register.Error) {
+    if (e instanceof operation.Error) {
       const error = e.getActualType()
       if (error.status === 400) {
         const formsStore = useFormsStore()
@@ -58,6 +67,7 @@ const getTags = fetcher.path("/tags").method("get").create()
 const login = fetcher.path("/users/login").method("post").create()
 const register = fetcher.path("/users").method("post").create()
 const getUser = fetcher.path("/user").method("get").create()
+const updateUser = fetcher.path("/user").method("put").create()
 
 export type { Article, Profile, Comment, User, ValidationProblemDetails }
 export {
@@ -71,4 +81,5 @@ export {
   login,
   register,
   getUser,
+  updateUser,
 }

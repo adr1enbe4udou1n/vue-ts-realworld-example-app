@@ -23,6 +23,7 @@ declare module '@vue/runtime-core' {
     ProfileCard: typeof import('./components/ProfileCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SuccessMessage: typeof import('./components/SuccessMessage.vue')['default']
     TagsList: typeof import('./components/TagsList.vue')['default']
   }
 }

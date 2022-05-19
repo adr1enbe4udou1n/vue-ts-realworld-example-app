@@ -19,6 +19,7 @@ const form = ref({
         <h1 font-heading text-4xl mb-2>Your new post</h1>
       </div>
       <form flex flex-col gap-4>
+        <AlertMessage />
         <div>
           <input
             v-model="form.title"
