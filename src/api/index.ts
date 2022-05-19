@@ -1,32 +1,8 @@
-import { ApiResponse, Fetcher } from "openapi-typescript-fetch"
+import { ApiResponse, Fetcher, Middleware } from "openapi-typescript-fetch"
+
 import { useFormsStore } from "~/stores/forms"
 
 import { components, paths } from "./conduit"
-
-const fetcher = Fetcher.for<paths>()
-
-fetcher.configure({
-  baseUrl: import.meta.env.VITE_CONDUIT_API,
-})
-
-type Article = components["schemas"]["Article"]
-type Profile = components["schemas"]["Profile"]
-type Comment = components["schemas"]["Comment"]
-type ValidationProblemDetails =
-  components["schemas"]["ValidationProblemDetails"]
-
-const getArticles = fetcher.path("/articles").method("get").create()
-const getArticle = fetcher.path("/articles/{slug}").method("get").create()
-const getProfile = fetcher
-  .path("/profiles/celeb_{username}")
-  .method("get")
-  .create()
-const getComments = fetcher
-  .path("/articles/{slug}/comments")
-  .method("get")
-  .create()
-const getTags = fetcher.path("/tags").method("get").create()
-const register = fetcher.path("/users").method("post").create()
 
 const handleValidation = async <T>(request: () => Promise<ApiResponse<T>>) => {
   try {
@@ -43,7 +19,45 @@ const handleValidation = async <T>(request: () => Promise<ApiResponse<T>>) => {
   }
 }
 
-export type { Article, Profile, Comment, ValidationProblemDetails }
+const authenticate: Middleware = async (url, init, next) => {
+  init.headers.set(
+    "Authorization",
+    `Token ${useLocalStorage("token", null).value}`
+  )
+  const response = await next(url, init)
+  return response
+}
+
+const fetcher = Fetcher.for<paths>()
+
+fetcher.configure({
+  baseUrl: import.meta.env.VITE_CONDUIT_API,
+  use: [authenticate],
+})
+
+type Article = components["schemas"]["Article"]
+type Profile = components["schemas"]["Profile"]
+type Comment = components["schemas"]["Comment"]
+type User = components["schemas"]["User"]
+type ValidationProblemDetails =
+  components["schemas"]["ValidationProblemDetails"]
+
+const getArticles = fetcher.path("/articles").method("get").create()
+const getArticle = fetcher.path("/articles/{slug}").method("get").create()
+const getProfile = fetcher
+  .path("/profiles/celeb_{username}")
+  .method("get")
+  .create()
+const getComments = fetcher
+  .path("/articles/{slug}/comments")
+  .method("get")
+  .create()
+const getTags = fetcher.path("/tags").method("get").create()
+const login = fetcher.path("/users/login").method("post").create()
+const register = fetcher.path("/users").method("post").create()
+const getUser = fetcher.path("/user").method("get").create()
+
+export type { Article, Profile, Comment, User, ValidationProblemDetails }
 export {
   handleValidation,
   getArticles,
@@ -51,5 +65,7 @@ export {
   getArticle,
   getComments,
   getProfile,
+  login,
   register,
+  getUser,
 }

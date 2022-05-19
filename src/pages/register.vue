@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import { register, handleValidation } from "~/api"
+import { useUserStore } from "~/stores/user"
 
-const initialForm = {
+const user = useUserStore()
+
+const form = ref({
   username: "",
   email: "",
   password: "",
-}
-
-const form = ref({ ...initialForm })
+})
 
 const submit = async () => {
   const response = await handleValidation(() => register({ user: form.value }))
 
   if (response) {
-    Object.assign(form.value, initialForm)
+    user.login(response.data.user)
   }
 }
 </script>

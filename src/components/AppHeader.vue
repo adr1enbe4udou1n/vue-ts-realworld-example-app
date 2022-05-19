@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+import { getUser } from "~/api"
+import { useUserStore } from "~/stores/user"
+
+const user = useUserStore()
+
 const menuItems = [
   {
     icon: "i-carbon-request-quote",
@@ -26,6 +31,7 @@ const menuItems = [
       <router-link to="/" font-brand text-green font-bold text-xl>
         conduit
       </router-link>
+      logged as {{ user.user?.username }}
       <nav ml-auto flex>
         <router-link
           v-for="(item, i) in menuItems"

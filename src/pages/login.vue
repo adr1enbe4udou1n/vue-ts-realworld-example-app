@@ -1,8 +1,21 @@
 <script setup lang="ts">
+import { handleValidation, login } from "~/api"
+import { useUserStore } from "~/stores/user"
+
+const user = useUserStore()
+
 const form = ref({
   email: "",
   password: "",
 })
+
+const submit = async () => {
+  const response = await handleValidation(() => login({ user: form.value }))
+
+  if (response) {
+    user.login(response.data.user)
+  }
+}
 </script>
 
 <template>
@@ -14,7 +27,7 @@ const form = ref({
           No account yet ?
         </router-link>
       </div>
-      <form flex flex-col gap-4>
+      <form flex flex-col gap-4 @submit.prevent="submit">
         <div>
           <input
             v-model="form.email"
