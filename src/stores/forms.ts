@@ -1,8 +1,10 @@
 import { acceptHMRUpdate, defineStore } from "pinia"
-import { ValidationProblemDetails } from "~/api"
 
 export const useFormsStore = defineStore("forms", () => {
-  const errors = ref<ValidationProblemDetails | null>(null)
+  const errors = ref<{
+    title: string
+    errors: { [key: string]: string[] }
+  } | null>(null)
 
   const $reset = () => {
     errors.value = null
