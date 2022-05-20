@@ -1,17 +1,30 @@
+<route lang="yaml">
+meta:
+  article: true
+</route>
+
 <script lang="ts" setup>
-import { getArticle, getComments } from "~/api"
+import { deleteArticle, getArticle, getComments } from "~/api"
 import { useUserStore } from "~/stores/user"
 
 const userStore = useUserStore()
+const router = useRouter()
 
 const props = defineProps<{ slug: string }>()
 
 const articleResponse = await getArticle({ slug: props.slug })
-const commentsResponse = await getComments({ slug: props.slug })
-
 const article = articleResponse.data.article
 
+const commentsResponse = await getComments({ slug: props.slug })
 const comments = ref(commentsResponse.data.comments)
+
+const deleteArticleAction = async () => {
+  if (confirm("Are you sure?")) {
+    await deleteArticle({ slug: props.slug })
+
+    router.push("/")
+  }
+}
 </script>
 
 <template>
@@ -31,8 +44,16 @@ const comments = ref(commentsResponse.data.comments)
           flex
           gap-2
         >
-          <IconButton icon="i-carbon-edit" label="Edit" />
-          <IconButton icon="i-carbon-trash-can" label="Delete" />
+          <IconButton
+            icon="i-carbon-edit"
+            label="Edit"
+            :link="`/articles/${slug}/edit`"
+          />
+          <IconButton
+            icon="i-carbon-trash-can"
+            label="Delete"
+            @click="deleteArticleAction"
+          />
         </div>
       </div>
     </div>

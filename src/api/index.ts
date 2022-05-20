@@ -59,16 +59,34 @@ const getProfile = fetcher
   .path("/profiles/celeb_{username}")
   .method("get")
   .create()
+const followProfile = fetcher
+  .path("/profiles/celeb_{username}/follow")
+  .method("post")
+  .create()
+const unfollowProfile = fetcher
+  .path("/profiles/celeb_{username}/follow")
+  .method("delete")
+  .create()
 const getComments = fetcher
   .path("/articles/{slug}/comments")
   .method("get")
   .create()
-const getTags = fetcher.path("/tags").method("get").create()
 const login = fetcher.path("/users/login").method("post").create()
 const register = fetcher.path("/users").method("post").create()
 const getUser = fetcher.path("/user").method("get").create()
 const updateUser = fetcher.path("/user").method("put").create()
+const getTags = fetcher.path("/tags").method("get").create()
 const createArticle = fetcher.path("/articles").method("post").create()
+const updateArticle = fetcher.path("/articles/{slug}").method("put").create()
+const deleteArticle = fetcher.path("/articles/{slug}").method("delete").create()
+const favoriteArticle = fetcher
+  .path("/articles/{slug}/favorite")
+  .method("post")
+  .create()
+const unfavoriteArticle = fetcher
+  .path("/articles/{slug}/favorite")
+  .method("delete")
+  .create()
 const createComment = fetcher
   .path("/articles/{slug}/comments")
   .method("post")
@@ -92,6 +110,12 @@ export {
   getUser,
   updateUser,
   createArticle,
+  updateArticle,
+  deleteArticle,
   createComment,
   deleteComment,
+  favoriteArticle,
+  unfavoriteArticle,
+  followProfile,
+  unfollowProfile,
 }
