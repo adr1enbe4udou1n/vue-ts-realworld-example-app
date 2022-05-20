@@ -1,5 +1,4 @@
 import {
-  ApiResponse,
   Fetcher,
   Middleware,
   OpArgType,

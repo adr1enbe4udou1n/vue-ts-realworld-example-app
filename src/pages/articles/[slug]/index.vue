@@ -1,8 +1,3 @@
-<route lang="yaml">
-meta:
-  article: true
-</route>
-
 <script lang="ts" setup>
 import { deleteArticle, getArticle, getComments } from "~/api"
 import { useUserStore } from "~/stores/user"

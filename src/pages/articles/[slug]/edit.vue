@@ -1,7 +1,6 @@
 <route lang="yaml">
 meta:
   auth: true
-  article: true
 </route>
 
 <script setup lang="ts">
