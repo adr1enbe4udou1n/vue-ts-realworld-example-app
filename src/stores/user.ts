@@ -34,6 +34,12 @@ export const useUserStore = defineStore("user", () => {
     }
   }
 
+  const ensureLoggedIn = () => {
+    if (!isLoggedIn.value) {
+      router.push("/login")
+    }
+  }
+
   return {
     setUser,
     login,
@@ -41,6 +47,7 @@ export const useUserStore = defineStore("user", () => {
     fetch,
     user,
     isLoggedIn,
+    ensureLoggedIn,
   }
 })
 

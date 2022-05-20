@@ -28,6 +28,7 @@ const getDate = (date: string) => {
         h-5
         :src="author.image"
         :alt="author.username"
+        :title="author.following ? 'Following' : 'Unfollowed'"
       />
       <h2 text-green text-xs>
         {{ author.username }}
@@ -42,6 +43,7 @@ const getDate = (date: string) => {
         h-10
         :src="author.image"
         :alt="author.username"
+        :title="author.following ? 'Following' : 'Unfollowed'"
       />
       <div>
         <h2 text-green class="-mb-1">
