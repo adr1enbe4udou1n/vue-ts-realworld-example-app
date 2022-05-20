@@ -40,7 +40,7 @@ const authenticate: Middleware = async (url, init, next) => {
 const fetcher = Fetcher.for<paths>()
 
 fetcher.configure({
-  baseUrl: import.meta.env.VITE_CONDUIT_API,
+  baseUrl: import.meta.env.VITE_CONDUIT_API || "/api",
   use: [authenticate],
 })
 
