@@ -8,7 +8,7 @@ const router = useRouter()
 const props = defineProps<{ slug: string }>()
 
 const articleResponse = await getArticle({ slug: props.slug })
-const article = articleResponse.data.article
+const article = ref(articleResponse.data.article)
 
 const commentsResponse = await getComments({ slug: props.slug })
 const comments = ref(commentsResponse.data.comments)
@@ -28,7 +28,11 @@ const deleteArticleAction = async () => {
       <h1 font-brand font-bold text-5xl mb-8>{{ article.title }}</h1>
 
       <div flex items-center>
-        <PostAuthor :article="article" />
+        <PostAuthor
+          :article="article"
+          @follow="article.author.following = $event"
+          @favorite="article.favorited = $event"
+        />
 
         <div
           v-if="
@@ -57,7 +61,13 @@ const deleteArticleAction = async () => {
     <MarkdownViewer :source="article.body" />
   </div>
   <div class="container" border-t border-gray-300 py-4 flex flex-col>
-    <PostAuthor :article="article" mx-auto mb-8 />
+    <PostAuthor
+      :article="article"
+      mx-auto
+      mb-8
+      @follow="article.author.following = $event"
+      @favorite="article.favorited = $event"
+    />
     <div mx-auto w-2xl flex flex-col gap-4>
       <CommentNew
         :article="article"

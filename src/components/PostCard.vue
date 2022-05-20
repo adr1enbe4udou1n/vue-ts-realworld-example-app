@@ -13,7 +13,10 @@ withDefaults(
   }
 )
 
-defineEmits(["select-tag"])
+defineEmits<{
+  (e: "select-tag", tag: string): void
+  (e: "favorite", toggle: boolean): void
+}>()
 </script>
 
 <template>
@@ -22,7 +25,11 @@ defineEmits(["select-tag"])
       <header flex mb-2>
         <ProfileCard :author="article.author" :date="article.createdAt" />
         <div ml-auto>
-          <FavoriteArticle :article="article" :full="false" />
+          <FavoriteArticle
+            :article="article"
+            :full="false"
+            @favorite="$emit('favorite', $event)"
+          />
         </div>
       </header>
       <div flex flex-col gap-2 relative>

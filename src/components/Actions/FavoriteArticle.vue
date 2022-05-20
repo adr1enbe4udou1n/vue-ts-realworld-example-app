@@ -14,30 +14,44 @@ const props = withDefaults(
   }
 )
 
-const toggle = ref(props.article.favorited)
 const counter = ref(props.article.favoritesCount)
 
+watch(
+  () => props.article.favorited,
+  async (newValue) => {
+    if (newValue) {
+      counter.value++
+      return
+    }
+    counter.value--
+  }
+)
+
+const emit = defineEmits<{
+  (e: "favorite", toggle: boolean): void
+}>()
+
 const icon = computed(() => {
-  return toggle.value ? "i-carbon-favorite-filled" : "i-carbon-favorite"
+  return props.article.favorited
+    ? "i-carbon-favorite-filled"
+    : "i-carbon-favorite"
 })
 
 const label = computed(() => {
-  return toggle.value ? "Unfavorite" : "Favorite"
+  return props.article.favorited ? "Unfavorite" : "Favorite"
 })
 
 const toggleFavorite = async () => {
   userStore.ensureLoggedIn()
 
-  if (toggle.value) {
+  if (props.article.favorited) {
     await unfavoriteArticle({ slug: props.article.slug })
-    toggle.value = false
-    counter.value -= 1
+    emit("favorite", false)
     return
   }
 
   await favoriteArticle({ slug: props.article.slug })
-  toggle.value = true
-  counter.value += 1
+  emit("favorite", true)
 }
 </script>
 

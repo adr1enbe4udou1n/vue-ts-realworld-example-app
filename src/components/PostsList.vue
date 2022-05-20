@@ -69,6 +69,7 @@ defineEmits(["update:tag"])
     :tag="tag"
     :hide-tags="hideTags"
     @select-tag="(t) => $emit('update:tag', t)"
+    @favorite="article.favorited = $event"
   />
 
   <OffsetPagination

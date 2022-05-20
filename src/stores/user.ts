@@ -22,6 +22,7 @@ export const useUserStore = defineStore("user", () => {
     token.value = null
 
     router.push("/")
+    router.go(0)
   }
 
   const isLoggedIn = computed(() => !!user.value)

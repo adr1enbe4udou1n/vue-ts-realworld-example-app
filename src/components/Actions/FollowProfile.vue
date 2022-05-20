@@ -8,27 +8,29 @@ const props = defineProps<{
   profile: Profile
 }>()
 
-const toggle = ref(props.profile.following)
+const emit = defineEmits<{
+  (e: "follow", toggle: boolean): void
+}>()
 
 const icon = computed(() => {
-  return toggle.value ? "i-carbon-subtract" : "i-carbon-add"
+  return props.profile.following ? "i-carbon-subtract" : "i-carbon-add"
 })
 
 const label = computed(() => {
-  return toggle.value ? "Unfollow" : "Follow"
+  return props.profile.following ? "Unfollow" : "Follow"
 })
 
 const toggleFollow = async () => {
   userStore.ensureLoggedIn()
 
-  if (toggle.value) {
+  if (props.profile.following) {
     await unfollowProfile({ username: props.profile.username })
-    toggle.value = false
+    emit("follow", false)
     return
   }
 
   await followProfile({ username: props.profile.username })
-  toggle.value = true
+  emit("follow", true)
 }
 </script>
 
