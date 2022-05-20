@@ -1,4 +1,4 @@
-<route>
+<route lang="yaml">
 meta:
   auth: false
 </route>

@@ -1,0 +1,60 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: restore-cache
+  image: drillster/drone-volume-cache
+  volumes:
+  - name: cache
+    path: /cache
+  settings:
+    restore: true
+    mount:
+    - ./.pnpm-store
+
+- name: build
+  image: node:16-buster
+  commands:
+  - curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm@7
+  - pnpm config set store-dir .pnpm-store
+  - pnpm i && pnpm lint
+  # - pnpm test
+  - pnpm build
+
+- name: image
+  image: plugins/docker
+  settings:
+    registry: registry.okami101.io
+    repo: registry.okami101.io/adr1enbe4udou1n/vue-ts-realworld
+    tags: latest
+    username:
+      from_secret: registry_username
+    password:
+      from_secret: registry_password
+
+- name: rebuild-cache
+  image: drillster/drone-volume-cache
+  volumes:
+  - name: cache
+    path: /cache
+  settings:
+    rebuild: true
+    mount:
+    - ./.pnpm-store
+
+- name: deploy
+  image: appleboy/drone-ssh
+  settings:
+    host: front.okami101.io
+    port: 2222
+    username: okami
+    key:
+      from_secret: swarm_ssh_key
+    script:
+      - docker service update --image registry.okami101.io/adr1enbe4udou1n/vue-ts-realworld:latest vuetsrealworld_app --with-registry-auth
+
+trigger:
+  event:
+  - push
+  - pull_request
