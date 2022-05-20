@@ -1,18 +1,43 @@
 <script lang="ts" setup>
-import { Article } from "~/api"
+import { Article, Comment, createComment, handleValidation } from "~/api"
 import { useUserStore } from "~/stores/user"
 
 const userStore = useUserStore()
 
-defineProps<{
+const props = defineProps<{
   article: Article
 }>()
 
+const emit = defineEmits<{
+  (e: "comment-created", comment: Comment): void
+}>()
+
 const body = ref("")
+
+const submit = async () => {
+  const response = await handleValidation(createComment, {
+    slug: props.article.slug,
+    comment: {
+      body: body.value,
+    },
+  })
+
+  if (response) {
+    emit("comment-created", response.data.comment)
+  }
+}
 </script>
 
 <template>
-  <form v-if="userStore.user" block rounded border border-gray-300>
+  <form
+    v-if="userStore.user"
+    block
+    rounded
+    border
+    border-gray-300
+    @submit.prevent="submit"
+  >
+    <AlertMessage />
     <textarea
       v-model="body"
       w-full
@@ -21,7 +46,7 @@ const body = ref("")
       p-4
       block
       focus:outline-none
-      placeholder="Leave your comment here"
+      placeholder="Leave your comment here (in markdown)"
     />
     <footer
       bg-gray-100

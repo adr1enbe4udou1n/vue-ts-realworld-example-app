@@ -69,6 +69,14 @@ const register = fetcher.path("/users").method("post").create()
 const getUser = fetcher.path("/user").method("get").create()
 const updateUser = fetcher.path("/user").method("put").create()
 const createArticle = fetcher.path("/articles").method("post").create()
+const createComment = fetcher
+  .path("/articles/{slug}/comments")
+  .method("post")
+  .create()
+const deleteComment = fetcher
+  .path("/articles/{slug}/comments/{commentId}")
+  .method("delete")
+  .create()
 
 export type { Article, Profile, Comment, User, ValidationProblemDetails }
 export {
@@ -84,4 +92,6 @@ export {
   getUser,
   updateUser,
   createArticle,
+  createComment,
+  deleteComment,
 }

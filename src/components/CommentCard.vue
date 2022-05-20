@@ -1,9 +1,26 @@
 <script lang="ts" setup>
-import { Comment } from "~/api"
+import { Comment, deleteComment } from "~/api"
+import { useUserStore } from "~/stores/user"
 
-defineProps<{
+const userStore = useUserStore()
+
+const props = defineProps<{
+  slug: string
   comment: Comment
 }>()
+
+const emit = defineEmits(["comment-deleted"])
+
+const deleteCommentAction = async () => {
+  if (confirm("Are you sure?")) {
+    await deleteComment({
+      slug: props.slug,
+      commentId: props.comment.id,
+    })
+
+    emit("comment-deleted")
+  }
+}
 </script>
 
 <template>
@@ -18,11 +35,16 @@ defineProps<{
         :inline="true"
         mr-4
       />
-      <div flex gap-2 ml-auto>
-        <button type="button" flex-inline>
-          <i i-carbon-edit></i>
-        </button>
-        <button type="button" flex-inline>
+      <div
+        v-if="
+          userStore.isLoggedIn &&
+          comment.author.username === userStore.user?.username
+        "
+        flex
+        gap-2
+        ml-auto
+      >
+        <button type="button" flex-inline @click="deleteCommentAction">
           <i i-carbon-trash-can></i>
         </button>
       </div>
