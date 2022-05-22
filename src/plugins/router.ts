@@ -20,7 +20,11 @@ router.beforeEach(async (to, from) => {
 
   const userStore = useUserStore()
 
-  await userStore.fetch()
+  try {
+    await userStore.fetch()
+  } catch (e) {
+    console.error(e)
+  }
 
   if (to.meta.auth === false && userStore.isLoggedIn) {
     return router.push("/")
