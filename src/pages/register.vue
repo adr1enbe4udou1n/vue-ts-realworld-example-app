@@ -26,7 +26,7 @@ const submit = async () => {
 
 <template>
   <div class="container" flex flex-col mb-8>
-    <div lg:w-2xl mx-auto>
+    <div lg:w-2xl sm:mx-auto>
       <div text-center mb-8>
         <h1 font-heading text-4xl mb-2>Sign up</h1>
         <router-link to="/login" text-green hover:underline>

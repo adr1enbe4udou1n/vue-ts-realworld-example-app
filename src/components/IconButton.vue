@@ -22,7 +22,7 @@ defineEmits(["click"])
   </router-link>
   <button v-else type="button" class="btn-icon" @click="$emit('click')">
     <i v-if="icon" :class="icon"></i>
-    <span v-if="label">{{ label }}</span>
+    <span v-if="label" hidden sm:inline>{{ label }}</span>
   </button>
 </template>
 

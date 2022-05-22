@@ -68,7 +68,7 @@ const deleteArticleAction = async () => {
       @follow="article.author.following = $event"
       @favorite="article.favorited = $event"
     />
-    <div mx-auto w-2xl flex flex-col gap-4>
+    <div mx-auto max-w-2xl flex flex-col gap-4>
       <CommentNew
         :article="article"
         @comment-created="(c) => (comments = [c, ...comments])"
