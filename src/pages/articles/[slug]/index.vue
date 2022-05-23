@@ -20,6 +20,11 @@ const deleteArticleAction = async () => {
     router.push("/")
   }
 }
+
+useHead({
+  title: `${article.value.title} - Conduit`,
+  meta: [{ name: "description", content: article.value.description }],
+})
 </script>
 
 <template>
