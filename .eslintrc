@@ -1,6 +1,7 @@
 {
   "extends": [
     "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:vue/vue3-recommended",
     "@vue/eslint-config-typescript",
     "@vue/eslint-config-prettier"
@@ -11,7 +12,6 @@
         "*.vue"
       ],
       "rules": {
-        "no-unused-vars": "off",
         "no-undef": "off"
       }
     },

@@ -23,7 +23,7 @@ const usePagesBuilder = (currentPage: number, pageCount: number) => {
     range.end += 1
   }
 
-  let pages: any =
+  let pages: (string | number)[] =
     currentPage > delta
       ? getRange(
           Math.min(range.start, pageCount - delta),
