@@ -3,6 +3,8 @@
 // Read more: https://github.com/vuejs/core/pull/3399
 import '@vue/runtime-core'
 
+export {}
+
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AlertMessage: typeof import('./components/AlertMessage.vue')['default']
@@ -29,5 +31,3 @@ declare module '@vue/runtime-core' {
     TagsList: typeof import('./components/TagsList.vue')['default']
   }
 }
-
-export {}
