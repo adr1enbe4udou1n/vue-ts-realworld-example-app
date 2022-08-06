@@ -49,8 +49,8 @@ const menuItems = [
     </div>
 
     <div v-if="!hideTags" w-70>
-      <div bg-gray-100 font-sans p-2>
-        <h3 mb-2>Popular Tags</h3>
+      <div bg-gray-100 dark:bg-gray-800 font-sans p-2>
+        <h3 mb-2 dark:text-white>Popular Tags</h3>
         <Suspense>
           <TagsList v-model:tag="currentTag" />
         </Suspense>

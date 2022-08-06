@@ -24,11 +24,20 @@ const deleteCommentAction = async () => {
 </script>
 
 <template>
-  <div rounded border border-gray-300>
+  <div rounded border border-gray-300 dark:border-gray-800>
     <div px-4>
       <MarkdownViewer :source="comment.body" />
     </div>
-    <footer bg-gray-100 flex p-4 rounded-b border-t border-gray-300>
+    <footer
+      bg-gray-100
+      flex
+      p-4
+      rounded-b
+      border-t
+      border-gray-300
+      dark:bg-gray-800
+      dark:border-gray-800
+    >
       <ProfileCard
         :author="comment.author"
         :date="comment.createdAt"

@@ -1,5 +1,5 @@
 <template>
-  <footer bg-gray-100>
+  <footer bg-gray-100 dark:bg-gray-800>
     <div class="container" py-4 flex items-center gap-4>
       <router-link to="/" font-brand text-green font-bold>
         conduit

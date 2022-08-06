@@ -30,7 +30,7 @@ const submit = async () => {
   <div class="container" flex flex-col mb-8>
     <div lg:w-2xl sm:mx-auto>
       <div text-center mb-8>
-        <h1 font-heading text-4xl mb-2>Your new post</h1>
+        <h1 font-heading text-4xl mb-2 dark:text-white>Your new post</h1>
       </div>
       <form flex flex-col gap-4 @submit.prevent="submit">
         <AlertMessage />

@@ -33,7 +33,9 @@ defineEmits<{
         </div>
       </header>
       <div flex flex-col gap-2 relative>
-        <h3 font-heading font-bold text-xl>{{ article.title }}</h3>
+        <h3 font-heading font-bold text-xl dark:text-white>
+          {{ article.title }}
+        </h3>
         <p text-sm text-gray-500>
           {{ article.description }}
         </p>

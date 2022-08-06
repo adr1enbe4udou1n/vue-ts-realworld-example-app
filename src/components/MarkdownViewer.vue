@@ -10,5 +10,11 @@ const markdownToHtml = computed(() => marked(props.source))
 
 <template>
   <!-- eslint-disable-next-line vue/no-v-html -->
-  <div prose mx-auto max-w-full v-html="markdownToHtml"></div>
+  <div
+    prose
+    mx-auto
+    max-w-full
+    dark:text-gray-300
+    v-html="markdownToHtml"
+  ></div>
 </template>

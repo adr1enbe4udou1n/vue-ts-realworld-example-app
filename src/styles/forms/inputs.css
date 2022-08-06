@@ -1,5 +1,5 @@
 .form-control {
-  @apply border w-full rounded border-gray-300 focus:border-gray-300 focus:ring-1 focus:ring-indigo-500 focus:ring-opacity-50 focus:outline-none p-4 text-xl;
+  @apply border w-full rounded border-gray-300 focus:border-gray-300 focus:ring-1 focus:ring-indigo-500 focus:ring-opacity-50 focus:outline-none p-4 text-xl dark:bg-gray-800 dark:text-white;
 }
 
 .form-control::placeholder {

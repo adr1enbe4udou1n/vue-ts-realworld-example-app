@@ -28,7 +28,7 @@ const menuItems = computed(() =>
 </script>
 
 <template>
-  <header>
+  <header dark:text-white>
     <div class="container" py-4 flex>
       <router-link to="/" font-brand text-green font-bold text-xl>
         conduit
@@ -39,14 +39,7 @@ const menuItems = computed(() =>
             <i v-if="item.icon" :class="`${item.icon}`" inline-block mr-2></i>
             {{ item.name }}
           </router-link>
-          <button
-            v-else
-            type="button"
-            flex
-            items-center
-            text-gray-500
-            @click="item.click"
-          >
+          <button v-else type="button" flex items-center @click="item.click">
             <i v-if="item.icon" :class="`${item.icon}`" inline-block mr-2></i>
             {{ item.name }}
           </button>
