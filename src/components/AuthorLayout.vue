@@ -37,8 +37,10 @@ useHead({
         h-30
         mb-4
       />
-      <h1 font-brand font-bold text-2xl mb-4>{{ profile.username }}</h1>
-      <p mx-auto max-w-140 text-gray-400 mb-4>
+      <h1 font-brand font-bold text-2xl mb-4 text-gray-300>
+        {{ profile.username }}
+      </h1>
+      <p mx-auto max-w-140 text-gray-300 mb-4>
         {{ profile.bio }}
       </p>
       <FollowProfile :profile="profile" ml-auto />

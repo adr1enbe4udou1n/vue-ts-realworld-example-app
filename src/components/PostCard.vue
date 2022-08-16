@@ -36,7 +36,7 @@ defineEmits<{
         <h3 font-heading font-bold text-xl dark:text-white>
           {{ article.title }}
         </h3>
-        <p text-sm text-gray-500>
+        <p text-sm text-gray-300>
           {{ article.description }}
         </p>
         <footer flex items-center>

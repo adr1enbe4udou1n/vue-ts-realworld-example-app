@@ -45,7 +45,7 @@ let pagination = computed(() =>
       "
       class="pagination-link"
       :class="{ active: pagination.currentPage.value === item }"
-      @click="pagination.currentPage.value = (item as number)"
+      @click="pagination.currentPage.value = item as number"
     >
       {{ item }}
     </button>
@@ -61,7 +61,7 @@ let pagination = computed(() =>
 
 <style scoped>
 .pagination-link {
-  @apply flex items-center justify-center border rounded-1 text-sm font-sans text-gray-500 border-gray-500 w-8 h-8;
+  @apply flex items-center justify-center border rounded-1 text-sm font-sans text-gray-300 border-gray-500 w-8 h-8;
 }
 
 .pagination-link:disabled:not(.active) {
