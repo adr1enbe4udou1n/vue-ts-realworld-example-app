@@ -68,7 +68,7 @@ defineEmits(["update:tag"])
     :article="article"
     :tag="tag"
     :hide-tags="hideTags"
-    @select-tag="(t) => $emit('update:tag', t)"
+    @select-tag="(t: string) => $emit('update:tag', t)"
     @favorite="article.favorited = $event"
   />
 
