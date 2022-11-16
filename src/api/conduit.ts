@@ -5,65 +5,122 @@
 
 export interface paths {
   "/articles": {
-    /** Get most recent articles globally. Use query parameters to filter results. Auth is optional */
+    /**
+     * Get recent articles globally
+     * @description Get most recent articles globally. Use query parameters to filter results. Auth is optional
+     */
     get: operations["GetArticles"]
-    /** Create an article. Auth is required */
+    /**
+     * Create an article
+     * @description Create an article. Auth is required
+     */
     post: operations["CreateArticle"]
   }
   "/articles/feed": {
-    /** Get most recent articles from users you follow. Use query parameters to limit. Auth is required */
+    /**
+     * Get recent articles from users you follow
+     * @description Get most recent articles from users you follow. Use query parameters to limit. Auth is required
+     */
     get: operations["GetArticlesFeed"]
   }
   "/articles/{slug}": {
-    /** Get an article. Auth not required */
+    /**
+     * Get an article
+     * @description Get an article. Auth not required
+     */
     get: operations["GetArticle"]
-    /** Update an article. Auth is required */
+    /**
+     * Update an article
+     * @description Update an article. Auth is required
+     */
     put: operations["UpdateArticle"]
-    /** Delete an article. Auth is required */
+    /**
+     * Delete an article
+     * @description Delete an article. Auth is required
+     */
     delete: operations["DeleteArticle"]
   }
   "/articles/{slug}/comments": {
-    /** Get the comments for an article. Auth is optional */
+    /**
+     * Get comments for an article
+     * @description Get the comments for an article. Auth is optional
+     */
     get: operations["GetArticleComments"]
-    /** Create a comment for an article. Auth is required */
+    /**
+     * Create a comment for an article
+     * @description Create a comment for an article. Auth is required
+     */
     post: operations["CreateArticleComment"]
   }
   "/articles/{slug}/comments/{commentId}": {
-    /** Delete a comment for an article. Auth is required */
+    /**
+     * Delete a comment for an article
+     * @description Delete a comment for an article. Auth is required
+     */
     delete: operations["DeleteArticleComment"]
   }
   "/articles/{slug}/favorite": {
-    /** Favorite an article. Auth is required */
+    /**
+     * Favorite an article
+     * @description Favorite an article. Auth is required
+     */
     post: operations["CreateArticleFavorite"]
-    /** Unfavorite an article. Auth is required */
+    /**
+     * Unfavorite an article
+     * @description Unfavorite an article. Auth is required
+     */
     delete: operations["DeleteArticleFavorite"]
   }
   "/profiles/celeb_{username}": {
-    /** Get a profile of a user of the system. Auth is optional */
+    /**
+     * Get a profile
+     * @description Get a profile of a user of the system. Auth is optional
+     */
     get: operations["GetProfileByUsername"]
   }
   "/profiles/celeb_{username}/follow": {
-    /** Follow a user by username */
+    /**
+     * Follow a user
+     * @description Follow a user by username
+     */
     post: operations["FollowUserByUsername"]
-    /** Unfollow a user by username */
+    /**
+     * Unfollow a user
+     * @description Unfollow a user by username
+     */
     delete: operations["UnfollowUserByUsername"]
   }
   "/tags": {
-    /** Get tags. Auth not required */
+    /**
+     * Get tags
+     * @description Get tags. Auth not required
+     */
     get: operations["GetTags"]
   }
   "/user": {
-    /** Gets the currently logged-in user */
+    /**
+     * Get current user
+     * @description Gets the currently logged-in user
+     */
     get: operations["GetCurrentUser"]
-    /** Updated user information for current user */
+    /**
+     * Update current user
+     * @description Updated user information for current user
+     */
     put: operations["UpdateCurrentUser"]
   }
   "/users": {
-    /** Register a new user */
+    /**
+     * Register a new user
+     * @description Register a new user
+     */
     post: operations["CreateUser"]
   }
   "/users/login": {
-    /** Login for existing user */
+    /**
+     * Existing user login
+     * @description Login for existing user
+     */
     post: operations["Login"]
   }
 }
@@ -185,30 +242,43 @@ export interface components {
       status?: number | null
       detail?: string | null
       instance?: string | null
-      errors: { [key: string]: string[] }
-    } & { [key: string]: unknown }
+      errors: {
+        [key: string]: string[] | undefined
+      }
+      [key: string]: unknown | undefined
+    }
   }
+  responses: never
+  parameters: never
+  requestBodies: never
+  headers: never
+  pathItems: never
 }
 
+export type external = Record<string, never>
+
 export interface operations {
-  /** Get most recent articles globally. Use query parameters to filter results. Auth is optional */
   GetArticles: {
-    parameters: {
-      query: {
-        /** Filter by author (username) */
+    /**
+     * Get recent articles globally
+     * @description Get most recent articles globally. Use query parameters to filter results. Auth is optional
+     */
+    parameters?: {
+      /** @description Filter by author (username) */
+      /** @description Filter by favorites of a user (username) */
+      /** @description Filter by tag */
+      /** @description Limit number of articles returned (default is 20) */
+      /** @description Offset/skip number of articles (default is 0) */
+      query?: {
         author?: string
-        /** Filter by favorites of a user (username) */
         favorited?: string
-        /** Filter by tag */
         tag?: string
-        /** Limit number of articles returned (default is 20) */
         limit?: number
-        /** Offset/skip number of articles (default is 0) */
         offset?: number
       }
     }
     responses: {
-      /** Success */
+      /** @description Success */
       200: {
         content: {
           "text/plain": components["schemas"]["MultipleArticlesResponse"]
@@ -218,74 +288,21 @@ export interface operations {
       }
     }
   }
-  /** Create an article. Auth is required */
   CreateArticle: {
-    responses: {
-      /** Success */
-      200: {
-        content: {
-          "text/plain": components["schemas"]["SingleArticleResponse"]
-          "application/json": components["schemas"]["SingleArticleResponse"]
-          "text/json": components["schemas"]["SingleArticleResponse"]
-        }
-      }
-      /** Bad Request */
-      400: {
-        content: {
-          "text/plain": components["schemas"]["ValidationProblemDetails"]
-          "application/json": components["schemas"]["ValidationProblemDetails"]
-          "text/json": components["schemas"]["ValidationProblemDetails"]
-        }
-      }
-      /** Unauthorized */
-      401: unknown
-      /** Forbidden */
-      403: unknown
-    }
-    /** Article to create */
-    requestBody: {
+    /**
+     * Create an article
+     * @description Create an article. Auth is required
+     */
+    /** @description Article to create */
+    requestBody?: {
       content: {
         "application/json": components["schemas"]["NewArticleRequest"]
         "text/json": components["schemas"]["NewArticleRequest"]
         "application/*+json": components["schemas"]["NewArticleRequest"]
       }
     }
-  }
-  /** Get most recent articles from users you follow. Use query parameters to limit. Auth is required */
-  GetArticlesFeed: {
-    parameters: {
-      query: {
-        /** Limit number of articles returned (default is 20) */
-        limit?: number
-        /** Offset/skip number of articles (default is 0) */
-        offset?: number
-      }
-    }
     responses: {
-      /** Success */
-      200: {
-        content: {
-          "text/plain": components["schemas"]["MultipleArticlesResponse"]
-          "application/json": components["schemas"]["MultipleArticlesResponse"]
-          "text/json": components["schemas"]["MultipleArticlesResponse"]
-        }
-      }
-      /** Unauthorized */
-      401: unknown
-      /** Forbidden */
-      403: unknown
-    }
-  }
-  /** Get an article. Auth not required */
-  GetArticle: {
-    parameters: {
-      path: {
-        /** Slug of the article to get */
-        slug: string
-      }
-    }
-    responses: {
-      /** Success */
+      /** @description Success */
       200: {
         content: {
           "text/plain": components["schemas"]["SingleArticleResponse"]
@@ -293,26 +310,7 @@ export interface operations {
           "text/json": components["schemas"]["SingleArticleResponse"]
         }
       }
-    }
-  }
-  /** Update an article. Auth is required */
-  UpdateArticle: {
-    parameters: {
-      path: {
-        /** Slug of the article to update */
-        slug: string
-      }
-    }
-    responses: {
-      /** Success */
-      200: {
-        content: {
-          "text/plain": components["schemas"]["SingleArticleResponse"]
-          "application/json": components["schemas"]["SingleArticleResponse"]
-          "text/json": components["schemas"]["SingleArticleResponse"]
-        }
-      }
-      /** Bad Request */
+      /** @description Bad Request */
       400: {
         content: {
           "text/plain": components["schemas"]["ValidationProblemDetails"]
@@ -320,47 +318,137 @@ export interface operations {
           "text/json": components["schemas"]["ValidationProblemDetails"]
         }
       }
-      /** Unauthorized */
-      401: unknown
-      /** Forbidden */
-      403: unknown
+      /** @description Unauthorized */
+      401: never
+      /** @description Forbidden */
+      403: never
     }
-    /** Article to update */
-    requestBody: {
+  }
+  GetArticlesFeed: {
+    /**
+     * Get recent articles from users you follow
+     * @description Get most recent articles from users you follow. Use query parameters to limit. Auth is required
+     */
+    parameters?: {
+      /** @description Limit number of articles returned (default is 20) */
+      /** @description Offset/skip number of articles (default is 0) */
+      query?: {
+        limit?: number
+        offset?: number
+      }
+    }
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "text/plain": components["schemas"]["MultipleArticlesResponse"]
+          "application/json": components["schemas"]["MultipleArticlesResponse"]
+          "text/json": components["schemas"]["MultipleArticlesResponse"]
+        }
+      }
+      /** @description Unauthorized */
+      401: never
+      /** @description Forbidden */
+      403: never
+    }
+  }
+  GetArticle: {
+    /**
+     * Get an article
+     * @description Get an article. Auth not required
+     */
+    parameters: {
+      /** @description Slug of the article to get */
+      path: {
+        slug: string
+      }
+    }
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "text/plain": components["schemas"]["SingleArticleResponse"]
+          "application/json": components["schemas"]["SingleArticleResponse"]
+          "text/json": components["schemas"]["SingleArticleResponse"]
+        }
+      }
+    }
+  }
+  UpdateArticle: {
+    /**
+     * Update an article
+     * @description Update an article. Auth is required
+     */
+    parameters: {
+      /** @description Slug of the article to update */
+      path: {
+        slug: string
+      }
+    }
+    /** @description Article to update */
+    requestBody?: {
       content: {
         "application/json": components["schemas"]["UpdateArticleRequest"]
         "text/json": components["schemas"]["UpdateArticleRequest"]
         "application/*+json": components["schemas"]["UpdateArticleRequest"]
       }
     }
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "text/plain": components["schemas"]["SingleArticleResponse"]
+          "application/json": components["schemas"]["SingleArticleResponse"]
+          "text/json": components["schemas"]["SingleArticleResponse"]
+        }
+      }
+      /** @description Bad Request */
+      400: {
+        content: {
+          "text/plain": components["schemas"]["ValidationProblemDetails"]
+          "application/json": components["schemas"]["ValidationProblemDetails"]
+          "text/json": components["schemas"]["ValidationProblemDetails"]
+        }
+      }
+      /** @description Unauthorized */
+      401: never
+      /** @description Forbidden */
+      403: never
+    }
   }
-  /** Delete an article. Auth is required */
   DeleteArticle: {
+    /**
+     * Delete an article
+     * @description Delete an article. Auth is required
+     */
     parameters: {
+      /** @description Slug of the article to delete */
       path: {
-        /** Slug of the article to delete */
         slug: string
       }
     }
     responses: {
-      /** Success */
-      200: unknown
-      /** Unauthorized */
-      401: unknown
-      /** Forbidden */
-      403: unknown
+      /** @description Success */
+      200: never
+      /** @description Unauthorized */
+      401: never
+      /** @description Forbidden */
+      403: never
     }
   }
-  /** Get the comments for an article. Auth is optional */
   GetArticleComments: {
+    /**
+     * Get comments for an article
+     * @description Get the comments for an article. Auth is optional
+     */
     parameters: {
+      /** @description Slug of the article that you want to get comments for */
       path: {
-        /** Slug of the article that you want to get comments for */
         slug: string
       }
     }
     responses: {
-      /** Success */
+      /** @description Success */
       200: {
         content: {
           "text/plain": components["schemas"]["MultipleCommentsResponse"]
@@ -370,16 +458,27 @@ export interface operations {
       }
     }
   }
-  /** Create a comment for an article. Auth is required */
   CreateArticleComment: {
+    /**
+     * Create a comment for an article
+     * @description Create a comment for an article. Auth is required
+     */
     parameters: {
+      /** @description Slug of the article that you want to create a comment for */
       path: {
-        /** Slug of the article that you want to create a comment for */
         slug: string
       }
     }
+    /** @description Comment you want to create */
+    requestBody?: {
+      content: {
+        "application/json": components["schemas"]["NewCommentRequest"]
+        "text/json": components["schemas"]["NewCommentRequest"]
+        "application/*+json": components["schemas"]["NewCommentRequest"]
+      }
+    }
     responses: {
-      /** Success */
+      /** @description Success */
       200: {
         content: {
           "text/plain": components["schemas"]["SingleCommentResponse"]
@@ -387,7 +486,7 @@ export interface operations {
           "text/json": components["schemas"]["SingleCommentResponse"]
         }
       }
-      /** Bad Request */
+      /** @description Bad Request */
       400: {
         content: {
           "text/plain": components["schemas"]["ValidationProblemDetails"]
@@ -395,49 +494,47 @@ export interface operations {
           "text/json": components["schemas"]["ValidationProblemDetails"]
         }
       }
-      /** Unauthorized */
-      401: unknown
-      /** Forbidden */
-      403: unknown
-    }
-    /** Comment you want to create */
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["NewCommentRequest"]
-        "text/json": components["schemas"]["NewCommentRequest"]
-        "application/*+json": components["schemas"]["NewCommentRequest"]
-      }
+      /** @description Unauthorized */
+      401: never
+      /** @description Forbidden */
+      403: never
     }
   }
-  /** Delete a comment for an article. Auth is required */
   DeleteArticleComment: {
+    /**
+     * Delete a comment for an article
+     * @description Delete a comment for an article. Auth is required
+     */
     parameters: {
+      /** @description Slug of the article that you want to delete a comment for */
+      /** @description ID of the comment you want to delete */
       path: {
-        /** Slug of the article that you want to delete a comment for */
         slug: string
-        /** ID of the comment you want to delete */
         commentId: number
       }
     }
     responses: {
-      /** Success */
-      200: unknown
-      /** Unauthorized */
-      401: unknown
-      /** Forbidden */
-      403: unknown
+      /** @description Success */
+      200: never
+      /** @description Unauthorized */
+      401: never
+      /** @description Forbidden */
+      403: never
     }
   }
-  /** Favorite an article. Auth is required */
   CreateArticleFavorite: {
+    /**
+     * Favorite an article
+     * @description Favorite an article. Auth is required
+     */
     parameters: {
+      /** @description Slug of the article that you want to favorite */
       path: {
-        /** Slug of the article that you want to favorite */
         slug: string
       }
     }
     responses: {
-      /** Success */
+      /** @description Success */
       200: {
         content: {
           "text/plain": components["schemas"]["SingleArticleResponse"]
@@ -445,22 +542,25 @@ export interface operations {
           "text/json": components["schemas"]["SingleArticleResponse"]
         }
       }
-      /** Unauthorized */
-      401: unknown
-      /** Forbidden */
-      403: unknown
+      /** @description Unauthorized */
+      401: never
+      /** @description Forbidden */
+      403: never
     }
   }
-  /** Unfavorite an article. Auth is required */
   DeleteArticleFavorite: {
+    /**
+     * Unfavorite an article
+     * @description Unfavorite an article. Auth is required
+     */
     parameters: {
+      /** @description Slug of the article that you want to unfavorite */
       path: {
-        /** Slug of the article that you want to unfavorite */
         slug: string
       }
     }
     responses: {
-      /** Success */
+      /** @description Success */
       200: {
         content: {
           "text/plain": components["schemas"]["SingleArticleResponse"]
@@ -468,22 +568,25 @@ export interface operations {
           "text/json": components["schemas"]["SingleArticleResponse"]
         }
       }
-      /** Unauthorized */
-      401: unknown
-      /** Forbidden */
-      403: unknown
+      /** @description Unauthorized */
+      401: never
+      /** @description Forbidden */
+      403: never
     }
   }
-  /** Get a profile of a user of the system. Auth is optional */
   GetProfileByUsername: {
+    /**
+     * Get a profile
+     * @description Get a profile of a user of the system. Auth is optional
+     */
     parameters: {
+      /** @description Username of the profile to get */
       path: {
-        /** Username of the profile to get */
         username: string
       }
     }
     responses: {
-      /** Success */
+      /** @description Success */
       200: {
         content: {
           "text/plain": components["schemas"]["ProfileResponse"]
@@ -493,16 +596,19 @@ export interface operations {
       }
     }
   }
-  /** Follow a user by username */
   FollowUserByUsername: {
+    /**
+     * Follow a user
+     * @description Follow a user by username
+     */
     parameters: {
+      /** @description Username of the profile you want to follow */
       path: {
-        /** Username of the profile you want to follow */
         username: string
       }
     }
     responses: {
-      /** Success */
+      /** @description Success */
       200: {
         content: {
           "text/plain": components["schemas"]["ProfileResponse"]
@@ -510,22 +616,25 @@ export interface operations {
           "text/json": components["schemas"]["ProfileResponse"]
         }
       }
-      /** Unauthorized */
-      401: unknown
-      /** Forbidden */
-      403: unknown
+      /** @description Unauthorized */
+      401: never
+      /** @description Forbidden */
+      403: never
     }
   }
-  /** Unfollow a user by username */
   UnfollowUserByUsername: {
+    /**
+     * Unfollow a user
+     * @description Unfollow a user by username
+     */
     parameters: {
+      /** @description Username of the profile you want to unfollow */
       path: {
-        /** Username of the profile you want to unfollow */
         username: string
       }
     }
     responses: {
-      /** Success */
+      /** @description Success */
       200: {
         content: {
           "text/plain": components["schemas"]["ProfileResponse"]
@@ -533,16 +642,19 @@ export interface operations {
           "text/json": components["schemas"]["ProfileResponse"]
         }
       }
-      /** Unauthorized */
-      401: unknown
-      /** Forbidden */
-      403: unknown
+      /** @description Unauthorized */
+      401: never
+      /** @description Forbidden */
+      403: never
     }
   }
-  /** Get tags. Auth not required */
   GetTags: {
+    /**
+     * Get tags
+     * @description Get tags. Auth not required
+     */
     responses: {
-      /** Success */
+      /** @description Success */
       200: {
         content: {
           "text/plain": components["schemas"]["TagsResponse"]
@@ -552,10 +664,13 @@ export interface operations {
       }
     }
   }
-  /** Gets the currently logged-in user */
   GetCurrentUser: {
+    /**
+     * Get current user
+     * @description Gets the currently logged-in user
+     */
     responses: {
-      /** Success */
+      /** @description Success */
       200: {
         content: {
           "text/plain": components["schemas"]["UserResponse"]
@@ -563,49 +678,27 @@ export interface operations {
           "text/json": components["schemas"]["UserResponse"]
         }
       }
-      /** Unauthorized */
-      401: unknown
-      /** Forbidden */
-      403: unknown
+      /** @description Unauthorized */
+      401: never
+      /** @description Forbidden */
+      403: never
     }
   }
-  /** Updated user information for current user */
   UpdateCurrentUser: {
-    responses: {
-      /** Success */
-      200: {
-        content: {
-          "text/plain": components["schemas"]["UserResponse"]
-          "application/json": components["schemas"]["UserResponse"]
-          "text/json": components["schemas"]["UserResponse"]
-        }
-      }
-      /** Bad Request */
-      400: {
-        content: {
-          "text/plain": components["schemas"]["ValidationProblemDetails"]
-          "application/json": components["schemas"]["ValidationProblemDetails"]
-          "text/json": components["schemas"]["ValidationProblemDetails"]
-        }
-      }
-      /** Unauthorized */
-      401: unknown
-      /** Forbidden */
-      403: unknown
-    }
-    /** User details to update. At least <strong>one</strong> field is required. */
-    requestBody: {
+    /**
+     * Update current user
+     * @description Updated user information for current user
+     */
+    /** @description User details to update. At least <strong>one</strong> field is required. */
+    requestBody?: {
       content: {
         "application/json": components["schemas"]["UpdateUserRequest"]
         "text/json": components["schemas"]["UpdateUserRequest"]
         "application/*+json": components["schemas"]["UpdateUserRequest"]
       }
     }
-  }
-  /** Register a new user */
-  CreateUser: {
     responses: {
-      /** Success */
+      /** @description Success */
       200: {
         content: {
           "text/plain": components["schemas"]["UserResponse"]
@@ -613,7 +706,7 @@ export interface operations {
           "text/json": components["schemas"]["UserResponse"]
         }
       }
-      /** Bad Request */
+      /** @description Bad Request */
       400: {
         content: {
           "text/plain": components["schemas"]["ValidationProblemDetails"]
@@ -621,20 +714,27 @@ export interface operations {
           "text/json": components["schemas"]["ValidationProblemDetails"]
         }
       }
+      /** @description Unauthorized */
+      401: never
+      /** @description Forbidden */
+      403: never
     }
-    /** Details of the new user to register */
-    requestBody: {
+  }
+  CreateUser: {
+    /**
+     * Register a new user
+     * @description Register a new user
+     */
+    /** @description Details of the new user to register */
+    requestBody?: {
       content: {
         "application/json": components["schemas"]["NewUserRequest"]
         "text/json": components["schemas"]["NewUserRequest"]
         "application/*+json": components["schemas"]["NewUserRequest"]
       }
     }
-  }
-  /** Login for existing user */
-  Login: {
     responses: {
-      /** Success */
+      /** @description Success */
       200: {
         content: {
           "text/plain": components["schemas"]["UserResponse"]
@@ -642,7 +742,7 @@ export interface operations {
           "text/json": components["schemas"]["UserResponse"]
         }
       }
-      /** Bad Request */
+      /** @description Bad Request */
       400: {
         content: {
           "text/plain": components["schemas"]["ValidationProblemDetails"]
@@ -651,12 +751,36 @@ export interface operations {
         }
       }
     }
-    /** Credentials to use */
-    requestBody: {
+  }
+  Login: {
+    /**
+     * Existing user login
+     * @description Login for existing user
+     */
+    /** @description Credentials to use */
+    requestBody?: {
       content: {
         "application/json": components["schemas"]["LoginUserRequest"]
         "text/json": components["schemas"]["LoginUserRequest"]
         "application/*+json": components["schemas"]["LoginUserRequest"]
+      }
+    }
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "text/plain": components["schemas"]["UserResponse"]
+          "application/json": components["schemas"]["UserResponse"]
+          "text/json": components["schemas"]["UserResponse"]
+        }
+      }
+      /** @description Bad Request */
+      400: {
+        content: {
+          "text/plain": components["schemas"]["ValidationProblemDetails"]
+          "application/json": components["schemas"]["ValidationProblemDetails"]
+          "text/json": components["schemas"]["ValidationProblemDetails"]
+        }
       }
     }
   }
