@@ -1,11 +1,5 @@
 <script lang="ts" setup>
-import {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  Comment,
-  deleteArticle,
-  getArticle,
-  getComments,
-} from "~/api"
+import { deleteArticle, getArticle, getComments } from "~/api"
 import { useUserStore } from "~/stores/user"
 
 const userStore = useUserStore()
@@ -82,7 +76,7 @@ useHead({
     <div mx-auto max-w-2xl flex flex-col gap-4>
       <CommentNew
         :article="article"
-        @comment-created="(c: Comment) => (comments = [c, ...comments])"
+        @comment-created="(c) => (comments = [c, ...comments])"
       />
       <CommentCard
         v-for="comment in comments"
