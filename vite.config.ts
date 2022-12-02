@@ -8,7 +8,6 @@ import Components from "unplugin-vue-components/vite"
 import AutoImport from "unplugin-auto-import/vite"
 import Pages from "vite-plugin-pages"
 import Layouts from "vite-plugin-vue-layouts"
-import VueMacros from "unplugin-vue-macros/vite"
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,13 +17,7 @@ export default defineConfig({
     },
   },
   plugins: [
-    VueMacros({
-      plugins: {
-        vue: Vue({
-          reactivityTransform: true,
-        }),
-      },
-    }),
+    Vue(),
     Pages(),
     Layouts(),
     AutoImport({
