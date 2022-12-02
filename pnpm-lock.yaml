@@ -7,6 +7,7 @@ specifiers:
   '@types/marked': ^4.0.7
   '@types/node': ^18.11.10
   '@types/nprogress': ^0.2.0
+  '@unocss/reset': ^0.47.5
   '@vitejs/plugin-vue': ^3.2.0
   '@vue/eslint-config-prettier': ^7.0.0
   '@vue/eslint-config-typescript': ^11.0.2
@@ -52,6 +53,7 @@ devDependencies:
   '@types/marked': 4.0.7
   '@types/node': 18.11.10
   '@types/nprogress': 0.2.0
+  '@unocss/reset': 0.47.5
   '@vitejs/plugin-vue': 3.2.0_vite@3.2.4+vue@3.2.45
   '@vue/eslint-config-prettier': 7.0.0_5qrnzwqb344w6up62gv3safeoi
   '@vue/eslint-config-typescript': 11.0.2_5ma4o5namqj2syekqcvrgakwe4
