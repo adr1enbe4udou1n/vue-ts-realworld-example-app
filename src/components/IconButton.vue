@@ -28,6 +28,6 @@ defineEmits(["click"])
 
 <style scoped>
 .btn-icon {
-  @apply rounded bg-gray-300 py-1 px-2 text-sm flex items-center text-black flex-inline gap-1;
+  @apply rounded bg-gray-300 py-1 px-2 text-sm flex items-center text-black inline-flex gap-1;
 }
 </style>

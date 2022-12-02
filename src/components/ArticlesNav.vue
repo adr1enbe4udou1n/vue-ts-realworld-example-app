@@ -21,6 +21,6 @@ defineProps<{
 
 <style scoped>
 nav a.router-link-exact-active {
-  @apply text-green border-b-2 border-green-500;
+  @apply text-green-500 border-b-2 border-green-500;
 }
 </style>

@@ -45,7 +45,7 @@ let pagination = computed(() =>
       "
       class="pagination-link"
       :class="{ active: pagination.currentPage.value === item }"
-      @click="pagination.currentPage.value = item as number"
+      @click="pagination.currentPage.value = Number(item)"
     >
       {{ item }}
     </button>
@@ -69,6 +69,6 @@ let pagination = computed(() =>
 }
 
 .pagination-link.active {
-  @apply text-white border-green bg-green;
+  @apply text-white border-green-500 bg-green-500;
 }
 </style>
