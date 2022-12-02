@@ -4,8 +4,8 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { handleValidation, updateUser } from "~/api"
-import { useUserStore } from "~/stores/user"
+import { handleValidation, updateUser } from "@/api"
+import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()
 

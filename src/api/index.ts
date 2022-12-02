@@ -1,13 +1,13 @@
 import {
   Fetcher,
-  Middleware,
-  OpArgType,
-  TypedFetch,
+  type Middleware,
+  type OpArgType,
+  type TypedFetch,
 } from "openapi-typescript-fetch"
 
-import { useFormsStore } from "~/stores/forms"
+import { useFormsStore } from "@/stores/forms"
 
-import { components, paths } from "./conduit"
+import type { components, paths } from "./conduit"
 
 const handleValidation = async <T>(
   operation: TypedFetch<T>,

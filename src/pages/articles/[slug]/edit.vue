@@ -4,7 +4,7 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { updateArticle, handleValidation, getArticle } from "~/api"
+import { updateArticle, handleValidation, getArticle } from "@/api"
 
 const props = defineProps<{ slug: string }>()
 

@@ -1,6 +1,11 @@
 <script lang="ts" setup>
-import { Article, Comment, createComment, handleValidation } from "~/api"
-import { useUserStore } from "~/stores/user"
+import {
+  type Article,
+  type Comment,
+  createComment,
+  handleValidation,
+} from "@/api"
+import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()
 

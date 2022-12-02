@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { getProfile } from "~/api"
+import { getProfile } from "@/api"
 
 const props = defineProps<{ author: string }>()
 

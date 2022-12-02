@@ -4,7 +4,7 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { createArticle, handleValidation } from "~/api"
+import { createArticle, handleValidation } from "@/api"
 
 const router = useRouter()
 

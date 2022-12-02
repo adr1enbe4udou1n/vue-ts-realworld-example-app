@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Profile } from "~/api"
+import type { Profile } from "@/api"
 
 withDefaults(
   defineProps<{

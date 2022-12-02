@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Article, getArticles, getArticlesFeed } from "~/api"
+import { type Article, getArticles, getArticlesFeed } from "@/api"
 
 const props = withDefaults(
   defineProps<{

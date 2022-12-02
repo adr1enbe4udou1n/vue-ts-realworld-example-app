@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Article } from "~/api"
+import type { Article } from "@/api"
 
 withDefaults(
   defineProps<{

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { Comment, deleteComment } from "~/api"
-import { useUserStore } from "~/stores/user"
+import { type Comment, deleteComment } from "@/api"
+import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()
 

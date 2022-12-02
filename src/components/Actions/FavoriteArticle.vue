@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { Article, favoriteArticle, unfavoriteArticle } from "~/api"
-import { useUserStore } from "~/stores/user"
+import { favoriteArticle, unfavoriteArticle, type Article } from "@/api"
+import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()
 

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { deleteArticle, getArticle, getComments } from "~/api"
-import { useUserStore } from "~/stores/user"
+import { deleteArticle, getArticle, getComments } from "@/api"
+import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()
 const router = useRouter()

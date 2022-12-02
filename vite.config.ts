@@ -1,25 +1,21 @@
-/// <reference types="vitest" />
-
-import * as path from "path"
 import { defineConfig } from "vite"
 import Vue from "@vitejs/plugin-vue"
 import Unocss from "unocss/vite"
 import Components from "unplugin-vue-components/vite"
 import AutoImport from "unplugin-auto-import/vite"
 import Pages from "vite-plugin-pages"
-import Layouts from "vite-plugin-vue-layouts"
+import { fileURLToPath } from "node:url"
 
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
     alias: {
-      "~/": `${path.resolve(__dirname, "src")}/`,
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
   plugins: [
     Vue(),
     Pages(),
-    Layouts(),
     AutoImport({
       imports: [
         "vue",
@@ -33,7 +29,4 @@ export default defineConfig({
     Components(),
     Unocss(),
   ],
-  test: {
-    environment: "jsdom",
-  },
 })
