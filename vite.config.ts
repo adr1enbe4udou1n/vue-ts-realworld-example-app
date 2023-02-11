@@ -4,7 +4,7 @@ import Unocss from "unocss/vite"
 import Components from "unplugin-vue-components/vite"
 import AutoImport from "unplugin-auto-import/vite"
 import Pages from "vite-plugin-pages"
-import { fileURLToPath } from "node:url"
+import { fileURLToPath, URL } from "node:url"
 
 // https://vitejs.dev/config/
 export default defineConfig({
