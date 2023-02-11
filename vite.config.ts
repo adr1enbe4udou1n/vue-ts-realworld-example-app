@@ -1,6 +1,6 @@
 import { defineConfig } from "vite"
 import Vue from "@vitejs/plugin-vue"
-import Unocss from "unocss/vite"
+import UnoCSS from "unocss/vite"
 import Components from "unplugin-vue-components/vite"
 import AutoImport from "unplugin-auto-import/vite"
 import Pages from "vite-plugin-pages"
@@ -27,6 +27,6 @@ export default defineConfig({
       vueTemplate: true,
     }),
     Components(),
-    Unocss(),
+    UnoCSS(),
   ],
 })
