@@ -1,13 +1,10 @@
 <script lang="ts" setup>
-import {
-  type Article,
-  type Comment,
-  createComment,
-  handleValidation,
-} from "@/api"
+import { type Article, type Comment, createComment } from "@/api"
+import { useFormsStore } from "@/stores/forms"
 import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()
+const formStore = useFormsStore()
 
 const props = defineProps<{
   article: Article
@@ -20,7 +17,7 @@ const emit = defineEmits<{
 const body = ref("")
 
 const submit = async () => {
-  const response = await handleValidation(createComment, {
+  const response = await formStore.handleValidation(createComment, {
     slug: props.article.slug,
     comment: {
       body: body.value,

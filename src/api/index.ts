@@ -1,31 +1,6 @@
-import {
-  Fetcher,
-  type Middleware,
-  type OpArgType,
-  type TypedFetch,
-} from "openapi-typescript-fetch"
-
-import { useFormsStore } from "@/stores/forms"
+import { Fetcher, type Middleware } from "openapi-typescript-fetch"
 
 import type { components, paths } from "./conduit"
-
-const handleValidation = async <T>(
-  operation: TypedFetch<T>,
-  arg: OpArgType<T>
-) => {
-  try {
-    return await operation(arg)
-  } catch (e) {
-    if (e instanceof operation.Error) {
-      const error = e.getActualType()
-      if (error.status === 400) {
-        const formsStore = useFormsStore()
-
-        formsStore.errors = error.data
-      }
-    }
-  }
-}
 
 const authenticate: Middleware = async (url, init, next) => {
   const token = useLocalStorage("token", null)
@@ -95,7 +70,6 @@ const deleteComment = fetcher
 
 export type { Article, Profile, Comment, User }
 export {
-  handleValidation,
   getArticles,
   getArticlesFeed,
   getTags,

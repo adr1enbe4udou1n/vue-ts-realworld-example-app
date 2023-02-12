@@ -1,3 +1,4 @@
+import type { OpArgType, TypedFetch } from "openapi-typescript-fetch"
 import { acceptHMRUpdate, defineStore } from "pinia"
 
 export const useFormsStore = defineStore("forms", () => {
@@ -10,8 +11,27 @@ export const useFormsStore = defineStore("forms", () => {
     errors.value = null
   }
 
+  const handleValidation = async <T>(
+    operation: TypedFetch<T>,
+    arg: OpArgType<T>
+  ) => {
+    try {
+      return await operation(arg)
+    } catch (e) {
+      if (e instanceof operation.Error) {
+        const error = e.getActualType()
+        if (error.status === 400) {
+          const formsStore = useFormsStore()
+
+          formsStore.errors = error.data
+        }
+      }
+    }
+  }
+
   return {
     $reset,
+    handleValidation,
     errors,
   }
 })

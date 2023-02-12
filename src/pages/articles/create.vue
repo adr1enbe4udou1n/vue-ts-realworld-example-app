@@ -4,9 +4,11 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { createArticle, handleValidation } from "@/api"
+import { createArticle } from "@/api"
+import { useFormsStore } from "@/stores/forms"
 
 const router = useRouter()
+const formStore = useFormsStore()
 
 const form = ref({
   title: "",
@@ -16,7 +18,7 @@ const form = ref({
 })
 
 const submit = async () => {
-  const response = await handleValidation(createArticle, {
+  const response = await formStore.handleValidation(createArticle, {
     article: form.value,
   })
 

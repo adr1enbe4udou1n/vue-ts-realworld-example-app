@@ -4,14 +4,15 @@ import {
   login as loginApi,
   register as registerApi,
   updateUser as updateUserApi,
-  handleValidation,
   type User,
 } from "@/api"
 import { router } from "@/plugins/router"
+import { useFormsStore } from "./forms"
 
 export const useUserStore = defineStore("user", () => {
   const user = ref<User | null>(null)
   const token = useLocalStorage("token", "")
+  const formStore = useFormsStore()
 
   const setUser = (data: User) => {
     user.value = data
@@ -19,7 +20,7 @@ export const useUserStore = defineStore("user", () => {
   }
 
   const login = async (data: { email: string; password: string }) => {
-    const response = await handleValidation(loginApi, {
+    const response = await formStore.handleValidation(loginApi, {
       user: data,
     })
 
@@ -36,7 +37,7 @@ export const useUserStore = defineStore("user", () => {
     email: string
     password: string
   }) => {
-    const response = await handleValidation(registerApi, {
+    const response = await formStore.handleValidation(registerApi, {
       user: data,
     })
 
@@ -54,7 +55,7 @@ export const useUserStore = defineStore("user", () => {
     bio: string | undefined
     email: string | undefined
   }) => {
-    const response = await handleValidation(updateUserApi, {
+    const response = await formStore.handleValidation(updateUserApi, {
       user: data,
     })
 

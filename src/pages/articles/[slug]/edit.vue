@@ -4,7 +4,8 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { updateArticle, handleValidation, getArticle } from "@/api"
+import { updateArticle, getArticle } from "@/api"
+import { useFormsStore } from "@/stores/forms"
 
 const props = defineProps<{ slug: string }>()
 
@@ -12,6 +13,7 @@ const articleResponse = await getArticle({ slug: props.slug })
 const article = articleResponse.data.article
 
 const router = useRouter()
+const formStore = useFormsStore()
 
 const form = ref({
   title: article.title,
@@ -20,7 +22,7 @@ const form = ref({
 })
 
 const submit = async () => {
-  const response = await handleValidation(updateArticle, {
+  const response = await formStore.handleValidation(updateArticle, {
     slug: props.slug,
     article: form.value,
   })
