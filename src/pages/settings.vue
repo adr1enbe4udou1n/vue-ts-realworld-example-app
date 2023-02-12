@@ -4,7 +4,6 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { handleValidation, updateUser } from "@/api"
 import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()
@@ -19,14 +18,8 @@ const form = ref({
 })
 
 const submit = async () => {
-  const response = await handleValidation(updateUser, {
-    user: form.value,
-  })
-
-  if (response) {
+  if (await userStore.updateUser(form.value)) {
     success.value = true
-
-    userStore.setUser(response.data.user)
   }
 }
 </script>

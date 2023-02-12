@@ -4,7 +4,6 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { handleValidation, login } from "@/api"
 import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()
@@ -13,14 +12,6 @@ const form = ref({
   email: "",
   password: "",
 })
-
-const submit = async () => {
-  const response = await handleValidation(login, { user: form.value })
-
-  if (response) {
-    userStore.login(response.data.user)
-  }
-}
 </script>
 
 <template>
@@ -32,7 +23,7 @@ const submit = async () => {
           No account yet ?
         </router-link>
       </div>
-      <form flex flex-col gap-4 @submit.prevent="submit">
+      <form flex flex-col gap-4 @submit.prevent="() => userStore.login(form)">
         <AlertMessage />
         <div>
           <input

@@ -1,5 +1,12 @@
 import { acceptHMRUpdate, defineStore } from "pinia"
-import { getUser, type User } from "@/api"
+import {
+  getUser,
+  login as loginApi,
+  register as registerApi,
+  updateUser as updateUserApi,
+  handleValidation,
+  type User,
+} from "@/api"
 import { router } from "@/plugins/router"
 
 export const useUserStore = defineStore("user", () => {
@@ -11,10 +18,52 @@ export const useUserStore = defineStore("user", () => {
     token.value = data.token
   }
 
-  const login = (data: User) => {
-    setUser(data)
+  const login = async (data: { email: string; password: string }) => {
+    const response = await handleValidation(loginApi, {
+      user: data,
+    })
 
+    if (!response?.ok) {
+      return
+    }
+
+    setUser(response.data.user)
     router.push("/")
+  }
+
+  const register = async (data: {
+    username: string
+    email: string
+    password: string
+  }) => {
+    const response = await handleValidation(registerApi, {
+      user: data,
+    })
+
+    if (!response?.ok) {
+      return
+    }
+
+    setUser(response.data.user)
+    router.push("/")
+  }
+
+  const updateUser = async (data: {
+    image: string | undefined
+    username: string | undefined
+    bio: string | undefined
+    email: string | undefined
+  }) => {
+    const response = await handleValidation(updateUserApi, {
+      user: data,
+    })
+
+    if (!response?.ok) {
+      return false
+    }
+
+    setUser(response.data.user)
+    return true
   }
 
   const logout = () => {
@@ -22,7 +71,6 @@ export const useUserStore = defineStore("user", () => {
     token.value = null
 
     router.push("/")
-    router.go(0)
   }
 
   const isLoggedIn = computed(() => !!user.value)
@@ -42,9 +90,10 @@ export const useUserStore = defineStore("user", () => {
   }
 
   return {
-    setUser,
     login,
     logout,
+    register,
+    updateUser,
     fetch,
     user,
     isLoggedIn,
