@@ -16,7 +16,7 @@ const form = ref({
   password: "",
 })
 
-const success = (user: User) => {
+const onSuccess = (user: User) => {
   userStore.setUser(user)
   router.push("/")
 }
@@ -37,7 +37,7 @@ const success = (user: User) => {
         gap-4
         :operation="login"
         :arg="{ user: form }"
-        @success="success"
+        @success="onSuccess"
       >
         <div>
           <input

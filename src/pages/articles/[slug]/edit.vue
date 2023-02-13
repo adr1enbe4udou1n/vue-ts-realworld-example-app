@@ -20,7 +20,7 @@ const form = ref({
   body: article.body,
 })
 
-const success = async (article: Article) => {
+const onSuccess = async (article: Article) => {
   router.push(`/articles/${article.slug}`)
 }
 </script>
@@ -42,7 +42,7 @@ const success = async (article: Article) => {
           slug: props.slug,
           article: form,
         }"
-        @success="success"
+        @success="onSuccess"
       >
         <div>
           <input

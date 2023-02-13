@@ -15,7 +15,7 @@ const emit = defineEmits<{
 
 const body = ref("")
 
-const success = async (comment: Comment) => {
+const onSuccess = async (comment: Comment) => {
   emit("comment-created", comment)
 }
 </script>
@@ -34,7 +34,7 @@ const success = async (comment: Comment) => {
         body: body,
       },
     }"
-    @success="success"
+    @success="onSuccess"
   >
     <textarea
       v-model="body"

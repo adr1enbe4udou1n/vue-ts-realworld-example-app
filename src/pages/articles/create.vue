@@ -16,7 +16,7 @@ const form = ref({
   tagList: [],
 })
 
-const success = async (article: Article) => {
+const onSuccess = async (article: Article) => {
   router.push(`/articles/${article.slug}`)
 }
 </script>
@@ -35,7 +35,7 @@ const success = async (article: Article) => {
         :arg="{
           article: form,
         }"
-        @success="success"
+        @success="onSuccess"
       >
         <div>
           <input
