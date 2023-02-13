@@ -1,5 +1,10 @@
 <script lang="ts" setup>
-import { type Article, type Comment, createComment } from "@/api"
+import {
+  type Article,
+  type Comment,
+  createComment,
+  handleValidation,
+} from "@/api"
 import { useUserStore } from "@/stores/user"
 import FormValidation from "./FormValidation.vue"
 
@@ -15,7 +20,7 @@ const emit = defineEmits<{
 
 const body = ref("")
 
-const onSuccess = async (comment: Comment) => {
+const onSuccess = async ({ comment }: { comment: Comment }) => {
   emit("comment-created", comment)
 }
 </script>
@@ -27,14 +32,19 @@ const onSuccess = async (comment: Comment) => {
     rounded
     border
     border-gray-300
-    :operation="createComment"
-    :arg="{
-      slug: props.article.slug,
-      comment: {
-        body: body,
-      },
-    }"
-    @success="onSuccess"
+    :action="
+      () =>
+        handleValidation(
+          createComment,
+          {
+            slug: props.article.slug,
+            comment: {
+              body: body,
+            },
+          },
+          onSuccess
+        )
+    "
   >
     <textarea
       v-model="body"

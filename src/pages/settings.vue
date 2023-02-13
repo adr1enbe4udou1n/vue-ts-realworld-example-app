@@ -4,7 +4,7 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { updateUser, type User } from "@/api"
+import { updateUser, type User, handleValidation } from "@/api"
 import FormValidation from "@/components/FormValidation.vue"
 import { useUserStore } from "@/stores/user"
 
@@ -19,7 +19,7 @@ const form = ref({
   email: userStore.user?.email,
 })
 
-const onSuccess = (user: User) => {
+const onSuccess = ({ user }: { user: User }) => {
   userStore.setUser(user)
   success.value = true
 }
@@ -35,9 +35,7 @@ const onSuccess = (user: User) => {
         flex
         flex-col
         gap-4
-        :operation="updateUser"
-        :arg="{ user: form }"
-        @success="onSuccess"
+        :action="() => handleValidation(updateUser, { user: form }, onSuccess)"
       >
         <SuccessMessage v-if="success">
           Your settings have been updated successfully

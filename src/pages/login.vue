@@ -4,7 +4,7 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { login, type User } from "@/api"
+import { handleValidation, login, type User } from "@/api"
 import FormValidation from "@/components/FormValidation.vue"
 import { router } from "@/plugins/router"
 import { useUserStore } from "@/stores/user"
@@ -16,7 +16,7 @@ const form = ref({
   password: "",
 })
 
-const onSuccess = (user: User) => {
+const onSuccess = ({ user }: { user: User }) => {
   userStore.setUser(user)
   router.push("/")
 }
@@ -35,9 +35,7 @@ const onSuccess = (user: User) => {
         flex
         flex-col
         gap-4
-        :operation="login"
-        :arg="{ user: form }"
-        @success="onSuccess"
+        :action="() => handleValidation(login, { user: form }, onSuccess)"
       >
         <div>
           <input

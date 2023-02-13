@@ -1,9 +1,6 @@
 <script lang="ts" setup>
-import type { OpArgType, TypedFetch } from "openapi-typescript-fetch"
-
 const props = defineProps<{
-  operation: TypedFetch<any>
-  arg: OpArgType<any>
+  action: () => Promise<any>
 }>()
 
 const errors = ref<{
@@ -11,24 +8,11 @@ const errors = ref<{
   errors: { [key: string]: string[] }
 } | null>(null)
 
-const emit = defineEmits<{
-  (e: "success", data: any): void
-}>()
-
 const handleValidation = async () => {
-  try {
-    const response = await props.operation(props.arg)
+  const errorResponse = await props.action()
 
-    if (response?.ok) {
-      emit("success", response.data)
-    }
-  } catch (e) {
-    if (e instanceof props.operation.Error) {
-      const error = e.getActualType()
-      if (error.status === 400) {
-        errors.value = error.data
-      }
-    }
+  if (errorResponse) {
+    errors.value = errorResponse
   }
 }
 </script>

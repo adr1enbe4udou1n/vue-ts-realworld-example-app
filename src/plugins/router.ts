@@ -12,9 +12,9 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from) => {
-  if (to.path === from.path) return
-
-  NProgress.start()
+  if (to.path !== from.path) {
+    NProgress.start()
+  }
 
   const userStore = useUserStore()
 
@@ -24,7 +24,7 @@ router.beforeEach(async (to, from) => {
     console.error(e)
   }
 
-  if (to.meta.auth === false && userStore.isLoggedIn) {
+  if (to.meta.auth === false && userStore.isLoggedIn && to.path !== "/") {
     return router.push("/")
   }
 

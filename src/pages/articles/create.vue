@@ -4,7 +4,7 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { createArticle, type Article } from "@/api"
+import { createArticle, handleValidation, type Article } from "@/api"
 import FormValidation from "@/components/FormValidation.vue"
 
 const router = useRouter()
@@ -16,7 +16,7 @@ const form = ref({
   tagList: [],
 })
 
-const onSuccess = async (article: Article) => {
+const onSuccess = async ({ article }: { article: Article }) => {
   router.push(`/articles/${article.slug}`)
 }
 </script>
@@ -31,11 +31,16 @@ const onSuccess = async (article: Article) => {
         flex
         flex-col
         gap-4
-        :operation="createArticle"
-        :arg="{
-          article: form,
-        }"
-        @success="onSuccess"
+        :action="
+          () =>
+            handleValidation(
+              createArticle,
+              {
+                article: form,
+              },
+              onSuccess
+            )
+        "
       >
         <div>
           <input

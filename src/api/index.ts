@@ -1,6 +1,33 @@
-import { Fetcher, type Middleware } from "openapi-typescript-fetch"
+import {
+  Fetcher,
+  type Middleware,
+  type OpArgType,
+  type OpReturnType,
+  type TypedFetch,
+} from "openapi-typescript-fetch"
 
 import type { components, paths } from "./conduit"
+
+const handleValidation = async <T>(
+  operation: TypedFetch<T>,
+  arg: OpArgType<T>,
+  onSuccess: (data: OpReturnType<T>) => void
+) => {
+  try {
+    const response = await operation(arg)
+
+    if (response?.ok) {
+      onSuccess(response.data)
+    }
+  } catch (e) {
+    if (e instanceof operation.Error) {
+      const error = e.getActualType()
+      if (error.status === 400) {
+        return error.data
+      }
+    }
+  }
+}
 
 const authenticate: Middleware = async (url, init, next) => {
   const token = useLocalStorage("token", null)
@@ -70,6 +97,7 @@ const deleteComment = fetcher
 
 export type { Article, Profile, Comment, User }
 export {
+  handleValidation,
   getArticles,
   getArticlesFeed,
   getTags,

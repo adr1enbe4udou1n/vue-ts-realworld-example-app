@@ -4,7 +4,12 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { updateArticle, getArticle, type Article } from "@/api"
+import {
+  updateArticle,
+  getArticle,
+  type Article,
+  handleValidation,
+} from "@/api"
 import FormValidation from "@/components/FormValidation.vue"
 
 const props = defineProps<{ slug: string }>()
@@ -20,7 +25,7 @@ const form = ref({
   body: article.body,
 })
 
-const onSuccess = async (article: Article) => {
+const onSuccess = async ({ article }: { article: Article }) => {
   router.push(`/articles/${article.slug}`)
 }
 </script>
@@ -37,12 +42,17 @@ const onSuccess = async (article: Article) => {
         flex
         flex-col
         gap-4
-        :operation="updateArticle"
-        :arg="{
-          slug: props.slug,
-          article: form,
-        }"
-        @success="onSuccess"
+        :action="
+          () =>
+            handleValidation(
+              updateArticle,
+              {
+                slug: props.slug,
+                article: form,
+              },
+              onSuccess
+            )
+        "
       >
         <div>
           <input
