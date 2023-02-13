@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router"
 
 import NProgress from "nprogress"
 
-import { useFormsStore } from "../stores/forms"
 import { useUserStore } from "../stores/user"
 
 import routes from "~pages"
@@ -32,8 +31,6 @@ router.beforeEach(async (to, from) => {
   if (to.meta.auth === true && !userStore.isLoggedIn) {
     return router.push("/login")
   }
-
-  useFormsStore().$reset()
 })
 router.afterEach(() => {
   NProgress.done()

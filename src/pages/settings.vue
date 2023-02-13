@@ -4,6 +4,8 @@ meta:
 </route>
 
 <script setup lang="ts">
+import { updateUser } from "@/api"
+import FormValidation from "@/components/FormValidation.vue"
 import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()
@@ -16,12 +18,6 @@ const form = ref({
   bio: userStore.user?.bio,
   email: userStore.user?.email,
 })
-
-const submit = async () => {
-  if (await userStore.updateUser(form.value)) {
-    success.value = true
-  }
-}
 </script>
 
 <template>
@@ -30,11 +26,17 @@ const submit = async () => {
       <div text-center mb-8>
         <h1 font-heading text-4xl dark:text-white>Your settings</h1>
       </div>
-      <form flex flex-col gap-4 @submit.prevent="submit">
+      <FormValidation
+        flex
+        flex-col
+        gap-4
+        :operation="updateUser"
+        :arg="{ user: form }"
+        @success="success = true"
+      >
         <SuccessMessage v-if="success">
           Your settings have been updated successfully
         </SuccessMessage>
-        <AlertMessage />
         <div>
           <input
             v-model="form.image"
@@ -70,7 +72,7 @@ const submit = async () => {
         <div flex justify-end>
           <button class="btn btn-primary" type="submit">Update Settings</button>
         </div>
-      </form>
+      </FormValidation>
     </div>
   </div>
 </template>

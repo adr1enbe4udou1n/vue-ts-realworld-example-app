@@ -4,6 +4,9 @@ meta:
 </route>
 
 <script setup lang="ts">
+import { login, type User } from "@/api"
+import FormValidation from "@/components/FormValidation.vue"
+import { router } from "@/plugins/router"
 import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()
@@ -12,6 +15,11 @@ const form = ref({
   email: "",
   password: "",
 })
+
+const success = (user: User) => {
+  userStore.setUser(user)
+  router.push("/")
+}
 </script>
 
 <template>
@@ -23,8 +31,14 @@ const form = ref({
           No account yet ?
         </router-link>
       </div>
-      <form flex flex-col gap-4 @submit.prevent="() => userStore.login(form)">
-        <AlertMessage />
+      <FormValidation
+        flex
+        flex-col
+        gap-4
+        :operation="login"
+        :arg="{ user: form }"
+        @success="success"
+      >
         <div>
           <input
             v-model="form.email"
@@ -45,7 +59,7 @@ const form = ref({
         <div flex justify-end>
           <button class="btn btn-primary" type="submit">Login</button>
         </div>
-      </form>
+      </FormValidation>
     </div>
   </div>
 </template>

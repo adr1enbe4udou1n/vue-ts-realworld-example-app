@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { type Article, type Comment, createComment } from "@/api"
-import { useFormsStore } from "@/stores/forms"
 import { useUserStore } from "@/stores/user"
+import FormValidation from "./FormValidation.vue"
 
 const userStore = useUserStore()
-const formStore = useFormsStore()
 
 const props = defineProps<{
   article: Article
@@ -16,30 +15,27 @@ const emit = defineEmits<{
 
 const body = ref("")
 
-const submit = async () => {
-  const response = await formStore.handleValidation(createComment, {
-    slug: props.article.slug,
-    comment: {
-      body: body.value,
-    },
-  })
-
-  if (response) {
-    emit("comment-created", response.data.comment)
-  }
+const success = async (comment: Comment) => {
+  emit("comment-created", comment)
 }
 </script>
 
 <template>
-  <form
+  <FormValidation
     v-if="userStore.user"
     block
     rounded
     border
     border-gray-300
-    @submit.prevent="submit"
+    :operation="createComment"
+    :arg="{
+      slug: props.article.slug,
+      comment: {
+        body: body,
+      },
+    }"
+    @success="success"
   >
-    <AlertMessage />
     <textarea
       v-model="body"
       w-full
@@ -71,5 +67,5 @@ const submit = async () => {
         Post Comment
       </button>
     </footer>
-  </form>
+  </FormValidation>
 </template>

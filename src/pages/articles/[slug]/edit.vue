@@ -4,8 +4,8 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { updateArticle, getArticle } from "@/api"
-import { useFormsStore } from "@/stores/forms"
+import { updateArticle, getArticle, type Article } from "@/api"
+import FormValidation from "@/components/FormValidation.vue"
 
 const props = defineProps<{ slug: string }>()
 
@@ -13,7 +13,6 @@ const articleResponse = await getArticle({ slug: props.slug })
 const article = articleResponse.data.article
 
 const router = useRouter()
-const formStore = useFormsStore()
 
 const form = ref({
   title: article.title,
@@ -21,15 +20,8 @@ const form = ref({
   body: article.body,
 })
 
-const submit = async () => {
-  const response = await formStore.handleValidation(updateArticle, {
-    slug: props.slug,
-    article: form.value,
-  })
-
-  if (response) {
-    router.push(`/articles/${response.data.article.slug}`)
-  }
+const success = async (article: Article) => {
+  router.push(`/articles/${article.slug}`)
 }
 </script>
 
@@ -41,8 +33,17 @@ const submit = async () => {
           Edit the post "{{ article.slug }}"
         </h1>
       </div>
-      <form flex flex-col gap-4 @submit.prevent="submit">
-        <AlertMessage />
+      <FormValidation
+        flex
+        flex-col
+        gap-4
+        :operation="updateArticle"
+        :arg="{
+          slug: props.slug,
+          article: form,
+        }"
+        @success="success"
+      >
         <div>
           <input
             v-model="form.title"
@@ -70,7 +71,7 @@ const submit = async () => {
         <div flex justify-end>
           <button class="btn btn-primary" type="submit">Edit Post</button>
         </div>
-      </form>
+      </FormValidation>
     </div>
   </div>
 </template>

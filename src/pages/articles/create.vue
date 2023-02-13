@@ -4,11 +4,10 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { createArticle } from "@/api"
-import { useFormsStore } from "@/stores/forms"
+import { createArticle, type Article } from "@/api"
+import FormValidation from "@/components/FormValidation.vue"
 
 const router = useRouter()
-const formStore = useFormsStore()
 
 const form = ref({
   title: "",
@@ -17,14 +16,8 @@ const form = ref({
   tagList: [],
 })
 
-const submit = async () => {
-  const response = await formStore.handleValidation(createArticle, {
-    article: form.value,
-  })
-
-  if (response) {
-    router.push(`/articles/${response.data.article.slug}`)
-  }
+const success = async (article: Article) => {
+  router.push(`/articles/${article.slug}`)
 }
 </script>
 
@@ -34,8 +27,16 @@ const submit = async () => {
       <div text-center mb-8>
         <h1 font-heading text-4xl mb-2 dark:text-white>Your new post</h1>
       </div>
-      <form flex flex-col gap-4 @submit.prevent="submit">
-        <AlertMessage />
+      <FormValidation
+        flex
+        flex-col
+        gap-4
+        :operation="createArticle"
+        :arg="{
+          article: form,
+        }"
+        @success="success"
+      >
         <div>
           <input
             v-model="form.title"
@@ -66,7 +67,7 @@ const submit = async () => {
         <div flex justify-end>
           <button class="btn btn-primary" type="submit">Create Post</button>
         </div>
-      </form>
+      </FormValidation>
     </div>
   </div>
 </template>
