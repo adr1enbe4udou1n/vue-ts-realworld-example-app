@@ -12,7 +12,7 @@ const handleValidation = async <T>(
   operation: TypedFetch<T>,
   arg: OpArgType<T>,
   onSuccess: (data: OpReturnType<T>) => void
-) => {
+): Promise<ValidationProblemDetails | undefined> => {
   try {
     const response = await operation(arg)
 
@@ -50,6 +50,8 @@ type Article = components["schemas"]["Article"]
 type Profile = components["schemas"]["Profile"]
 type Comment = components["schemas"]["Comment"]
 type User = components["schemas"]["User"]
+type ValidationProblemDetails =
+  components["schemas"]["ValidationProblemDetails"]
 
 const getArticles = fetcher.path("/articles").method("get").create()
 const getArticlesFeed = fetcher.path("/articles/feed").method("get").create()
@@ -95,7 +97,7 @@ const deleteComment = fetcher
   .method("delete")
   .create()
 
-export type { Article, Profile, Comment, User }
+export type { Article, Profile, Comment, User, ValidationProblemDetails }
 export {
   handleValidation,
   getArticles,

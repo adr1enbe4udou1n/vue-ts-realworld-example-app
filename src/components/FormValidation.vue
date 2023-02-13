@@ -1,14 +1,11 @@
 <script lang="ts" setup>
-export type Errors = {
-  title: string
-  errors: { [key: string]: string[] }
-}
+import type { ValidationProblemDetails } from "@/api"
 
 const props = defineProps<{
-  action: () => Promise<Errors | null>
+  action: () => Promise<ValidationProblemDetails | undefined>
 }>()
 
-const errors = ref<Errors | null>(null)
+const errors = ref<ValidationProblemDetails | null>(null)
 
 const handleValidation = async () => {
   const errorResponse = await props.action()

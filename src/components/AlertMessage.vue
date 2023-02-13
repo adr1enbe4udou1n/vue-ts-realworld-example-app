@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { Errors } from "./FormValidation.vue"
+import type { ValidationProblemDetails } from "@/api"
 
 defineProps<{
-  errors?: Errors
+  errors?: ValidationProblemDetails
 }>()
 
 defineEmits(["close"])
