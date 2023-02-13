@@ -1,12 +1,14 @@
 <script lang="ts" setup>
-const props = defineProps<{
-  action: () => Promise<any>
-}>()
-
-const errors = ref<{
+export type Errors = {
   title: string
   errors: { [key: string]: string[] }
-} | null>(null)
+}
+
+const props = defineProps<{
+  action: () => Promise<Errors | null>
+}>()
+
+const errors = ref<Errors | null>(null)
 
 const handleValidation = async () => {
   const errorResponse = await props.action()

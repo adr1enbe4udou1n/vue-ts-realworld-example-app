@@ -1,9 +1,8 @@
 <script lang="ts" setup>
+import type { Errors } from "./FormValidation.vue"
+
 defineProps<{
-  errors?: {
-    title: string
-    errors: { [key: string]: string[] }
-  }
+  errors?: Errors
 }>()
 
 defineEmits(["close"])

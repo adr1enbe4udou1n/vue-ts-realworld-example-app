@@ -20,9 +20,9 @@ const props = withDefaults(
 
 const limit = 10
 
-let articles = ref<Article[]>([])
-let page = ref(0)
-let total = ref(0)
+const articles = ref<Article[]>([])
+const page = ref(0)
+const total = ref(0)
 
 const fetchData = async ({
   currentPage,

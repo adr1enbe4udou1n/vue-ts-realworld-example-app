@@ -14,7 +14,7 @@ const props = defineProps<{
   }) => Promise<void>
 }>()
 
-let pagination = computed(() =>
+const pagination = computed(() =>
   useOffsetPagination({
     total: props.total,
     page: props.page,
