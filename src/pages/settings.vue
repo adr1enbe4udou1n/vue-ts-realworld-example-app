@@ -55,6 +55,7 @@ const onSuccess = ({ user }: { user: User }) => {
             class="form-control"
             type="text"
             placeholder="Your Name"
+            required
           />
         </div>
         <div>
@@ -70,11 +71,12 @@ const onSuccess = ({ user }: { user: User }) => {
             type="email"
             placeholder="Email"
             class="form-control"
+            required
           />
         </div>
 
         <div flex justify-end>
-          <BaseButton type="submit">Update Settings</BaseButton>
+          <BaseButton>Update Settings</BaseButton>
         </div>
       </FormValidation>
     </div>

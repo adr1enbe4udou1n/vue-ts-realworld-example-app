@@ -49,6 +49,7 @@ const onSuccess = async ({ article }: { article: Article }) => {
             type="text"
             placeholder="Post Title"
             class="form-control"
+            required
           />
         </div>
         <div>
@@ -56,6 +57,7 @@ const onSuccess = async ({ article }: { article: Article }) => {
             v-model="form.description"
             placeholder="Short description"
             class="form-control"
+            required
           />
         </div>
         <div>
@@ -63,6 +65,7 @@ const onSuccess = async ({ article }: { article: Article }) => {
             v-model="form.body"
             placeholder="Write your post (in markdown)"
             class="form-control"
+            required
             h-100
           />
         </div>
@@ -71,7 +74,7 @@ const onSuccess = async ({ article }: { article: Article }) => {
         </div>
 
         <div flex justify-end>
-          <BaseButton type="submit">Create Post</BaseButton>
+          <BaseButton>Create Post</BaseButton>
         </div>
       </FormValidation>
     </div>

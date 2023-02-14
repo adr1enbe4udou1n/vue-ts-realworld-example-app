@@ -45,6 +45,7 @@ const onSuccess = ({ user }: { user: User }) => {
             class="form-control"
             type="text"
             placeholder="Your Name"
+            required
           />
         </div>
         <div>
@@ -53,6 +54,7 @@ const onSuccess = ({ user }: { user: User }) => {
             type="email"
             placeholder="Email"
             class="form-control"
+            required
           />
         </div>
         <div>
@@ -61,11 +63,12 @@ const onSuccess = ({ user }: { user: User }) => {
             type="password"
             placeholder="Password"
             class="form-control"
+            required
           />
         </div>
 
         <div flex justify-end>
-          <BaseButton type="submit">Sign up</BaseButton>
+          <BaseButton>Sign up</BaseButton>
         </div>
       </FormValidation>
     </div>
