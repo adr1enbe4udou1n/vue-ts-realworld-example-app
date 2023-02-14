@@ -6,7 +6,6 @@ import {
   getArticle,
   getComments,
 } from "@/api"
-import BaseButton from "@/components/BaseButton.vue"
 import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()

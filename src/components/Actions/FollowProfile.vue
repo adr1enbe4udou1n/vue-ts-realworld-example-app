@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { followProfile, type Profile, unfollowProfile } from "@/api"
 import { useUserStore } from "@/stores/user"
-import BaseButton from "../BaseButton.vue"
 
 const userStore = useUserStore()
 

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { favoriteArticle, unfavoriteArticle, type Article } from "@/api"
 import { useUserStore } from "@/stores/user"
-import BaseButton from "../BaseButton.vue"
 
 const userStore = useUserStore()
 

@@ -6,8 +6,6 @@ import {
   handleValidation,
 } from "@/api"
 import { useUserStore } from "@/stores/user"
-import BaseButton from "./BaseButton.vue"
-import FormValidation from "./FormValidation.vue"
 
 const userStore = useUserStore()
 

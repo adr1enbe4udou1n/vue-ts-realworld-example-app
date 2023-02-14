@@ -5,8 +5,6 @@ meta:
 
 <script setup lang="ts">
 import { createArticle, handleValidation, type Article } from "@/api"
-import BaseButton from "@/components/BaseButton.vue"
-import FormValidation from "@/components/FormValidation.vue"
 
 const router = useRouter()
 

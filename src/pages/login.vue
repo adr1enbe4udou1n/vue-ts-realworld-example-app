@@ -5,8 +5,6 @@ meta:
 
 <script setup lang="ts">
 import { handleValidation, login, type User } from "@/api"
-import BaseButton from "@/components/BaseButton.vue"
-import FormValidation from "@/components/FormValidation.vue"
 import { router } from "@/plugins/router"
 import { useUserStore } from "@/stores/user"
 

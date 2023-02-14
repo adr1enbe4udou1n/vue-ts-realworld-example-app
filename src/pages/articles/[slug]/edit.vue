@@ -10,8 +10,6 @@ import {
   type Article,
   handleValidation,
 } from "@/api"
-import BaseButton from "@/components/BaseButton.vue"
-import FormValidation from "@/components/FormValidation.vue"
 
 const props = defineProps<{ slug: string }>()
 

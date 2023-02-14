@@ -5,8 +5,6 @@ meta:
 
 <script setup lang="ts">
 import { updateUser, type User, handleValidation } from "@/api"
-import BaseButton from "@/components/BaseButton.vue"
-import FormValidation from "@/components/FormValidation.vue"
 import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()
