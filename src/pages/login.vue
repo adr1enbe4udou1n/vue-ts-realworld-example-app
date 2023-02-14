@@ -5,6 +5,7 @@ meta:
 
 <script setup lang="ts">
 import { handleValidation, login, type User } from "@/api"
+import BaseButton from "@/components/BaseButton.vue"
 import FormValidation from "@/components/FormValidation.vue"
 import { router } from "@/plugins/router"
 import { useUserStore } from "@/stores/user"
@@ -55,7 +56,7 @@ const onSuccess = ({ user }: { user: User }) => {
         </div>
 
         <div flex justify-end>
-          <button class="btn btn-primary" type="submit">Login</button>
+          <BaseButton type="submit">Login</BaseButton>
         </div>
       </FormValidation>
     </div>

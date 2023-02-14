@@ -6,6 +6,7 @@ import {
   handleValidation,
 } from "@/api"
 import { useUserStore } from "@/stores/user"
+import BaseButton from "./BaseButton.vue"
 import FormValidation from "./FormValidation.vue"
 
 const userStore = useUserStore()
@@ -48,6 +49,7 @@ const onSuccess = async ({ comment }: { comment: Comment }) => {
   >
     <textarea
       v-model="body"
+      dark:bg-gray-800
       w-full
       min-h-40
       rounded-t
@@ -58,6 +60,7 @@ const onSuccess = async ({ comment }: { comment: Comment }) => {
     />
     <footer
       bg-gray-100
+      dark:bg-gray-300
       flex
       p-4
       rounded-b
@@ -73,9 +76,7 @@ const onSuccess = async ({ comment }: { comment: Comment }) => {
         :src="userStore.user.image"
         :alt="userStore.user.username"
       />
-      <button ml-auto type="submit" class="btn btn-primary btn-sm">
-        Post Comment
-      </button>
+      <BaseButton ml-auto type="submit" size="sm"> Post Comment </BaseButton>
     </footer>
   </FormValidation>
 </template>

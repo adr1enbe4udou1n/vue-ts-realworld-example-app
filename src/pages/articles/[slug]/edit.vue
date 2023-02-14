@@ -10,6 +10,7 @@ import {
   type Article,
   handleValidation,
 } from "@/api"
+import BaseButton from "@/components/BaseButton.vue"
 import FormValidation from "@/components/FormValidation.vue"
 
 const props = defineProps<{ slug: string }>()
@@ -79,7 +80,7 @@ const onSuccess = async ({ article }: { article: Article }) => {
         </div>
 
         <div flex justify-end>
-          <button class="btn btn-primary" type="submit">Edit Post</button>
+          <BaseButton type="submit">Edit Post</BaseButton>
         </div>
       </FormValidation>
     </div>

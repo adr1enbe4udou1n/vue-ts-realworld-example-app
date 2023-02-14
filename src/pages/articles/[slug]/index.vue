@@ -6,6 +6,7 @@ import {
   getArticle,
   getComments,
 } from "@/api"
+import BaseButton from "@/components/BaseButton.vue"
 import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()
@@ -54,16 +55,23 @@ useHead({
           flex
           gap-2
         >
-          <IconButton
-            icon="i-carbon-edit"
-            label="Edit"
-            :link="`/articles/${slug}/edit`"
-          />
-          <IconButton
-            icon="i-carbon-trash-can"
+          <BaseButton
+            size="sm"
+            variant="secondary"
+            :to="`/articles/${slug}/edit`"
+          >
+            <i class="i-carbon-edit"></i>
+            Edit
+          </BaseButton>
+          <BaseButton
+            size="sm"
+            variant="secondary"
             label="Delete"
             @click="deleteArticleAction"
-          />
+          >
+            <i class="i-carbon-trash-can"></i>
+            Delete
+          </BaseButton>
         </div>
       </div>
     </div>
@@ -79,7 +87,7 @@ useHead({
       @follow="article.author.following = $event"
       @favorite="article.favorited = $event"
     />
-    <div mx-auto max-w-2xl flex flex-col gap-4>
+    <div mx-auto max-w-2xl flex flex-col gap-4 lg:min-w-xl>
       <CommentNew
         :article="article"
         @comment-created="(c: Comment) => (comments = [c, ...comments])"

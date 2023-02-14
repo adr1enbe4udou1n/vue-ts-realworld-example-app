@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { favoriteArticle, unfavoriteArticle, type Article } from "@/api"
 import { useUserStore } from "@/stores/user"
+import BaseButton from "../BaseButton.vue"
 
 const userStore = useUserStore()
 
@@ -56,12 +57,10 @@ const toggleFavorite = async () => {
 </script>
 
 <template>
-  <IconButton
-    v-if="full"
-    :icon="icon"
-    :label="`${label} Post (${counter})`"
-    @click="toggleFavorite"
-  />
+  <BaseButton size="sm" variant="secondary" v-if="full" @click="toggleFavorite">
+    <i :class="icon"></i>
+    {{ `${label} Post (${counter})` }}
+  </BaseButton>
   <button
     v-else
     type="button"

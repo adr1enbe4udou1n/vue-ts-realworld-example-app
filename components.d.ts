@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     AppHeader: typeof import('./src/components/AppHeader.vue')['default']
     ArticlesNav: typeof import('./src/components/ArticlesNav.vue')['default']
     AuthorLayout: typeof import('./src/components/AuthorLayout.vue')['default']
+    BaseButton: typeof import('./src/components/BaseButton.vue')['default']
     CommentCard: typeof import('./src/components/CommentCard.vue')['default']
     CommentNew: typeof import('./src/components/CommentNew.vue')['default']
     FavoriteArticle: typeof import('./src/components/Actions/FavoriteArticle.vue')['default']

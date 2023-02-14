@@ -5,6 +5,7 @@ meta:
 
 <script setup lang="ts">
 import { createArticle, handleValidation, type Article } from "@/api"
+import BaseButton from "@/components/BaseButton.vue"
 import FormValidation from "@/components/FormValidation.vue"
 
 const router = useRouter()
@@ -70,7 +71,7 @@ const onSuccess = async ({ article }: { article: Article }) => {
         </div>
 
         <div flex justify-end>
-          <button class="btn btn-primary" type="submit">Create Post</button>
+          <BaseButton type="submit">Create Post</BaseButton>
         </div>
       </FormValidation>
     </div>
