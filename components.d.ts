@@ -19,7 +19,6 @@ declare module '@vue/runtime-core' {
     FollowProfile: typeof import('./src/components/Actions/FollowProfile.vue')['default']
     FormValidation: typeof import('./src/components/FormValidation.vue')['default']
     HomeLayout: typeof import('./src/components/HomeLayout.vue')['default']
-    IconButton: typeof import('./src/components/IconButton.vue')['default']
     MarkdownViewer: typeof import('./src/components/MarkdownViewer.vue')['default']
     OffsetPagination: typeof import('./src/components/OffsetPagination.vue')['default']
     PostAuthor: typeof import('./src/components/PostAuthor.vue')['default']
