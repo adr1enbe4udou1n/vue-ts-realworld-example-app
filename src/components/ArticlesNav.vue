@@ -10,17 +10,19 @@ defineProps<{
       v-for="(link, i) in items"
       :key="i"
       :to="link.link"
-      px-4
-      py-2
-      class="-mb-[1px]"
+      v-slot="{ href, isActive, navigate }"
+      custom
     >
-      {{ link.name }}
+      <a
+        :href="href"
+        py-2
+        px-4
+        class="-mb-[1px]"
+        :class="{ 'text-green-500 border-b-2 border-green-500': isActive }"
+        @click="navigate"
+      >
+        {{ link.name }}
+      </a>
     </router-link>
   </nav>
 </template>
-
-<style scoped>
-nav a.router-link-exact-active {
-  @apply text-green-500 border-b-2 border-green-500;
-}
-</style>

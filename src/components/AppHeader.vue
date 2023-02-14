@@ -35,9 +35,22 @@ const menuItems = computed(() =>
       </router-link>
       <nav ml-auto flex gap-4>
         <template v-for="(item, i) in menuItems" :key="i">
-          <router-link v-if="item.link" :to="`${item.link}`" flex items-center>
-            <i v-if="item.icon" :class="`${item.icon}`" inline-block mr-2></i>
-            {{ item.name }}
+          <router-link
+            :to="item.link"
+            v-slot="{ href, isActive, navigate }"
+            v-if="item.link"
+            custom
+          >
+            <a
+              flex
+              items-center
+              :href="href"
+              :class="{ 'opacity-50': isActive }"
+              @click="navigate"
+            >
+              <i v-if="item.icon" :class="`${item.icon}`" inline-block mr-2></i>
+              {{ item.name }}
+            </a>
           </router-link>
           <button v-else type="button" flex items-center @click="item.click">
             <i v-if="item.icon" :class="`${item.icon}`" inline-block mr-2></i>
@@ -56,9 +69,3 @@ const menuItems = computed(() =>
     </div>
   </header>
 </template>
-
-<style scoped>
-nav a:not(.router-link-active) {
-  @apply opacity-50;
-}
-</style>
