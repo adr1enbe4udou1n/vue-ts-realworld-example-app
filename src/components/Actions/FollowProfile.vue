@@ -37,6 +37,7 @@ const toggleFollow = async () => {
 
 <template>
   <BaseButton
+    type="button"
     size="sm"
     variant="secondary"
     v-if="userStore.user?.username !== profile.username"

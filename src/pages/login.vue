@@ -56,7 +56,7 @@ const onSuccess = ({ user }: { user: User }) => {
         </div>
 
         <div flex justify-end>
-          <BaseButton type="submit">Login</BaseButton>
+          <BaseButton>Login</BaseButton>
         </div>
       </FormValidation>
     </div>

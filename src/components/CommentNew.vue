@@ -76,7 +76,7 @@ const onSuccess = async ({ comment }: { comment: Comment }) => {
         :src="userStore.user.image"
         :alt="userStore.user.username"
       />
-      <BaseButton ml-auto type="submit" size="sm"> Post Comment </BaseButton>
+      <BaseButton ml-auto size="sm">Post Comment</BaseButton>
     </footer>
   </FormValidation>
 </template>

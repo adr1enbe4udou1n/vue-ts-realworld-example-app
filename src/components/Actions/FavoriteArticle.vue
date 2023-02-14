@@ -57,7 +57,13 @@ const toggleFavorite = async () => {
 </script>
 
 <template>
-  <BaseButton size="sm" variant="secondary" v-if="full" @click="toggleFavorite">
+  <BaseButton
+    type="button"
+    size="sm"
+    variant="secondary"
+    v-if="full"
+    @click="toggleFavorite"
+  >
     <i :class="icon"></i>
     {{ `${label} Post (${counter})` }}
   </BaseButton>

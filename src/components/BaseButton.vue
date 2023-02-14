@@ -30,7 +30,7 @@ defineEmits(["click"])
   <router-link v-if="to" :to="to" :class="classes">
     <slot />
   </router-link>
-  <button v-else type="button" :class="classes" @click="$emit('click')">
+  <button v-else :class="classes" @click="$emit('click')">
     <slot />
   </button>
 </template>

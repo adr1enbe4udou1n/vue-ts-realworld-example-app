@@ -64,6 +64,7 @@ useHead({
             Edit
           </BaseButton>
           <BaseButton
+            type="button"
             size="sm"
             variant="secondary"
             label="Delete"
