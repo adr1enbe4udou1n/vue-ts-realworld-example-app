@@ -6,5 +6,5 @@ meta:
 <script lang="ts" setup></script>
 
 <template>
-  <HomeLayout :hide-tags="true" :use-feed="true" />
+  <HomeLayout :use-feed="true" />
 </template>

@@ -5,16 +5,13 @@ withDefaults(
   defineProps<{
     article: Article
     tag?: string
-    hideTags?: boolean
   }>(),
   {
     tag: undefined,
-    hideTags: false,
   }
 )
 
 defineEmits<{
-  (e: "select-tag", tag: string): void
   (e: "favorite", toggle: boolean): void
 }>()
 </script>
@@ -41,8 +38,8 @@ defineEmits<{
         </p>
         <footer flex items-center>
           <span text-xs text-gray-300> Read more... </span>
-          <div v-if="!hideTags" ml-auto z-10>
-            <button
+          <div ml-auto>
+            <span
               v-for="(t, i) in article.tagList"
               :key="i"
               border
@@ -53,10 +50,9 @@ defineEmits<{
               ml-1
               text-xs
               :class="{ 'border-green text-green': t === tag }"
-              @click="$emit('select-tag', t)"
             >
               {{ t }}
-            </button>
+            </span>
           </div>
         </footer>
         <router-link :to="`/articles/${article.slug}`" absolute inset-0>

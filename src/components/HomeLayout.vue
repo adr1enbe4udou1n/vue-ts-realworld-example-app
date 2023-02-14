@@ -1,23 +1,14 @@
 <script lang="ts" setup>
 withDefaults(
   defineProps<{
-    hideTags?: boolean
+    tag?: string
     useFeed?: boolean
   }>(),
   {
-    hideTags: false,
+    tag: undefined,
     useFeed: false,
   }
 )
-
-const tag = ref("")
-
-const currentTag = computed({
-  get: () => tag.value,
-  set: (value) => {
-    tag.value = tag.value === value ? "" : value
-  },
-})
 
 const menuItems = [
   {
@@ -40,21 +31,10 @@ const menuItems = [
     <div md:flex-1>
       <ArticlesNav :items="menuItems" />
       <Suspense>
-        <PostsList
-          v-model:tag="currentTag"
-          :hide-tags="hideTags"
-          :use-feed="useFeed"
-        />
+        <PostsList :tag="tag" :use-feed="useFeed" />
       </Suspense>
     </div>
 
-    <div v-if="!hideTags" w-70>
-      <div bg-gray-100 dark:bg-gray-800 font-sans p-2>
-        <h3 mb-2 dark:text-white>Popular Tags</h3>
-        <Suspense>
-          <TagsList v-model:tag="currentTag" />
-        </Suspense>
-      </div>
-    </div>
+    <slot name="aside" />
   </div>
 </template>

@@ -6,13 +6,11 @@ const props = withDefaults(
     author?: string
     favorited?: string
     tag?: string
-    hideTags?: boolean
     useFeed?: boolean
   }>(),
   {
     author: undefined,
     favorited: undefined,
-    hideTags: false,
     useFeed: false,
     tag: undefined,
   }
@@ -57,8 +55,6 @@ watch(
 )
 
 await fetchData({ currentPage: 1, currentPageSize: 10 })
-
-defineEmits(["update:tag"])
 </script>
 
 <template>
@@ -67,8 +63,6 @@ defineEmits(["update:tag"])
     :key="i"
     :article="article"
     :tag="tag"
-    :hide-tags="hideTags"
-    @select-tag="(t: string) => $emit('update:tag', t)"
     @favorite="article.favorited = $event"
   />
 

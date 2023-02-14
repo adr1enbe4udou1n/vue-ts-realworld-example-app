@@ -1,15 +1,20 @@
 <script lang="ts" setup>
 import { getTags } from "@/api"
 
-defineProps<{
-  tag: string
-}>()
-
 const { data } = await getTags({})
 
 const tags = data.tags
 
-defineEmits(["update:tag"])
+const selectedTag = ref<string | null>(null)
+
+const emit = defineEmits<{
+  (e: "select", tag: string | null): void
+}>()
+
+const selectTag = (tag: string) => {
+  selectedTag.value = selectedTag.value === tag ? null : tag
+  emit("select", selectedTag.value)
+}
 </script>
 
 <template>
@@ -23,8 +28,8 @@ defineEmits(["update:tag"])
         text-sm
         px-2
         mr-1
-        :class="{ 'bg-green': t === tag }"
-        @click="$emit('update:tag', t)"
+        :class="{ 'bg-green': t === selectedTag }"
+        @click="selectTag(t)"
       >
         {{ t }}
       </button>
