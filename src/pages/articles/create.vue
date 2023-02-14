@@ -71,7 +71,7 @@ const onSuccess = async ({ article }: { article: Article }) => {
         </div>
 
         <div flex justify-end>
-          <BaseButton>Create Post</BaseButton>
+          <BaseButton type="submit">Create Post</BaseButton>
         </div>
       </FormValidation>
     </div>

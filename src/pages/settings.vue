@@ -74,7 +74,7 @@ const onSuccess = ({ user }: { user: User }) => {
         </div>
 
         <div flex justify-end>
-          <BaseButton>Update Settings</BaseButton>
+          <BaseButton type="submit">Update Settings</BaseButton>
         </div>
       </FormValidation>
     </div>
