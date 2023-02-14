@@ -5,7 +5,7 @@ const { data } = await getTags({})
 
 const tags = data.tags
 
-const selectedTag = ref<string | null>(null)
+const selectedTag = ref<string | null>()
 
 const emit = defineEmits<{
   (e: "select", tag: string | null): void

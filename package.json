@@ -34,6 +34,7 @@
     "@vue/compiler-dom": "^3.2.47",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
+    "@vue/runtime-core": "^3.2.47",
     "@vue/test-utils": "^2.2.10",
     "@vue/tsconfig": "^0.1.3",
     "eslint": "^8.34.0",

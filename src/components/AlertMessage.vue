@@ -2,7 +2,7 @@
 import type { ValidationProblemDetails } from "@/api"
 
 defineProps<{
-  errors?: ValidationProblemDetails
+  errors?: ValidationProblemDetails | null
 }>()
 
 defineEmits(["close"])

@@ -9,7 +9,7 @@ const tag = ref<string | null>(null)
         <div bg-gray-100 dark:bg-gray-800 font-sans p-2>
           <h3 mb-2 dark:text-white>Popular Tags</h3>
           <Suspense>
-            <TagsList @select="(t: string | null) => (tag = t)" />
+            <TagsList @select="(t) => (tag = t)" />
           </Suspense>
         </div>
       </div>

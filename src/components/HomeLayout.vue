@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 withDefaults(
   defineProps<{
-    tag?: string
+    tag?: string | null
     useFeed?: boolean
   }>(),
   {
-    tag: undefined,
+    tag: null,
     useFeed: false,
   }
 )

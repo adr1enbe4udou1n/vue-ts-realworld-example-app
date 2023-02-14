@@ -3,16 +3,16 @@ import { type Article, getArticles, getArticlesFeed } from "@/api"
 
 const props = withDefaults(
   defineProps<{
-    author?: string
-    favorited?: string
-    tag?: string
+    author?: string | null
+    favorited?: string | null
+    tag?: string | null
     useFeed?: boolean
   }>(),
   {
-    author: undefined,
-    favorited: undefined,
+    author: null,
+    favorited: null,
+    tag: null,
     useFeed: false,
-    tag: undefined,
   }
 )
 
@@ -37,9 +37,9 @@ const fetchData = async ({
     : await getArticles({
         limit,
         offset: Math.floor(currentPageSize * (currentPage - 1)),
-        tag: props.tag,
-        author: props.author,
-        favorited: props.favorited,
+        tag: props.tag || undefined,
+        author: props.author || undefined,
+        favorited: props.favorited || undefined,
       })
 
   articles.value = data.articles

@@ -4,10 +4,10 @@ import type { Article } from "@/api"
 withDefaults(
   defineProps<{
     article: Article
-    tag?: string
+    tag?: string | null
   }>(),
   {
-    tag: undefined,
+    tag: null,
   }
 )
 
