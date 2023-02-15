@@ -18,7 +18,7 @@ const counter = ref(props.article.favoritesCount)
 
 watch(
   () => props.article.favorited,
-  async (newValue) => {
+  (newValue) => {
     if (newValue) {
       counter.value++
       return
