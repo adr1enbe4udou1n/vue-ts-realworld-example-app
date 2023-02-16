@@ -16,6 +16,17 @@ const props = withDefaults(
 
 const counter = ref(props.article.favoritesCount)
 
+watch(
+  () => props.article.favorited,
+  (newValue) => {
+    if (newValue) {
+      counter.value++
+      return
+    }
+    counter.value--
+  }
+)
+
 const emit = defineEmits<{
   (e: "favorite", toggle: boolean): void
 }>()
@@ -35,13 +46,11 @@ const toggleFavorite = async () => {
 
   if (props.article.favorited) {
     await unfavoriteArticle({ slug: props.article.slug })
-    counter.value--
     emit("favorite", false)
     return
   }
 
   await favoriteArticle({ slug: props.article.slug })
-  counter.value++
   emit("favorite", true)
 }
 </script>
