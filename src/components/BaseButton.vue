@@ -13,7 +13,7 @@ const props = withDefaults(
 
 const classes = computed(() => {
   return [
-    "rounded flex items-center inline-flex gap-1",
+    "rounded inline-flex items-center gap-1",
     {
       "py-1 px-2 text-sm": props.size === "sm",
       "p-4 text-xl": props.size === "md",

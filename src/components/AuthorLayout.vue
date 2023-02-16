@@ -43,7 +43,7 @@ useHead({
       <p mx-auto max-w-140 text-gray-300 mb-4>
         {{ profile.bio }}
       </p>
-      <FollowProfile :profile="profile" ml-auto />
+      <FollowProfile :profile="profile" />
     </div>
   </div>
   <div class="container" py-8>
