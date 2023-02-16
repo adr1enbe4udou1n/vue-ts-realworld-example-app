@@ -5,22 +5,22 @@ const props = defineProps<{ author: string }>()
 
 const { data } = await getProfile({ username: props.author })
 
-const profile = data.profile
+const profile = ref(data.profile)
 
 const menuItems = [
   {
     name: "My Posts",
-    link: `/profiles/${profile.username}`,
+    link: `/profiles/${profile.value.username}`,
   },
   {
     name: "Favorited Posts",
-    link: `/profiles/${profile.username}/favorites`,
+    link: `/profiles/${profile.value.username}/favorites`,
   },
 ]
 
 useHead({
-  title: `${profile.username} - Conduit`,
-  meta: [{ name: "description", content: profile.bio }],
+  title: `${profile.value.username} - Conduit`,
+  meta: [{ name: "description", content: profile.value.bio }],
 })
 </script>
 
@@ -43,7 +43,10 @@ useHead({
       <p mx-auto max-w-140 text-gray-300 mb-4>
         {{ profile.bio }}
       </p>
-      <FollowProfile :profile="profile" />
+      <FollowProfile
+        :profile="profile"
+        @follow="(following) => (profile.following = following)"
+      />
     </div>
   </div>
   <div class="container" py-8>
