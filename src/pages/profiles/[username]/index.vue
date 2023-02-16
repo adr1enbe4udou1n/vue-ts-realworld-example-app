@@ -4,6 +4,6 @@ defineProps<{ username: string }>()
 
 <template>
   <AuthorLayout :author="username">
-    <PostsList :author="username" :hide-tags="true" />
+    <PostsList :author="username" />
   </AuthorLayout>
 </template>
