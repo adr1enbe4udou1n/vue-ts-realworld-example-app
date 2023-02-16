@@ -66,7 +66,6 @@ useHead({
             type="button"
             size="sm"
             variant="secondary"
-            label="Delete"
             @click="deleteArticleAction"
           >
             <i class="i-carbon-trash-can"></i>
