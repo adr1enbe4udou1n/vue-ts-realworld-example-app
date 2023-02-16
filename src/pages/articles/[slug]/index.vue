@@ -14,10 +14,10 @@ const router = useRouter()
 const props = defineProps<{ slug: string }>()
 
 const articleResponse = await getArticle({ slug: props.slug })
-const article = ref(articleResponse.data.article)
+const article = articleResponse.data.article
 
 const commentsResponse = await getComments({ slug: props.slug })
-const comments = ref(commentsResponse.data.comments)
+const comments = commentsResponse.data.comments
 
 const deleteArticleAction = async () => {
   if (confirm("Are you sure?")) {
@@ -28,8 +28,8 @@ const deleteArticleAction = async () => {
 }
 
 useHead({
-  title: `${article.value.title} - Conduit`,
-  meta: [{ name: "description", content: article.value.description }],
+  title: `${article.title} - Conduit`,
+  meta: [{ name: "description", content: article.description }],
 })
 </script>
 

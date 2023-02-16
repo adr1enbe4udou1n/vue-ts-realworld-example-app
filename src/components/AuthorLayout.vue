@@ -5,22 +5,22 @@ const props = defineProps<{ author: string }>()
 
 const { data } = await getProfile({ username: props.author })
 
-const profile = ref(data.profile)
+const profile = data.profile
 
 const menuItems = [
   {
     name: "My Posts",
-    link: `/profiles/${profile.value.username}`,
+    link: `/profiles/${profile.username}`,
   },
   {
     name: "Favorited Posts",
-    link: `/profiles/${profile.value.username}/favorites`,
+    link: `/profiles/${profile.username}/favorites`,
   },
 ]
 
 useHead({
-  title: `${profile.value.username} - Conduit`,
-  meta: [{ name: "description", content: profile.value.bio }],
+  title: `${profile.username} - Conduit`,
+  meta: [{ name: "description", content: profile.bio }],
 })
 </script>
 
