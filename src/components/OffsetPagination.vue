@@ -26,17 +26,18 @@ const pagination = computed(() =>
 
 const classes =
   "flex items-center justify-center border rounded-1 text-sm font-sans text-gray-300 border-gray-500 w-8 h-8"
-
-const isItemActive = (item: string | number) => {
-  return pagination.value.currentPage.value === item
-}
 </script>
 
 <template>
   <div flex flex-wrap gap-1>
     <button
       :disabled="pagination.isFirstPage.value"
-      :class="classes"
+      :class="[
+        classes,
+        {
+          'opacity-50': pagination.isFirstPage.value,
+        },
+      ]"
       @click="pagination.prev"
     >
       &lt;
@@ -47,12 +48,15 @@ const isItemActive = (item: string | number) => {
         pagination.pageCount.value
       )"
       :key="item"
-      :disabled="!Number.isInteger(item)"
+      :disabled="
+        pagination.currentPage.value === item || !Number.isInteger(item)
+      "
       :class="[
         classes,
         {
-          'opacity-50': !isItemActive(item) && !Number.isInteger(item),
-          'text-white border-green-500 bg-green-500': isItemActive(item),
+          'opacity-50': !Number.isInteger(item),
+          'text-white border-green-500 bg-green-500':
+            pagination.currentPage.value === item,
         },
       ]"
       @click="pagination.currentPage.value = Number(item)"
@@ -61,7 +65,12 @@ const isItemActive = (item: string | number) => {
     </button>
     <button
       :disabled="pagination.isLastPage.value"
-      :class="classes"
+      :class="[
+        classes,
+        {
+          'opacity-50': pagination.isLastPage.value,
+        },
+      ]"
       @click="pagination.next"
     >
       &gt;
