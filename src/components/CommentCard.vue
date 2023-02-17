@@ -53,7 +53,12 @@ const deleteCommentAction = async () => {
         gap-2
         ml-auto
       >
-        <button type="button" inline-flex @click="deleteCommentAction">
+        <button
+          type="button"
+          inline-flex
+          dark:text-white
+          @click="deleteCommentAction"
+        >
           <i i-carbon-trash-can></i>
         </button>
       </div>
