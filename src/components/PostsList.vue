@@ -1,5 +1,10 @@
 <script lang="ts" setup>
-import { type Article, getArticles, getArticlesFeed } from "@/api"
+import {
+  type Article,
+  getArticles,
+  getArticlesFeed,
+  favoriteArticleToggle,
+} from "@/api"
 
 const props = withDefaults(
   defineProps<{
@@ -63,7 +68,7 @@ await fetchData({ currentPage: 1, currentPageSize: 10 })
     :key="i"
     :article="article"
     :tag="tag"
-    @favorite="article.favorited = $event"
+    @favorite="() => favoriteArticleToggle(article)"
   />
 
   <OffsetPagination

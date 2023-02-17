@@ -97,6 +97,28 @@ const deleteComment = fetcher
   .method("delete")
   .create()
 
+const favoriteArticleToggle = async (article: Article) => {
+  if (article.favorited) {
+    await unfavoriteArticle({ slug: article.slug })
+    article.favorited = false
+    article.favoritesCount--
+    return
+  }
+  await favoriteArticle({ slug: article.slug })
+  article.favorited = true
+  article.favoritesCount++
+}
+
+const followProfileToggle = async (profile: Profile) => {
+  if (profile.following) {
+    await followProfile({ username: profile.username })
+    profile.following = false
+    return
+  }
+  await unfollowProfile({ username: profile.username })
+  profile.following = true
+}
+
 export type { Article, Profile, Comment, User, ValidationProblemDetails }
 export {
   handleValidation,
@@ -115,8 +137,6 @@ export {
   deleteArticle,
   createComment,
   deleteComment,
-  favoriteArticle,
-  unfavoriteArticle,
-  followProfile,
-  unfollowProfile,
+  favoriteArticleToggle,
+  followProfileToggle,
 }

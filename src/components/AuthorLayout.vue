@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { getProfile } from "@/api"
+import { followProfileToggle, getProfile } from "@/api"
 
 const props = defineProps<{ author: string }>()
 
@@ -45,7 +45,7 @@ useHead({
       </p>
       <FollowProfile
         :profile="profile"
-        @follow="(following) => (profile.following = following)"
+        @follow="() => followProfileToggle(profile)"
       />
     </div>
   </div>

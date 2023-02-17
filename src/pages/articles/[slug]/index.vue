@@ -5,6 +5,8 @@ import {
   deleteArticle,
   getArticle,
   getComments,
+  favoriteArticleToggle,
+  followProfileToggle,
 } from "@/api"
 import { useUserStore } from "@/stores/user"
 
@@ -41,8 +43,8 @@ useHead({
       <div flex items-center>
         <PostAuthor
           :article="article"
-          @follow="article.author.following = $event"
-          @favorite="article.favorited = $event"
+          @follow="() => followProfileToggle(article.author)"
+          @favorite="() => favoriteArticleToggle(article)"
         />
 
         <div
@@ -83,8 +85,8 @@ useHead({
       :article="article"
       mx-auto
       mb-8
-      @follow="article.author.following = $event"
-      @favorite="article.favorited = $event"
+      @follow="() => followProfileToggle(article.author)"
+      @favorite="() => favoriteArticleToggle(article)"
     />
     <div mx-auto max-w-2xl flex flex-col gap-4 lg:min-w-xl>
       <CommentNew

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { followProfile, type Profile, unfollowProfile } from "@/api"
+import type { Profile } from "@/api"
 import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()
@@ -9,7 +9,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: "follow", toggle: boolean): void
+  (e: "follow"): void
 }>()
 
 const icon = computed(() => {
@@ -23,14 +23,7 @@ const label = computed(() => {
 const toggleFollow = async () => {
   userStore.ensureLoggedIn()
 
-  if (props.profile.following) {
-    await unfollowProfile({ username: props.profile.username })
-    emit("follow", false)
-    return
-  }
-
-  await followProfile({ username: props.profile.username })
-  emit("follow", true)
+  emit("follow")
 }
 </script>
 

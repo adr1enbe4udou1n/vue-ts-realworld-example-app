@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { favoriteArticle, unfavoriteArticle, type Article } from "@/api"
+import type { Article } from "@/api"
 import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()
@@ -14,21 +14,8 @@ const props = withDefaults(
   }
 )
 
-const counter = ref(props.article.favoritesCount)
-
-watch(
-  () => props.article.favorited,
-  (newValue) => {
-    if (newValue) {
-      counter.value++
-      return
-    }
-    counter.value--
-  }
-)
-
 const emit = defineEmits<{
-  (e: "favorite", toggle: boolean): void
+  (e: "favorite"): void
 }>()
 
 const icon = computed(() => {
@@ -44,14 +31,7 @@ const label = computed(() => {
 const toggleFavorite = async () => {
   userStore.ensureLoggedIn()
 
-  if (props.article.favorited) {
-    await unfavoriteArticle({ slug: props.article.slug })
-    emit("favorite", false)
-    return
-  }
-
-  await favoriteArticle({ slug: props.article.slug })
-  emit("favorite", true)
+  emit("favorite")
 }
 </script>
 
@@ -64,7 +44,7 @@ const toggleFavorite = async () => {
     @click="toggleFavorite"
   >
     <i :class="icon"></i>
-    {{ `${label} Post (${counter})` }}
+    {{ `${label} Post (${props.article.favoritesCount})` }}
   </BaseButton>
   <button
     v-else
@@ -80,6 +60,6 @@ const toggleFavorite = async () => {
     @click="toggleFavorite"
   >
     <i :class="icon" text-xs mr-1></i>
-    {{ counter }}
+    {{ props.article.favoritesCount }}
   </button>
 </template>
