@@ -91,7 +91,7 @@ useHead({
     <div mx-auto max-w-2xl flex flex-col gap-4 lg:min-w-xl>
       <CommentNew
         :article="article"
-        @comment-created="(c: Comment) => (comments = [c, ...comments])"
+        @comment-created="(c) => (comments = [c, ...comments])"
       />
       <CommentCard
         v-for="comment in comments"
