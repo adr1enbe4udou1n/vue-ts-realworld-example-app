@@ -6,9 +6,7 @@ The frontend side **Vue 3** codebase containing realworld example that adheres t
 
 ## [RealWorld](https://github.com/gothinkster/realworld)
 
-This codebase was created to demonstrate a fully fledged fullstack application built with last **Vue 3** (with Feature orientation) including CRUD operations, authentication, routing, pagination, and more.
-
-We've gone to great lengths to adhere to the ASP.NET Core community styleguides & best practices.
+This codebase was created to demonstrate a fully fledged frontend application built with last version of **Vue** that adhere to the conduit API specification.
 
 For more information on how to this works with other frontends/backends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.
 
