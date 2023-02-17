@@ -13,10 +13,10 @@ const emit = defineEmits(["update:modelValue"])
 const tagInput = ref("")
 
 const addTag = () => {
-  if (tagInput.value) {
+  if (tagInput.value && !props.modelValue.includes(tagInput.value)) {
     emit("update:modelValue", [...props.modelValue, tagInput.value])
-    tagInput.value = ""
   }
+  tagInput.value = ""
 }
 </script>
 
