@@ -1,27 +1,18 @@
 <script lang="ts" setup>
-import { followProfileToggle, getProfile } from "@/api"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query"
-
-const queryClient = useQueryClient()
+import { getProfile } from "@/api"
+import { useQuery } from "@tanstack/vue-query"
 
 const props = defineProps<{ author: string }>()
 
 const { data } = useQuery({
   queryFn: () =>
     getProfile({ username: props.author }).then(({ data }) => data.profile),
-  queryKey: ["profile", props.author],
+  queryKey: ["profiles", props.author],
   onSuccess: (data) => {
     useHead({
       title: `${data.username} - Conduit`,
       meta: [{ name: "description", content: data.bio }],
     })
-  },
-})
-
-const mutation = useMutation({
-  mutationFn: followProfileToggle,
-  onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: ["profile", props.author] })
   },
 })
 
@@ -62,10 +53,7 @@ const menuItems = computed(() =>
       <p mx-auto max-w-140 text-gray-300 mb-4>
         {{ profile.bio }}
       </p>
-      <FollowProfile
-        :profile="profile"
-        @follow="() => mutation.mutate(profile!)"
-      />
+      <FollowProfile :profile="profile" />
     </div>
   </div>
   <div class="container" py-8>

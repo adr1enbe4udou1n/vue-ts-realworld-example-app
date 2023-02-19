@@ -10,10 +10,6 @@ withDefaults(
     tag: null,
   }
 )
-
-defineEmits<{
-  (e: "favorite", toggle: boolean): void
-}>()
 </script>
 
 <template>
@@ -22,11 +18,7 @@ defineEmits<{
       <header flex mb-2>
         <ProfileCard :author="article.author" :date="article.createdAt" />
         <div ml-auto>
-          <FavoriteArticle
-            :article="article"
-            :full="false"
-            @favorite="$emit('favorite', $event)"
-          />
+          <FavoriteArticle :article="article" :full="false" />
         </div>
       </header>
       <div flex flex-col gap-2 relative>

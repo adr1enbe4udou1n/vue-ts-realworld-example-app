@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { getArticles, getArticlesFeed, favoriteArticleToggle } from "@/api"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query"
+import { getArticles, getArticlesFeed } from "@/api"
+import { useQuery } from "@tanstack/vue-query"
 
 const props = withDefaults(
   defineProps<{
@@ -16,8 +16,6 @@ const props = withDefaults(
     useFeed: false,
   }
 )
-
-const queryClient = useQueryClient()
 
 const limit = 10
 const page = ref(1)
@@ -43,13 +41,6 @@ const articlesQuery = useQuery({
   queryKey: ["articles", props.tag, props.author, props.favorited, page],
 })
 
-const mutation = useMutation({
-  mutationFn: favoriteArticleToggle,
-  onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: ["articles"] })
-  },
-})
-
 const articles = computed(() => articlesQuery.data.value?.articles || [])
 const total = computed(() => articlesQuery.data.value?.articlesCount || 0)
 
@@ -68,7 +59,6 @@ watch(
     :key="i"
     :article="article"
     :tag="tag"
-    @favorite="() => mutation.mutate(article)"
   />
 
   <OffsetPagination

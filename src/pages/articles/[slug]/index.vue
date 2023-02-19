@@ -5,15 +5,12 @@ import {
   deleteArticle,
   getArticle,
   getComments,
-  favoriteArticleToggle,
-  followProfileToggle,
 } from "@/api"
 import { useUserStore } from "@/stores/user"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query"
+import { useQuery } from "@tanstack/vue-query"
 
 const userStore = useUserStore()
 const router = useRouter()
-const queryClient = useQueryClient()
 
 const props = defineProps<{ slug: string }>()
 
@@ -35,20 +32,6 @@ const commentsQuery = useQuery({
   queryKey: ["comments", props.slug],
 })
 
-const mutationFollow = useMutation({
-  mutationFn: followProfileToggle,
-  onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: ["articles", props.slug] })
-  },
-})
-
-const mutationFavorite = useMutation({
-  mutationFn: favoriteArticleToggle,
-  onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: ["articles", props.slug] })
-  },
-})
-
 const deleteArticleAction = async () => {
   if (confirm("Are you sure?")) {
     await deleteArticle({ slug: props.slug })
@@ -68,11 +51,7 @@ const comments = computed(() => commentsQuery.data.value || [])
         <h1 font-brand font-bold text-5xl mb-8>{{ article.title }}</h1>
 
         <div flex items-center>
-          <PostAuthor
-            :article="article"
-            @follow="() => mutationFollow.mutate(article!.author)"
-            @favorite="() => mutationFavorite.mutate(article!)"
-          />
+          <PostAuthor :article="article" />
 
           <div
             v-if="
@@ -108,13 +87,7 @@ const comments = computed(() => commentsQuery.data.value || [])
       <MarkdownViewer :source="article.body" />
     </div>
     <div class="container" border-t border-gray-300 py-4 flex flex-col>
-      <PostAuthor
-        :article="article"
-        mx-auto
-        mb-8
-        @follow="() => followProfileToggle(article!.author)"
-        @favorite="() => favoriteArticleToggle(article!)"
-      />
+      <PostAuthor :article="article" mx-auto mb-8 />
       <div mx-auto max-w-2xl flex flex-col gap-4 lg:min-w-xl>
         <CommentNew :article="article" />
         <CommentCard

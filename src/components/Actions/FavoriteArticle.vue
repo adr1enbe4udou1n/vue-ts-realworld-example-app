@@ -1,7 +1,9 @@
 <script lang="ts" setup>
-import type { Article } from "@/api"
+import { favoriteArticleToggle, type Article } from "@/api"
 import { useUserStore } from "@/stores/user"
+import { useMutation, useQueryClient } from "@tanstack/vue-query"
 
+const queryClient = useQueryClient()
 const userStore = useUserStore()
 
 const props = withDefaults(
@@ -14,9 +16,14 @@ const props = withDefaults(
   }
 )
 
-const emit = defineEmits<{
-  (e: "favorite"): void
-}>()
+const mutation = useMutation({
+  mutationFn: favoriteArticleToggle,
+  onSuccess: () => {
+    queryClient.invalidateQueries({
+      queryKey: ["articles"],
+    })
+  },
+})
 
 const icon = computed(() => {
   return props.article.favorited
@@ -31,7 +38,7 @@ const label = computed(() => {
 const toggleFavorite = async () => {
   userStore.ensureLoggedIn()
 
-  emit("favorite")
+  mutation.mutate(props.article)
 }
 </script>
 
