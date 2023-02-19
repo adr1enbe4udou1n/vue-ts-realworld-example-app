@@ -45,7 +45,7 @@ const menuItems = computed(() =>
               flex
               items-center
               :href="href"
-              :class="{ 'opacity-50': isActive }"
+              :class="{ 'opacity-50': !isActive }"
               @click="navigate"
             >
               <i v-if="item.icon" :class="`${item.icon}`" inline-block mr-2></i>
