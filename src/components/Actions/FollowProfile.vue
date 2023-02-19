@@ -30,7 +30,7 @@ const label = computed(() => {
   return props.profile.following ? "Unfollow" : "Follow"
 })
 
-const toggleFollow = async () => {
+const toggleFollow = () => {
   userStore.ensureLoggedIn()
 
   mutation.mutate(props.profile)

@@ -35,7 +35,7 @@ const label = computed(() => {
   return props.article.favorited ? "Unfavorite" : "Favorite"
 })
 
-const toggleFavorite = async () => {
+const toggleFavorite = () => {
   userStore.ensureLoggedIn()
 
   mutation.mutate(props.article)
