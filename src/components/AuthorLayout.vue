@@ -1,31 +1,50 @@
 <script lang="ts" setup>
 import { followProfileToggle, getProfile } from "@/api"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query"
+
+const queryClient = useQueryClient()
 
 const props = defineProps<{ author: string }>()
 
-const { data } = await getProfile({ username: props.author })
-
-const profile = ref(data.profile)
-
-const menuItems = [
-  {
-    name: "My Posts",
-    link: `/profiles/${profile.value.username}`,
+const { data } = useQuery({
+  queryFn: () =>
+    getProfile({ username: props.author }).then(({ data }) => data.profile),
+  queryKey: ["profile", props.author],
+  onSuccess: (data) => {
+    useHead({
+      title: `${data.username} - Conduit`,
+      meta: [{ name: "description", content: data.bio }],
+    })
   },
-  {
-    name: "Favorited Posts",
-    link: `/profiles/${profile.value.username}/favorites`,
-  },
-]
-
-useHead({
-  title: `${profile.value.username} - Conduit`,
-  meta: [{ name: "description", content: profile.value.bio }],
 })
+
+const mutation = useMutation({
+  mutationFn: followProfileToggle,
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ["profile", props.author] })
+  },
+})
+
+const profile = computed(() => data.value)
+
+const menuItems = computed(() =>
+  profile.value
+    ? [
+        {
+          name: "My Posts",
+          link: `/profiles/${profile.value.username}`,
+        },
+        {
+          name: "Favorited Posts",
+          link: `/profiles/${profile.value.username}/favorites`,
+        },
+      ]
+    : []
+)
 </script>
 
 <template>
-  <div bg-gray-100 dark:bg-gray-800 text-center py-8 mb-8>
+  <div bg-gray-100 dark:bg-gray-800 text-center py-8 mb-8 v-if="profile">
     <div class="container">
       <img
         v-if="profile.image"
@@ -45,14 +64,12 @@ useHead({
       </p>
       <FollowProfile
         :profile="profile"
-        @follow="() => followProfileToggle(profile)"
+        @follow="() => mutation.mutate(profile!)"
       />
     </div>
   </div>
   <div class="container" py-8>
     <ArticlesNav :items="menuItems" />
-    <Suspense>
-      <slot />
-    </Suspense>
+    <slot />
   </div>
 </template>

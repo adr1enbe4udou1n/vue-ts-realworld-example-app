@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import { type Comment, deleteComment } from "@/api"
 import { useUserStore } from "@/stores/user"
+import { useMutation, useQueryClient } from "@tanstack/vue-query"
 
+const queryClient = useQueryClient()
 const userStore = useUserStore()
 
 const props = defineProps<{
@@ -9,16 +11,20 @@ const props = defineProps<{
   comment: Comment
 }>()
 
-const emit = defineEmits(["comment-deleted"])
+const mutation = useMutation({
+  mutationFn: () =>
+    deleteComment({
+      slug: props.slug,
+      commentId: props.comment.id,
+    }),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ["comments", props.slug] })
+  },
+})
 
 const deleteCommentAction = async () => {
   if (confirm("Are you sure?")) {
-    await deleteComment({
-      slug: props.slug,
-      commentId: props.comment.id,
-    })
-
-    emit("comment-deleted")
+    mutation.mutate()
   }
 }
 </script>

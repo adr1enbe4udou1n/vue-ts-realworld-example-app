@@ -4,8 +4,10 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { createArticle, handleValidation, type Article } from "@/api"
+import { createArticle, handleValidation } from "@/api"
+import { useMutation, useQueryClient } from "@tanstack/vue-query"
 
+const queryClient = useQueryClient()
 const router = useRouter()
 
 const form = ref({
@@ -15,9 +17,21 @@ const form = ref({
   tagList: [],
 })
 
-const onSuccess = async ({ article }: { article: Article }) => {
-  router.push(`/articles/${article.slug}`)
-}
+const mutation = useMutation({
+  mutationFn: () =>
+    handleValidation(
+      createArticle,
+      {
+        article: form.value,
+      },
+      ({ article }) => {
+        router.push(`/articles/${article.slug}`)
+      }
+    ),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ["articles"] })
+  },
+})
 </script>
 
 <template>
@@ -26,21 +40,7 @@ const onSuccess = async ({ article }: { article: Article }) => {
       <div text-center mb-8>
         <h1 font-heading text-4xl mb-2 dark:text-white>Your new post</h1>
       </div>
-      <FormValidation
-        flex
-        flex-col
-        gap-4
-        :action="
-          () =>
-            handleValidation(
-              createArticle,
-              {
-                article: form,
-              },
-              onSuccess
-            )
-        "
-      >
+      <FormValidation flex flex-col gap-4 :action="mutation.mutateAsync">
         <div>
           <input
             v-model="form.title"

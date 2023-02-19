@@ -1,27 +1,32 @@
 <script lang="ts" setup>
-import {
-  type Article,
-  type Comment,
-  createComment,
-  handleValidation,
-} from "@/api"
+import { type Article, createComment, handleValidation } from "@/api"
 import { useUserStore } from "@/stores/user"
+import { useMutation, useQueryClient } from "@tanstack/vue-query"
 
+const queryClient = useQueryClient()
 const userStore = useUserStore()
 
 const props = defineProps<{
   article: Article
 }>()
 
-const emit = defineEmits<{
-  (e: "comment-created", comment: Comment): void
-}>()
-
 const body = ref("")
 
-const onSuccess = async ({ comment }: { comment: Comment }) => {
-  emit("comment-created", comment)
-}
+const mutation = useMutation({
+  mutationFn: () =>
+    handleValidation(createComment, {
+      slug: props.article.slug,
+      comment: {
+        body: body.value,
+      },
+    }),
+  onSuccess: () => {
+    queryClient.invalidateQueries({
+      queryKey: ["comments", props.article.slug],
+    })
+    body.value = ""
+  },
+})
 </script>
 
 <template>
@@ -31,19 +36,7 @@ const onSuccess = async ({ comment }: { comment: Comment }) => {
     rounded
     border
     border-gray-300
-    :action="
-      () =>
-        handleValidation(
-          createComment,
-          {
-            slug: props.article.slug,
-            comment: {
-              body: body,
-            },
-          },
-          onSuccess
-        )
-    "
+    :action="mutation.mutateAsync"
   >
     <textarea
       v-model="body"

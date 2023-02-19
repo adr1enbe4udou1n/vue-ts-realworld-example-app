@@ -30,9 +30,7 @@ const menuItems = [
   <div class="container" flex flex-col md:flex-row mb-8 gap-8>
     <div md:flex-1>
       <ArticlesNav :items="menuItems" />
-      <Suspense>
-        <PostsList :tag="tag" :use-feed="useFeed" />
-      </Suspense>
+      <PostsList :tag="tag" :use-feed="useFeed" />
     </div>
 
     <slot name="aside" />

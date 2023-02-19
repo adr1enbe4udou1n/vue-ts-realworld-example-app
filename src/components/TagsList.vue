@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { getTags } from "@/api"
+import { useQuery } from "@tanstack/vue-query"
 
-const { data } = await getTags({})
-
-const tags = data.tags
+const { data } = useQuery({
+  queryFn: () => getTags({}).then(({ data }) => data.tags),
+  queryKey: ["tags"],
+})
 
 const selectedTag = ref<string | null>()
 
@@ -19,7 +21,7 @@ const selectTag = (tag: string) => {
 
 <template>
   <ul>
-    <li v-for="(t, i) in tags" :key="i" inline-flex>
+    <li v-for="(t, i) in data" :key="i" inline-flex>
       <button
         type="button"
         bg-gray

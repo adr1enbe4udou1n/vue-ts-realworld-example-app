@@ -4,55 +4,54 @@ meta:
 </route>
 
 <script setup lang="ts">
-import {
-  updateArticle,
-  getArticle,
-  type Article,
-  handleValidation,
-} from "@/api"
+import { updateArticle, getArticle, handleValidation } from "@/api"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query"
 
 const props = defineProps<{ slug: string }>()
 
-const articleResponse = await getArticle({ slug: props.slug })
-const article = articleResponse.data.article
-
+const queryClient = useQueryClient()
 const router = useRouter()
 
 const form = ref({
-  title: article.title,
-  description: article.description,
-  body: article.body,
+  title: "",
+  description: "",
+  body: "",
 })
 
-const onSuccess = async ({ article }: { article: Article }) => {
-  router.push(`/articles/${article.slug}`)
-}
+const { data } = useQuery({
+  queryFn: () =>
+    getArticle({ slug: props.slug }).then(({ data }) => {
+      form.value.title = data.article.title
+      form.value.description = data.article.description
+      form.value.body = data.article.body
+
+      return data.article
+    }),
+  queryKey: ["articles", props.slug],
+})
+
+const mutation = useMutation({
+  mutationFn: () =>
+    handleValidation(updateArticle, {
+      slug: props.slug,
+      article: form.value,
+    }),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ["articles", props.slug] })
+    router.push(`/articles/${props.slug}`)
+  },
+})
 </script>
 
 <template>
-  <div class="container" flex flex-col mb-8>
+  <div class="container" flex flex-col mb-8 v-if="data">
     <div lg:w-2xl sm:mx-auto>
       <div text-center mb-8>
         <h1 font-heading text-4xl mb-2 dark:text-white>
-          Edit the post "{{ article.slug }}"
+          Edit the post "{{ data.title }}"
         </h1>
       </div>
-      <FormValidation
-        flex
-        flex-col
-        gap-4
-        :action="
-          () =>
-            handleValidation(
-              updateArticle,
-              {
-                slug: props.slug,
-                article: form,
-              },
-              onSuccess
-            )
-        "
-      >
+      <FormValidation flex flex-col gap-4 :action="mutation.mutateAsync">
         <div>
           <input
             v-model="form.title"

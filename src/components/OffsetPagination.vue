@@ -5,13 +5,7 @@ const props = defineProps<{
   total: number
   limit: number
   page: number
-  fetchData: ({
-    currentPage,
-    currentPageSize,
-  }: {
-    currentPage: number
-    currentPageSize: number
-  }) => Promise<void>
+  fetchData: ({ currentPage }: { currentPage: number }) => Promise<void> | void
 }>()
 
 const pagination = computed(() =>
