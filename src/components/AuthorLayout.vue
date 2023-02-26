@@ -11,7 +11,7 @@ const { data } = useQuery({
   onSuccess: (data) => {
     useHead({
       title: `${data.username} - Conduit`,
-      meta: [{ name: "description", content: data.bio }],
+      meta: data.bio ? [{ name: "description", content: data.bio }] : [],
     })
   },
 })
