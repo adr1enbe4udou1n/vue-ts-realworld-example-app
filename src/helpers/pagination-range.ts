@@ -23,7 +23,7 @@ const usePagesBuilder = (currentPage: number, pageCount: number) => {
     range.end += 1
   }
 
-  let pages: (string | number)[] =
+  const pages: number[] =
     currentPage > delta
       ? getRange(
           Math.min(range.start, pageCount - delta),
@@ -34,15 +34,19 @@ const usePagesBuilder = (currentPage: number, pageCount: number) => {
   const withDots = (value: number, pair: (number | string)[]) =>
     pages.length + 1 !== pageCount ? pair : [value]
 
+  let paginator: (number | string)[] = []
+
   if (pages[0] !== 1) {
-    pages = withDots(1, [1, "..."]).concat(pages)
+    paginator = withDots(1, [1, "..."])
   }
+
+  paginator = paginator.concat(pages)
 
   if (pages[pages.length - 1] < pageCount) {
-    pages = pages.concat(withDots(pageCount, ["...", pageCount]))
+    paginator = paginator.concat(withDots(pageCount, ["...", pageCount]))
   }
 
-  return pages
+  return paginator
 }
 
 export { usePagesBuilder }

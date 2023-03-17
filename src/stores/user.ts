@@ -1,4 +1,4 @@
-import { acceptHMRUpdate, defineStore } from "pinia"
+import { defineStore } from "pinia"
 import { getUser, type User } from "@/api"
 import { router } from "@/plugins/router"
 
@@ -43,7 +43,3 @@ export const useUserStore = defineStore("user", () => {
     ensureLoggedIn,
   }
 })
-
-if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useUserStore, import.meta.hot))
-}

@@ -13,7 +13,7 @@
     "openapi": "openapi-typescript https://aspnetcorerealworld.okami101.io/api/v1/docs.json --output src/api/conduit.ts"
   },
   "dependencies": {
-    "@tanstack/vue-query": "^4.26.1",
+    "@tanstack/vue-query": "^4.27.0",
     "@vueuse/core": "^9.13.0",
     "@vueuse/head": "^1.1.23",
     "marked": "^4.2.12",
@@ -30,8 +30,8 @@
     "@types/marked": "^4.0.8",
     "@types/node": "^18.15.3",
     "@types/nprogress": "^0.2.0",
-    "@unocss/reset": "^0.50.4",
-    "@vitejs/plugin-vue": "^4.0.0",
+    "@unocss/reset": "^0.50.6",
+    "@vitejs/plugin-vue": "^4.1.0",
     "@vue/compiler-dom": "^3.2.47",
     "@vue/eslint-config-prettier": "^7.1.0",
     "@vue/eslint-config-typescript": "^11.0.2",
@@ -44,13 +44,13 @@
     "npm-run-all": "^4.1.5",
     "openapi-typescript": "^6.2.0",
     "prettier": "^2.8.4",
-    "typescript": "^4.9.5",
-    "unocss": "^0.50.4",
+    "typescript": "^5.0.2",
+    "unocss": "^0.50.6",
     "unplugin-auto-import": "^0.15.1",
     "unplugin-vue-components": "^0.24.1",
-    "vite": "^4.1.4",
+    "vite": "^4.2.0",
     "vite-plugin-pages": "^0.29.0",
-    "vitest": "^0.29.2",
+    "vitest": "^0.29.3",
     "vue-tsc": "^1.2.0"
   }
 }
