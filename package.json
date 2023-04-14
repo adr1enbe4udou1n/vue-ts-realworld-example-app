@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@tanstack/vue-query": "^4.29.1",
-    "@vueuse/core": "^9.13.0",
+    "@vueuse/core": "^10.0.2",
     "@vueuse/head": "^1.1.23",
     "marked": "^4.3.0",
     "nprogress": "^0.2.0",
@@ -46,7 +46,7 @@
     "prettier": "^2.8.7",
     "typescript": "^5.0.4",
     "unocss": "^0.51.4",
-    "unplugin-auto-import": "^0.15.2",
+    "unplugin-auto-import": "^0.15.3",
     "unplugin-vue-components": "^0.24.1",
     "vite": "^4.2.1",
     "vite-plugin-pages": "^0.29.0",
