@@ -7,7 +7,6 @@
     "types": [
       "node",
       "jsdom"
-    ],
-    "ignoreDeprecations": "5.0",
+    ]
   }
 }

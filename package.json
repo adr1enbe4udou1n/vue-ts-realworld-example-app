@@ -26,6 +26,7 @@
   "devDependencies": {
     "@iconify-json/carbon": "^1.1.16",
     "@rushstack/eslint-patch": "^1.2.0",
+    "@tsconfig/node18": "^2.0.0",
     "@types/jsdom": "^21.1.1",
     "@types/marked": "^4.0.8",
     "@types/node": "^18.16.1",
