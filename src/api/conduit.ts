@@ -71,14 +71,14 @@ export interface paths {
      */
     delete: operations["DeleteArticleFavorite"]
   }
-  "/profiles/celeb_{username}": {
+  "/profiles/{username}": {
     /**
      * Get a profile
      * @description Get a profile of a user of the system. Auth is optional
      */
     get: operations["GetProfileByUsername"]
   }
-  "/profiles/celeb_{username}/follow": {
+  "/profiles/{username}/follow": {
     /**
      * Follow a user
      * @description Follow a user by username

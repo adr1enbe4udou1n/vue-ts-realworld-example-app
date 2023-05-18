@@ -56,16 +56,13 @@ type ValidationProblemDetails =
 const getArticles = fetcher.path("/articles").method("get").create()
 const getArticlesFeed = fetcher.path("/articles/feed").method("get").create()
 const getArticle = fetcher.path("/articles/{slug}").method("get").create()
-const getProfile = fetcher
-  .path("/profiles/celeb_{username}")
-  .method("get")
-  .create()
+const getProfile = fetcher.path("/profiles/{username}").method("get").create()
 const followProfile = fetcher
-  .path("/profiles/celeb_{username}/follow")
+  .path("/profiles/{username}/follow")
   .method("post")
   .create()
 const unfollowProfile = fetcher
-  .path("/profiles/celeb_{username}/follow")
+  .path("/profiles/{username}/follow")
   .method("delete")
   .create()
 const getComments = fetcher
