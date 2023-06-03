@@ -41,6 +41,11 @@ const articlesQuery = useQuery({
   queryKey: ["articles", props.tag, props.author, props.favorited, page],
 })
 
+const fetchDataOnPage = ({ currentPage }: { currentPage: number }) => {
+  page.value = currentPage
+  articlesQuery.refetch()
+}
+
 const articles = computed(() => articlesQuery.data.value?.articles || [])
 const total = computed(() => articlesQuery.data.value?.articlesCount || 0)
 
@@ -66,11 +71,6 @@ watch(
     :page="page"
     :limit="limit"
     :total="total"
-    :fetch-data="
-      ({ currentPage }) => {
-        page = currentPage
-        articlesQuery.refetch()
-      }
-    "
+    :fetch-data="fetchDataOnPage"
   />
 </template>
