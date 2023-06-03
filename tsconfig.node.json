@@ -8,6 +8,10 @@
   ],
   "compilerOptions": {
     "composite": true,
+    "lib": [
+      "ESNext",
+    ],
+    "module": "ESNext",
     "types": [
       "node"
     ]
