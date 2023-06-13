@@ -14,7 +14,7 @@ const success = ref(false)
 const form = ref({
   image: userStore.user?.image,
   username: userStore.user?.username,
-  bio: userStore.user?.bio,
+  bio: userStore.user?.bio ?? "",
   email: userStore.user?.email,
 })
 
