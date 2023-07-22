@@ -7,119 +7,119 @@
 export interface paths {
   "/articles": {
     /**
-     * Get recent articles globally 
+     * Get recent articles globally
      * @description Get most recent articles globally. Use query parameters to filter results. Auth is optional
      */
     get: operations["GetArticles"];
     /**
-     * Create an article 
+     * Create an article
      * @description Create an article. Auth is required
      */
     post: operations["CreateArticle"];
   };
   "/articles/feed": {
     /**
-     * Get recent articles from users you follow 
+     * Get recent articles from users you follow
      * @description Get most recent articles from users you follow. Use query parameters to limit. Auth is required
      */
     get: operations["GetArticlesFeed"];
   };
   "/articles/{slug}": {
     /**
-     * Get an article 
+     * Get an article
      * @description Get an article. Auth not required
      */
     get: operations["GetArticle"];
     /**
-     * Update an article 
+     * Update an article
      * @description Update an article. Auth is required
      */
     put: operations["UpdateArticle"];
     /**
-     * Delete an article 
+     * Delete an article
      * @description Delete an article. Auth is required
      */
     delete: operations["DeleteArticle"];
   };
   "/articles/{slug}/comments": {
     /**
-     * Get comments for an article 
+     * Get comments for an article
      * @description Get the comments for an article. Auth is optional
      */
     get: operations["GetArticleComments"];
     /**
-     * Create a comment for an article 
+     * Create a comment for an article
      * @description Create a comment for an article. Auth is required
      */
     post: operations["CreateArticleComment"];
   };
   "/articles/{slug}/comments/{commentId}": {
     /**
-     * Delete a comment for an article 
+     * Delete a comment for an article
      * @description Delete a comment for an article. Auth is required
      */
     delete: operations["DeleteArticleComment"];
   };
   "/articles/{slug}/favorite": {
     /**
-     * Favorite an article 
+     * Favorite an article
      * @description Favorite an article. Auth is required
      */
     post: operations["CreateArticleFavorite"];
     /**
-     * Unfavorite an article 
+     * Unfavorite an article
      * @description Unfavorite an article. Auth is required
      */
     delete: operations["DeleteArticleFavorite"];
   };
   "/profiles/{username}": {
     /**
-     * Get a profile 
+     * Get a profile
      * @description Get a profile of a user of the system. Auth is optional
      */
     get: operations["GetProfileByUsername"];
   };
   "/profiles/{username}/follow": {
     /**
-     * Follow a user 
+     * Follow a user
      * @description Follow a user by username
      */
     post: operations["FollowUserByUsername"];
     /**
-     * Unfollow a user 
+     * Unfollow a user
      * @description Unfollow a user by username
      */
     delete: operations["UnfollowUserByUsername"];
   };
   "/tags": {
     /**
-     * Get tags 
+     * Get tags
      * @description Get tags. Auth not required
      */
     get: operations["GetTags"];
   };
   "/user": {
     /**
-     * Get current user 
+     * Get current user
      * @description Gets the currently logged-in user
      */
     get: operations["GetCurrentUser"];
     /**
-     * Update current user 
+     * Update current user
      * @description Updated user information for current user
      */
     put: operations["UpdateCurrentUser"];
   };
   "/users": {
     /**
-     * Register a new user 
+     * Register a new user
      * @description Register a new user
      */
     post: operations["CreateUser"];
   };
   "/users/login": {
     /**
-     * Existing user login 
+     * Existing user login
      * @description Login for existing user
      */
     post: operations["Login"];
@@ -139,7 +139,7 @@ export interface components {
       createdAt: string;
       /** Format: date-time */
       updatedAt: string;
-      tagList: (string)[];
+      tagList: string[];
       author: components["schemas"]["Profile"];
       favorited: boolean;
       /** Format: int32 */
@@ -163,18 +163,18 @@ export interface components {
       user: components["schemas"]["LoginUser"];
     };
     MultipleArticlesResponse: {
-      articles: (components["schemas"]["Article"])[];
+      articles: components["schemas"]["Article"][];
       /** Format: int32 */
       articlesCount: number;
     };
     MultipleCommentsResponse: {
-      comments: (components["schemas"]["Comment"])[];
+      comments: components["schemas"]["Comment"][];
     };
     NewArticle: {
       title: string;
       description: string;
       body: string;
-      tagList: (string)[];
+      tagList: string[];
     };
     NewArticleRequest: {
       article: components["schemas"]["NewArticle"];
@@ -209,7 +209,7 @@ export interface components {
       comment: components["schemas"]["Comment"];
     };
     TagsResponse: {
-      tags: (string)[];
+      tags: string[];
     };
     UpdateArticle: {
       title?: string | null;
@@ -246,7 +246,7 @@ export interface components {
       detail?: string | null;
       instance?: string | null;
       errors: {
-        [key: string]: (string)[] | undefined;
+        [key: string]: string[] | undefined;
       };
       [key: string]: unknown;
     };
@@ -263,7 +263,7 @@ export type external = Record<string, never>;
 export interface operations {
 
   /**
-   * Get recent articles globally 
+   * Get recent articles globally
    * @description Get most recent articles globally. Use query parameters to filter results. Auth is optional
    */
   GetArticles: {
@@ -293,7 +293,7 @@ export interface operations {
     };
   };
   /**
-   * Create an article 
+   * Create an article
    * @description Create an article. Auth is required
    */
   CreateArticle: {
@@ -329,7 +329,7 @@ export interface operations {
     };
   };
   /**
-   * Get recent articles from users you follow 
+   * Get recent articles from users you follow
    * @description Get most recent articles from users you follow. Use query parameters to limit. Auth is required
    */
   GetArticlesFeed: {
@@ -357,7 +357,7 @@ export interface operations {
     };
   };
   /**
-   * Get an article 
+   * Get an article
    * @description Get an article. Auth not required
    */
   GetArticle: {
@@ -379,7 +379,7 @@ export interface operations {
     };
   };
   /**
-   * Update an article 
+   * Update an article
    * @description Update an article. Auth is required
    */
   UpdateArticle: {
@@ -421,7 +421,7 @@ export interface operations {
     };
   };
   /**
-   * Delete an article 
+   * Delete an article
    * @description Delete an article. Auth is required
    */
   DeleteArticle: {
@@ -441,7 +441,7 @@ export interface operations {
     };
   };
   /**
-   * Get comments for an article 
+   * Get comments for an article
    * @description Get the comments for an article. Auth is optional
    */
   GetArticleComments: {
@@ -463,7 +463,7 @@ export interface operations {
     };
   };
   /**
-   * Create a comment for an article 
+   * Create a comment for an article
    * @description Create a comment for an article. Auth is required
    */
   CreateArticleComment: {
@@ -505,7 +505,7 @@ export interface operations {
     };
   };
   /**
-   * Delete a comment for an article 
+   * Delete a comment for an article
    * @description Delete a comment for an article. Auth is required
    */
   DeleteArticleComment: {
@@ -527,7 +527,7 @@ export interface operations {
     };
   };
   /**
-   * Favorite an article 
+   * Favorite an article
    * @description Favorite an article. Auth is required
    */
   CreateArticleFavorite: {
@@ -553,7 +553,7 @@ export interface operations {
     };
   };
   /**
-   * Unfavorite an article 
+   * Unfavorite an article
    * @description Unfavorite an article. Auth is required
    */
   DeleteArticleFavorite: {
@@ -579,7 +579,7 @@ export interface operations {
     };
   };
   /**
-   * Get a profile 
+   * Get a profile
    * @description Get a profile of a user of the system. Auth is optional
    */
   GetProfileByUsername: {
@@ -601,7 +601,7 @@ export interface operations {
     };
   };
   /**
-   * Follow a user 
+   * Follow a user
    * @description Follow a user by username
    */
   FollowUserByUsername: {
@@ -627,7 +627,7 @@ export interface operations {
     };
   };
   /**
-   * Unfollow a user 
+   * Unfollow a user
    * @description Unfollow a user by username
    */
   UnfollowUserByUsername: {
@@ -653,7 +653,7 @@ export interface operations {
     };
   };
   /**
-   * Get tags 
+   * Get tags
    * @description Get tags. Auth not required
    */
   GetTags: {
@@ -669,7 +669,7 @@ export interface operations {
     };
   };
   /**
-   * Get current user 
+   * Get current user
    * @description Gets the currently logged-in user
    */
   GetCurrentUser: {
@@ -689,7 +689,7 @@ export interface operations {
     };
   };
   /**
-   * Update current user 
+   * Update current user
    * @description Updated user information for current user
    */
   UpdateCurrentUser: {
@@ -725,7 +725,7 @@ export interface operations {
     };
   };
   /**
-   * Register a new user 
+   * Register a new user
    * @description Register a new user
    */
   CreateUser: {
@@ -757,7 +757,7 @@ export interface operations {
     };
   };
   /**
-   * Existing user login 
+   * Existing user login
    * @description Login for existing user
    */
   Login: {
