@@ -7,7 +7,7 @@ withDefaults(
   {
     tag: null,
     useFeed: false,
-  }
+  },
 )
 
 const menuItems = [

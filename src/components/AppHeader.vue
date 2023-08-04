@@ -23,7 +23,7 @@ const menuItems = computed(() =>
           name: "Sign up",
           link: "/register",
         },
-      ]
+      ],
 )
 </script>
 

@@ -5,7 +5,7 @@ const props = withDefaults(
   }>(),
   {
     modelValue: () => [],
-  }
+  },
 )
 
 const emit = defineEmits(["update:modelValue"])
@@ -45,7 +45,7 @@ const addTag = () => {
           @click="
             $emit(
               'update:modelValue',
-              modelValue.filter((t) => t !== tag)
+              modelValue.filter((t) => t !== tag),
             )
           "
         >

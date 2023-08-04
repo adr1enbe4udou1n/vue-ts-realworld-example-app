@@ -14,7 +14,7 @@ const props = withDefaults(
     favorited: null,
     tag: null,
     useFeed: false,
-  }
+  },
 )
 
 const limit = 10
@@ -54,7 +54,7 @@ watch(
   () => {
     page.value = 1
     articlesQuery.refetch()
-  }
+  },
 )
 </script>
 

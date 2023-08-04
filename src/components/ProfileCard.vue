@@ -9,7 +9,7 @@ withDefaults(
   }>(),
   {
     inline: false,
-  }
+  },
 )
 
 const getDate = (date: string) => {

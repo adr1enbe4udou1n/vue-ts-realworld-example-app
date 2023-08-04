@@ -15,7 +15,7 @@ const pagination = computed(() =>
     pageSize: props.limit,
     onPageChange: props.fetchData,
     onPageSizeChange: props.fetchData,
-  })
+  }),
 )
 
 const classes =
@@ -39,7 +39,7 @@ const classes =
     <button
       v-for="item in usePagesBuilder(
         pagination.currentPage.value,
-        pagination.pageCount.value
+        pagination.pageCount.value,
       )"
       :key="item"
       :disabled="

@@ -8,7 +8,7 @@ withDefaults(
   }>(),
   {
     tag: null,
-  }
+  },
 )
 </script>
 

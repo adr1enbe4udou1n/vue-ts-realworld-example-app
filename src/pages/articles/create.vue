@@ -26,7 +26,7 @@ const mutation = useMutation({
       },
       ({ article }) => {
         router.push(`/articles/${article.slug}`)
-      }
+      },
     ),
   onSuccess: () => {
     queryClient.invalidateQueries({ queryKey: ["articles"] })

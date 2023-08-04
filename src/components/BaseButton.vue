@@ -8,7 +8,7 @@ const props = withDefaults(
   {
     variant: "primary",
     size: "md",
-  }
+  },
 )
 
 const classes = computed(() => {

@@ -11,7 +11,7 @@ import type { components, paths } from "./conduit"
 const handleValidation = async <T>(
   operation: TypedFetch<T>,
   arg: OpArgType<T>,
-  onSuccess?: (data: OpReturnType<T>) => void
+  onSuccess?: (data: OpReturnType<T>) => void,
 ): Promise<ValidationProblemDetails | undefined> => {
   try {
     const response = await operation(arg)

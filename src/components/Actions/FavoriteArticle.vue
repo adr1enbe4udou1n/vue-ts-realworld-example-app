@@ -13,7 +13,7 @@ const props = withDefaults(
   }>(),
   {
     full: false,
-  }
+  },
 )
 
 const mutation = useMutation({

@@ -30,7 +30,7 @@ const menuItems = computed(() =>
           link: `/profiles/${profile.value.username}/favorites`,
         },
       ]
-    : []
+    : [],
 )
 </script>
 
