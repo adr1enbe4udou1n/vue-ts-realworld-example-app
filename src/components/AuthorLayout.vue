@@ -7,7 +7,7 @@ const props = defineProps<{ author: string }>()
 const { data } = useQuery({
   queryFn: () =>
     getProfile({ username: props.author }).then(({ data }) => data.profile),
-  queryKey: ["profiles", props.author],
+  queryKey: ["profiles"],
   onSuccess: (data) => {
     useHead({
       title: `${data.username} - Conduit`,

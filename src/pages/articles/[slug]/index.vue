@@ -17,7 +17,7 @@ const props = defineProps<{ slug: string }>()
 const articlesQuery = useQuery({
   queryFn: () =>
     getArticle({ slug: props.slug }).then(({ data }) => data.article),
-  queryKey: ["articles", props.slug],
+  queryKey: ["articles"],
   onSuccess: (data) => {
     useHead({
       title: `${data.title} - Conduit`,
@@ -29,7 +29,7 @@ const articlesQuery = useQuery({
 const commentsQuery = useQuery({
   queryFn: () =>
     getComments({ slug: props.slug }).then(({ data }) => data.comments),
-  queryKey: ["comments", props.slug],
+  queryKey: ["comments"],
 })
 
 const deleteArticleAction = async () => {

@@ -38,7 +38,7 @@ const fetchData = () => {
 
 const articlesQuery = useQuery({
   queryFn: () => fetchData().then(({ data }) => data),
-  queryKey: ["articles", props.tag, props.author, props.favorited, page],
+  queryKey: ["articles", page],
 })
 
 const fetchDataOnPage = ({ currentPage }: { currentPage: number }) => {

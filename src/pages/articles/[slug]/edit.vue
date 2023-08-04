@@ -27,7 +27,7 @@ const { data } = useQuery({
 
       return data.article
     }),
-  queryKey: ["articles", props.slug],
+  queryKey: ["articles"],
 })
 
 const mutation = useMutation({
