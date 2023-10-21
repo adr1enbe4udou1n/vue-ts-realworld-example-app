@@ -6,14 +6,16 @@ const props = defineProps<{ author: string }>()
 
 const { data } = useQuery({
   queryFn: () =>
-    getProfile({ username: props.author }).then(({ data }) => data.profile),
+    getProfile({ username: props.author }).then(({ data }) => {
+      useHead({
+        title: `${data.profile.username} - Conduit`,
+        meta: data.profile.bio
+          ? [{ name: "description", content: data.profile.bio }]
+          : [],
+      })
+      return data.profile
+    }),
   queryKey: ["profiles"],
-  onSuccess: (data) => {
-    useHead({
-      title: `${data.username} - Conduit`,
-      meta: data.bio ? [{ name: "description", content: data.bio }] : [],
-    })
-  },
 })
 
 const profile = computed(() => data.value)

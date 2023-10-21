@@ -16,14 +16,14 @@ const props = defineProps<{ slug: string }>()
 
 const articlesQuery = useQuery({
   queryFn: () =>
-    getArticle({ slug: props.slug }).then(({ data }) => data.article),
+    getArticle({ slug: props.slug }).then(({ data }) => {
+      useHead({
+        title: `${data.article.title} - Conduit`,
+        meta: [{ name: "description", content: data.article.description }],
+      })
+      return data.article
+    }),
   queryKey: ["articles"],
-  onSuccess: (data) => {
-    useHead({
-      title: `${data.title} - Conduit`,
-      meta: [{ name: "description", content: data.description }],
-    })
-  },
 })
 
 const commentsQuery = useQuery({
