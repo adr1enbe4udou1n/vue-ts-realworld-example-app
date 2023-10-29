@@ -13,7 +13,7 @@
     "openapi": "openapi-typescript https://aspnetcorerealworld.okami101.io/api/v1/docs.json --output src/api/conduit.ts"
   },
   "dependencies": {
-    "@tanstack/vue-query": "^5.0.0",
+    "@tanstack/vue-query": "^5.4.3",
     "@vueuse/core": "^10.5.0",
     "@vueuse/head": "^2.0.0",
     "marked": "^9.1.3",
