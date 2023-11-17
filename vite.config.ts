@@ -34,7 +34,15 @@ export default defineConfig({
     // https://github.com/posva/unplugin-vue-router
     VueRouter(),
     AutoImport({
-      imports: ["vue", "@vueuse/head", "@vueuse/core", VueRouterAutoImports],
+      imports: [
+        "vue",
+        "@vueuse/head",
+        "@vueuse/core",
+        VueRouterAutoImports,
+        {
+          "vue-router/auto": ["useLink"],
+        },
+      ],
       vueTemplate: true,
     }),
     Components(),

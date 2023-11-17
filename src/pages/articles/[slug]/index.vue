@@ -1,11 +1,5 @@
 <script lang="ts" setup>
-import {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  type Comment,
-  deleteArticle,
-  getArticle,
-  getComments,
-} from "~/api"
+import { deleteArticle, getArticle, getComments } from "~/api"
 import { useUserStore } from "~/stores/user"
 import { useQuery } from "@tanstack/vue-query"
 
