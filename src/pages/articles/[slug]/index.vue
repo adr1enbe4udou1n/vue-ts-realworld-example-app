@@ -4,13 +4,12 @@ import { useUserStore } from "~/stores/user"
 import { useQuery } from "@tanstack/vue-query"
 
 const userStore = useUserStore()
+const route = useRoute("/articles/[slug]/")
 const router = useRouter()
-
-const props = defineProps<{ slug: string }>()
 
 const articlesQuery = useQuery({
   queryFn: () =>
-    getArticle({ slug: props.slug }).then(({ data }) => {
+    getArticle({ slug: route.params.slug }).then(({ data }) => {
       useHead({
         title: `${data.article.title} - Conduit`,
         meta: [{ name: "description", content: data.article.description }],
@@ -22,13 +21,13 @@ const articlesQuery = useQuery({
 
 const commentsQuery = useQuery({
   queryFn: () =>
-    getComments({ slug: props.slug }).then(({ data }) => data.comments),
+    getComments({ slug: route.params.slug }).then(({ data }) => data.comments),
   queryKey: ["comments"],
 })
 
 const deleteArticleAction = async () => {
   if (confirm("Are you sure?")) {
-    await deleteArticle({ slug: props.slug })
+    await deleteArticle({ slug: route.params.slug })
 
     router.push("/")
   }
@@ -59,7 +58,7 @@ const comments = computed(() => commentsQuery.data.value || [])
             <BaseButton
               size="sm"
               variant="secondary"
-              :to="`/articles/${slug}/edit`"
+              :to="`/articles/${route.params.slug}/edit`"
             >
               <i class="i-carbon-edit"></i>
               Edit

@@ -7,10 +7,9 @@ meta:
 import { updateArticle, getArticle, handleValidation } from "~/api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query"
 
-const props = defineProps<{ slug: string }>()
-
 const queryClient = useQueryClient()
 const router = useRouter()
+const route = useRoute("/articles/[slug]/edit")
 
 const form = ref({
   title: "",
@@ -20,7 +19,7 @@ const form = ref({
 
 const { data } = useQuery({
   queryFn: () =>
-    getArticle({ slug: props.slug }).then(({ data }) => {
+    getArticle({ slug: route.params.slug }).then(({ data }) => {
       form.value.title = data.article.title
       form.value.description = data.article.description
       form.value.body = data.article.body
@@ -33,12 +32,12 @@ const { data } = useQuery({
 const mutation = useMutation({
   mutationFn: () =>
     handleValidation(updateArticle, {
-      slug: props.slug,
+      slug: route.params.slug,
       article: form.value,
     }),
   onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: ["articles", props.slug] })
-    router.push(`/articles/${props.slug}`)
+    queryClient.invalidateQueries({ queryKey: ["articles", route.params.slug] })
+    router.push(`/articles/${route.params.slug}`)
   },
 })
 </script>

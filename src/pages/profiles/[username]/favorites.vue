@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-defineProps<{ username: string }>()
+const route = useRoute("/profiles/[username]/favorites")
 </script>
 
 <template>
-  <AuthorLayout :author="username">
-    <PostsList :favorited="username" />
+  <AuthorLayout :author="route.params.username">
+    <PostsList :favorited="route.params.username" />
   </AuthorLayout>
 </template>
