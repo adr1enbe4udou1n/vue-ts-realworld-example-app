@@ -13,9 +13,14 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
+      "~/*": [
+        "src/*"
       ]
-    }
+    },
+    "types": [
+      "vite/client",
+      "unplugin-vue-macros/macros-global"
+    ],
+    "strict": true,
   }
 }

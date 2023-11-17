@@ -1,14 +1,11 @@
-import { createRouter, createWebHistory } from "vue-router"
+import { createRouter, createWebHistory } from "vue-router/auto"
 
 import NProgress from "nprogress"
 
 import { useUserStore } from "../stores/user"
 
-import routes from "~pages"
-
 const router = createRouter({
   history: createWebHistory(),
-  routes,
 })
 
 router.beforeEach(async (to, from) => {

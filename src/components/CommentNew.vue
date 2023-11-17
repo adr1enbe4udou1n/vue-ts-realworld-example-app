@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { type Article, createComment, handleValidation } from "@/api"
-import { useUserStore } from "@/stores/user"
+import { type Article, createComment, handleValidation } from "~/api"
+import { useUserStore } from "~/stores/user"
 import { useMutation, useQueryClient } from "@tanstack/vue-query"
 
 const queryClient = useQueryClient()

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { usePagesBuilder } from "@/helpers/pagination-range"
+import { usePagesBuilder } from "~/helpers/pagination-range"
 
 const props = defineProps<{
   total: number

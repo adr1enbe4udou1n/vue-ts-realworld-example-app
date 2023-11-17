@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { getTags } from "@/api"
+import { getTags } from "~/api"
 import { useQuery } from "@tanstack/vue-query"
 
 const { data } = useQuery({

@@ -4,7 +4,7 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { updateArticle, getArticle, handleValidation } from "@/api"
+import { updateArticle, getArticle, handleValidation } from "~/api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query"
 
 const props = defineProps<{ slug: string }>()

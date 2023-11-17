@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ValidationProblemDetails } from "@/api"
+import type { ValidationProblemDetails } from "~/api"
 
 const props = defineProps<{
   action: () => Promise<ValidationProblemDetails | undefined>

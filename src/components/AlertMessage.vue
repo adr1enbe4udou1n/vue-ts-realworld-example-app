@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ValidationProblemDetails } from "@/api"
+import type { ValidationProblemDetails } from "~/api"
 
 defineProps<{
   errors?: ValidationProblemDetails | null
