@@ -1,9 +1,15 @@
+<route lang="yaml">
+props: true
+</route>
+
 <script lang="ts" setup>
-const route = useRoute("/profiles/[username]/favorites")
+defineProps<{
+  username: string
+}>()
 </script>
 
 <template>
-  <AuthorLayout :author="route.params.username">
-    <PostsList :favorited="route.params.username" />
+  <AuthorLayout :author="username">
+    <PostsList :favorited="username" />
   </AuthorLayout>
 </template>

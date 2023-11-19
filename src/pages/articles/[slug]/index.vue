@@ -1,15 +1,21 @@
+<route lang="yaml">
+props: true
+</route>
+
 <script lang="ts" setup>
 import { deleteArticle, getArticle, getComments } from "~/api"
 import { useUserStore } from "~/stores/user"
 import { useQuery } from "@tanstack/vue-query"
 
 const userStore = useUserStore()
-const route = useRoute("/articles/[slug]/")
+const props = defineProps<{
+  slug: string
+}>()
 const router = useRouter()
 
 const articlesQuery = useQuery({
   queryFn: () =>
-    getArticle({ slug: route.params.slug }).then(({ data }) => {
+    getArticle({ slug: props.slug }).then(({ data }) => {
       useHead({
         title: `${data.article.title} - Conduit`,
         meta: [{ name: "description", content: data.article.description }],
@@ -21,13 +27,13 @@ const articlesQuery = useQuery({
 
 const commentsQuery = useQuery({
   queryFn: () =>
-    getComments({ slug: route.params.slug }).then(({ data }) => data.comments),
+    getComments({ slug: props.slug }).then(({ data }) => data.comments),
   queryKey: ["comments"],
 })
 
 const deleteArticleAction = async () => {
   if (confirm("Are you sure?")) {
-    await deleteArticle({ slug: route.params.slug })
+    await deleteArticle({ slug: props.slug })
 
     router.push("/")
   }
@@ -58,7 +64,7 @@ const comments = computed(() => commentsQuery.data.value || [])
             <BaseButton
               size="sm"
               variant="secondary"
-              :to="`/articles/${route.params.slug}/edit`"
+              :to="`/articles/${slug}/edit`"
             >
               <i class="i-carbon-edit"></i>
               Edit
