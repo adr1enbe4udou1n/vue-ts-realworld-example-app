@@ -18,8 +18,7 @@
       ]
     },
     "types": [
-      "vite/client",
-      "unplugin-vue-macros/macros-global"
+      "vite/client"
     ],
     "strict": true,
   }
