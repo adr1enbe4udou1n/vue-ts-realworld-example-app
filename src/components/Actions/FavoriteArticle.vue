@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { favoriteArticleToggle, type Article } from "~/api"
-import { useUserStore } from "~/stores/user"
+import { favoriteArticleToggle, type Article } from "@/api"
+import { useUserStore } from "@/stores/user"
 import { useMutation, useQueryClient } from "@tanstack/vue-query"
 
 const queryClient = useQueryClient()

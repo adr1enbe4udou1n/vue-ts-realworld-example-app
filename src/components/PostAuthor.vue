@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Article } from "~/api"
+import type { Article } from "@/api"
 
 defineProps<{
   article: Article

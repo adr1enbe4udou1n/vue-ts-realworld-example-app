@@ -3,8 +3,8 @@ props: true
 </route>
 
 <script lang="ts" setup>
-import { deleteArticle, getArticle, getComments } from "~/api"
-import { useUserStore } from "~/stores/user"
+import { deleteArticle, getArticle, getComments } from "@/api"
+import { useUserStore } from "@/stores/user"
 import { useQuery } from "@tanstack/vue-query"
 
 const userStore = useUserStore()

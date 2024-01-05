@@ -13,8 +13,8 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "src/*"
+      "@/*": [
+        "./src/*"
       ]
     },
     "types": [

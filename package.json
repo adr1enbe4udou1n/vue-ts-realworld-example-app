@@ -4,12 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "vite build",
     "dev": "vite",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "typecheck": "vue-tsc --noEmit",
+    "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
-    "test": "vitest",
+    "test:unit": "vitest",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build --force",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "format": "prettier --write src/",
     "openapi": "openapi-typescript https://aspnetcorerealworld.okami101.io/api/v1/docs.json --output src/api/conduit.ts"
   },
   "dependencies": {
@@ -41,6 +43,7 @@
     "eslint": "^8.56.0",
     "eslint-plugin-vue": "^9.19.2",
     "jsdom": "^23.1.0",
+    "npm-run-all2": "^6.1.1",
     "openapi-typescript": "^6.7.3",
     "prettier": "^3.1.1",
     "typescript": "^5.3.3",

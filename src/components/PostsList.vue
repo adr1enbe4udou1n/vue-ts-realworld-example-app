@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { getArticles, getArticlesFeed } from "~/api"
+import { getArticles, getArticlesFeed } from "@/api"
 import { useQuery } from "@tanstack/vue-query"
 
 const props = withDefaults(
