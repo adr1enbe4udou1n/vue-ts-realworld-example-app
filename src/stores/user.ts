@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { getUser, type User } from "@/api"
-import { router } from "@/plugins/router"
+import { router } from "@/plugins/router.js"
 
 export const useUserStore = defineStore("user", () => {
   const user = ref<User | null>(null)

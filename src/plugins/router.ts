@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router/auto"
 
 import NProgress from "nprogress"
 
-import { useUserStore } from "../stores/user"
+import { useUserStore } from "../stores/user.js"
 
 const router = createRouter({
   history: createWebHistory(),
