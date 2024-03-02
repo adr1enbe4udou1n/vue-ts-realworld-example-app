@@ -12,7 +12,7 @@
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "openapi": "openapi-typescript https://aspnetcorerealworld.okami101.io/api/v1/docs.json --output src/api/conduit.ts"
+    "openapi": "openapi-typescript http://localhost:5000/api/v1/docs.json --output src/api/conduit.ts"
   },
   "dependencies": {
     "@tanstack/vue-query": "^5.24.2",

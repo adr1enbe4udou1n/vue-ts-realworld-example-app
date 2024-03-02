@@ -51,7 +51,7 @@ type Profile = components["schemas"]["Profile"]
 type Comment = components["schemas"]["Comment"]
 type User = components["schemas"]["User"]
 type ValidationProblemDetails =
-  components["schemas"]["ValidationProblemDetails"]
+  components["schemas"]["HttpValidationProblemDetails"]
 
 const getArticles = fetcher.path("/articles").method("get").create()
 const getArticlesFeed = fetcher.path("/articles/feed").method("get").create()
