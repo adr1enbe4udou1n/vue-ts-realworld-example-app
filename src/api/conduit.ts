@@ -508,6 +508,7 @@ export interface operations {
       path: {
         /** @description Slug of the article that you want to delete a comments for */
         slug: string
+        /** @description ID of the comment you want to delete */
         commentId: number
       }
     }
