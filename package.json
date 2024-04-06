@@ -15,7 +15,7 @@
     "openapi": "openapi-typescript http://localhost:5000/api/v1/docs.json --output src/api/conduit.ts"
   },
   "dependencies": {
-    "@tanstack/vue-query": "^5.28.9",
+    "@tanstack/vue-query": "^5.29.0",
     "@vueuse/core": "^10.9.0",
     "@vueuse/head": "^2.0.0",
     "marked": "^12.0.1",
@@ -30,9 +30,9 @@
     "@rushstack/eslint-patch": "^1.10.1",
     "@tsconfig/node18": "^18.2.4",
     "@types/jsdom": "^21.1.6",
-    "@types/node": "^20.12.2",
+    "@types/node": "^20.12.5",
     "@types/nprogress": "^0.2.3",
-    "@unocss/reset": "^0.58.8",
+    "@unocss/reset": "^0.59.0",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/compiler-dom": "^3.4.21",
     "@vue/eslint-config-prettier": "^9.0.0",
@@ -40,19 +40,19 @@
     "@vue/runtime-core": "^3.4.21",
     "@vue/test-utils": "^2.4.5",
     "@vue/tsconfig": "^0.5.1",
-    "eslint": "^8.57.0",
+    "eslint": "<9.0.0",
     "eslint-plugin-vue": "^9.24.0",
     "jsdom": "^24.0.0",
     "npm-run-all2": "^6.1.2",
     "openapi-typescript": "^6.7.5",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.3",
-    "unocss": "^0.58.8",
+    "typescript": "^5.4.4",
+    "unocss": "^0.59.0",
     "unplugin-auto-import": "^0.17.5",
     "unplugin-vue-components": "^0.26.0",
     "unplugin-vue-router": "^0.8.5",
-    "vite": "^5.2.7",
+    "vite": "^5.2.8",
     "vitest": "^1.4.0",
-    "vue-tsc": "^2.0.7"
+    "vue-tsc": "^2.0.10"
   }
 }
