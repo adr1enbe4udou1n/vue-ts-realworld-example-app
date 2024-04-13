@@ -18,6 +18,7 @@ declare module 'vue' {
     FavoriteArticle: typeof import('./src/components/Actions/FavoriteArticle.vue')['default']
     FollowProfile: typeof import('./src/components/Actions/FollowProfile.vue')['default']
     FormValidation: typeof import('./src/components/FormValidation.vue')['default']
+    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     HomeLayout: typeof import('./src/components/HomeLayout.vue')['default']
     MarkdownViewer: typeof import('./src/components/MarkdownViewer.vue')['default']
     OffsetPagination: typeof import('./src/components/OffsetPagination.vue')['default']
