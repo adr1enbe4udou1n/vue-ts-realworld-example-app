@@ -17,4 +17,4 @@ tasks:
       - pnpm build
   test:
     cmds:
-      - pnpm test:unit run
+      - pnpm test:unit
