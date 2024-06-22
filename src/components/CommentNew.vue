@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { type Article, createComment, handleValidation } from "@/api"
+import { type Article, createComment, type HandleValidation } from "@/api"
 import { useUserStore } from "@/stores/user"
 import { useMutation, useQueryClient } from "@tanstack/vue-query"
 
@@ -13,13 +13,14 @@ const props = defineProps<{
 const body = ref("")
 
 const mutation = useMutation({
-  mutationFn: () =>
-    handleValidation(createComment, {
-      slug: props.article.slug,
-      comment: {
+  mutationFn: (handleValidation: HandleValidation) =>
+    createComment(
+      props.article.slug,
+      {
         body: body.value,
       },
-    }),
+      handleValidation,
+    ),
   onSuccess: () => {
     queryClient.invalidateQueries({
       queryKey: ["comments", props.article.slug],

@@ -15,25 +15,24 @@ const router = useRouter()
 
 const articlesQuery = useQuery({
   queryFn: () =>
-    getArticle({ slug: props.slug }).then(({ data }) => {
+    getArticle(props.slug).then((article) => {
       useHead({
-        title: `${data.article.title} - Conduit`,
-        meta: [{ name: "description", content: data.article.description }],
+        title: `${article.title} - Conduit`,
+        meta: [{ name: "description", content: article.description }],
       })
-      return data.article
+      return article
     }),
   queryKey: ["articles"],
 })
 
 const commentsQuery = useQuery({
-  queryFn: () =>
-    getComments({ slug: props.slug }).then(({ data }) => data.comments),
-  queryKey: ["comments"],
+  queryFn: () => getComments(props.slug),
+  queryKey: ["comments", props.slug],
 })
 
 const deleteArticleAction = async () => {
   if (confirm("Are you sure?")) {
-    await deleteArticle({ slug: props.slug })
+    await deleteArticle(props.slug)
 
     router.push("/")
   }

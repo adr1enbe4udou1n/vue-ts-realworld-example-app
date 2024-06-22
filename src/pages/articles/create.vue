@@ -4,7 +4,7 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { createArticle, handleValidation } from "@/api"
+import { createArticle, type HandleValidation } from "@/api"
 import { useMutation, useQueryClient } from "@tanstack/vue-query"
 
 const queryClient = useQueryClient()
@@ -18,16 +18,13 @@ const form = ref({
 })
 
 const mutation = useMutation({
-  mutationFn: () =>
-    handleValidation(
-      createArticle,
-      {
-        article: form.value,
-      },
-      ({ article }) => {
-        router.push(`/articles/${article.slug}`)
-      },
-    ),
+  mutationFn: async (handleValidation: HandleValidation) => {
+    const article = await createArticle(form.value, handleValidation)
+
+    if (article) {
+      router.push(`/articles/${article.slug}`)
+    }
+  },
   onSuccess: () => {
     queryClient.invalidateQueries({ queryKey: ["articles"] })
   },

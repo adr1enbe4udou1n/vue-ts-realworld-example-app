@@ -1,118 +1,208 @@
-import {
-  Fetcher,
-  type Middleware,
-  type OpArgType,
-  type OpReturnType,
-  type TypedFetch,
-} from "openapi-typescript-fetch"
+import createClient, { type Middleware } from "openapi-fetch"
 
 import type { components, paths } from "./conduit"
 
-const handleValidation = async <T>(
-  operation: TypedFetch<T>,
-  arg: OpArgType<T>,
-  onSuccess?: (data: OpReturnType<T>) => void,
-): Promise<ValidationProblemDetails | undefined> => {
-  try {
-    const response = await operation(arg)
+const authenticate: Middleware = {
+  async onRequest({ request }) {
+    const token = useLocalStorage("token", null)
 
-    if (response?.ok && onSuccess) {
-      onSuccess(response.data)
+    if (token.value) {
+      request.headers.set("Authorization", `Token ${token.value}`)
     }
-  } catch (e) {
-    if (e instanceof operation.Error) {
-      const error = e.getActualType()
-      if (error.status === 400) {
-        return error.data
-      }
-    }
-  }
+    return request
+  },
 }
 
-const authenticate: Middleware = async (url, init, next) => {
-  const token = useLocalStorage("token", null)
-
-  if (token.value) {
-    init.headers.set("Authorization", `Token ${token.value}`)
-  }
-  const response = await next(url, init)
-  return response
-}
-
-const fetcher = Fetcher.for<paths>()
-
-fetcher.configure({
+const client = createClient<paths>({
   baseUrl: import.meta.env.VITE_CONDUIT_API || "/api",
-  use: [authenticate],
 })
 
+client.use(authenticate)
+
+type HandleValidation = (error: ValidationProblemDetails | undefined) => void
 type Article = components["schemas"]["Article"]
 type Profile = components["schemas"]["Profile"]
 type Comment = components["schemas"]["Comment"]
 type User = components["schemas"]["User"]
+type LoginUser = components["schemas"]["LoginUser"]
+type NewUser = components["schemas"]["NewUser"]
+type UpdateUser = components["schemas"]["UpdateUser"]
+type NewArticle = components["schemas"]["NewArticle"]
+type UpdateArticle = components["schemas"]["UpdateArticle"]
+type NewComment = components["schemas"]["NewComment"]
 type ValidationProblemDetails =
   components["schemas"]["HttpValidationProblemDetails"]
 
-const getArticles = fetcher.path("/articles").method("get").create()
-const getArticlesFeed = fetcher.path("/articles/feed").method("get").create()
-const getArticle = fetcher.path("/articles/{slug}").method("get").create()
-const getProfile = fetcher.path("/profiles/{username}").method("get").create()
-const followProfile = fetcher
-  .path("/profiles/{username}/follow")
-  .method("post")
-  .create()
-const unfollowProfile = fetcher
-  .path("/profiles/{username}/follow")
-  .method("delete")
-  .create()
-const getComments = fetcher
-  .path("/articles/{slug}/comments")
-  .method("get")
-  .create()
-const login = fetcher.path("/users/login").method("post").create()
-const register = fetcher.path("/users").method("post").create()
-const getUser = fetcher.path("/user").method("get").create()
-const updateUser = fetcher.path("/user").method("put").create()
-const getTags = fetcher.path("/tags").method("get").create()
-const createArticle = fetcher.path("/articles").method("post").create()
-const updateArticle = fetcher.path("/articles/{slug}").method("put").create()
-const deleteArticle = fetcher.path("/articles/{slug}").method("delete").create()
-const favoriteArticle = fetcher
-  .path("/articles/{slug}/favorite")
-  .method("post")
-  .create()
-const unfavoriteArticle = fetcher
-  .path("/articles/{slug}/favorite")
-  .method("delete")
-  .create()
-const createComment = fetcher
-  .path("/articles/{slug}/comments")
-  .method("post")
-  .create()
-const deleteComment = fetcher
-  .path("/articles/{slug}/comments/{commentId}")
-  .method("delete")
-  .create()
+const getArticles = (query: {
+  author?: string
+  favorited?: string
+  tag?: string
+  limit?: number
+  offset?: number
+}) => client.GET("/articles", { params: { query } })
+const getArticlesFeed = (query: { limit?: number; offset?: number }) =>
+  client.GET("/articles/feed", { params: { query } })
+const getArticle = (slug: string) =>
+  client
+    .GET("/articles/{slug}", {
+      params: { path: { slug } },
+    })
+    .then(({ data }) => data!.article)
+const getProfile = (username: string) =>
+  client
+    .GET("/profiles/{username}", {
+      params: { path: { username } },
+    })
+    .then(({ data }) => data!.profile)
+const followProfile = (username: string) =>
+  client
+    .POST("/profiles/{username}/follow", {
+      params: { path: { username } },
+    })
+    .then(({ data }) => data!.profile)
+const unfollowProfile = (username: string) =>
+  client
+    .DELETE("/profiles/{username}/follow", {
+      params: { path: { username } },
+    })
+    .then(({ data }) => data!.profile)
+const getComments = (slug: string) =>
+  client
+    .GET("/articles/{slug}/comments", {
+      params: { path: { slug } },
+    })
+    .then(({ data }) => data!.comments)
+const login = (user: LoginUser, handleValidation: HandleValidation) =>
+  client
+    .POST("/users/login", { body: { user } })
+    .then(async ({ data, response, error }) => {
+      if (response.status === 400) {
+        handleValidation(error)
+        return null
+      }
+
+      return data!.user
+    })
+const register = (user: NewUser, handleValidation: HandleValidation) =>
+  client
+    .POST("/users", { body: { user } })
+    .then(async ({ data, response, error }) => {
+      if (response.status === 400) {
+        handleValidation(error)
+        return null
+      }
+
+      return data!.user
+    })
+const getUser = () => client.GET("/user").then(({ data }) => data!.user)
+const updateUser = (user: UpdateUser, handleValidation: HandleValidation) =>
+  client
+    .PUT("/user", { body: { user } })
+    .then(async ({ data, response, error }) => {
+      if (response.status === 400) {
+        handleValidation(error)
+        return null
+      }
+
+      return data!.user
+    })
+const getTags = () => client.GET("/tags").then(({ data }) => data!.tags)
+const createArticle = (
+  article: NewArticle,
+  handleValidation: HandleValidation,
+) =>
+  client
+    .POST("/articles", { body: { article } })
+    .then(async ({ data, response, error }) => {
+      if (response.status === 400) {
+        handleValidation(error)
+        return null
+      }
+
+      return data!.article
+    })
+const updateArticle = (
+  slug: string,
+  article: UpdateArticle,
+  handleValidation: HandleValidation,
+) =>
+  client
+    .PUT("/articles/{slug}", {
+      params: { path: { slug } },
+      body: { article },
+    })
+    .then(async ({ data, response, error }) => {
+      if (response.status === 400) {
+        handleValidation(error)
+        return null
+      }
+
+      return data!.article
+    })
+const deleteArticle = (slug: string) =>
+  client.DELETE("/articles/{slug}", {
+    params: { path: { slug } },
+  })
+const favoriteArticle = (slug: string) =>
+  client
+    .POST("/articles/{slug}/favorite", {
+      params: { path: { slug } },
+    })
+    .then(({ data }) => data!.article)
+const unfavoriteArticle = (slug: string) =>
+  client
+    .DELETE("/articles/{slug}/favorite", {
+      params: { path: { slug } },
+    })
+    .then(({ data }) => data!.article)
+const createComment = (
+  slug: string,
+  comment: NewComment,
+  handleValidation: HandleValidation,
+) =>
+  client
+    .POST("/articles/{slug}/comments", {
+      params: { path: { slug } },
+      body: { comment },
+    })
+    .then(async ({ data, response, error }) => {
+      if (response.status === 400) {
+        handleValidation(error)
+        return null
+      }
+
+      return data!.comment
+    })
+const deleteComment = (slug: string, commentId: number) =>
+  client.DELETE("/articles/{slug}/comments/{commentId}", {
+    params: { path: { slug, commentId } },
+  })
 
 const favoriteArticleToggle = async (article: Article) => {
   if (article.favorited) {
-    await unfavoriteArticle({ slug: article.slug })
+    await unfavoriteArticle(article.slug)
     return
   }
-  await favoriteArticle({ slug: article.slug })
+  await favoriteArticle(article.slug)
 }
 
 const followProfileToggle = async (profile: Profile) => {
   if (profile.following) {
-    await unfollowProfile({ username: profile.username })
+    await unfollowProfile(profile.username)
     return
   }
-  await followProfile({ username: profile.username })
+  await followProfile(profile.username)
 }
 
-export type { Article, Profile, Comment, User, ValidationProblemDetails }
+export type {
+  Article,
+  Profile,
+  Comment,
+  User,
+  ValidationProblemDetails,
+  HandleValidation,
+}
 export {
-  handleValidation,
   getArticles,
   getArticlesFeed,
   getTags,

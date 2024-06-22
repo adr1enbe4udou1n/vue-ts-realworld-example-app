@@ -4,7 +4,7 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { handleValidation, login, type User } from "@/api"
+import { login, type HandleValidation } from "@/api"
 import { router } from "@/plugins/router"
 import { useUserStore } from "@/stores/user"
 
@@ -15,9 +15,13 @@ const form = ref({
   password: "",
 })
 
-const onSuccess = ({ user }: { user: User }) => {
-  userStore.setUser(user)
-  router.push("/")
+const submit = async (handleValidation: HandleValidation) => {
+  const user = await login(form.value, handleValidation)
+
+  if (user) {
+    userStore.setUser(user)
+    router.push("/")
+  }
 }
 </script>
 
@@ -30,12 +34,7 @@ const onSuccess = ({ user }: { user: User }) => {
           No account yet ?
         </router-link>
       </div>
-      <FormValidation
-        flex
-        flex-col
-        gap-4
-        :action="() => handleValidation(login, { user: form }, onSuccess)"
-      >
+      <FormValidation flex flex-col gap-4 :action="submit">
         <div>
           <input
             v-model="form.email"

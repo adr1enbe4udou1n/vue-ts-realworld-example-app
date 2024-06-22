@@ -4,7 +4,7 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { updateUser, type User, handleValidation } from "@/api"
+import { updateUser, type HandleValidation } from "@/api"
 import { useUserStore } from "@/stores/user"
 
 const userStore = useUserStore()
@@ -18,9 +18,13 @@ const form = ref({
   email: userStore.user?.email,
 })
 
-const onSuccess = ({ user }: { user: User }) => {
-  userStore.setUser(user)
-  success.value = true
+const submit = async (handleValidation: HandleValidation) => {
+  const user = await updateUser(form.value, handleValidation)
+
+  if (user) {
+    userStore.setUser(user)
+    success.value = true
+  }
 }
 </script>
 
@@ -30,12 +34,7 @@ const onSuccess = ({ user }: { user: User }) => {
       <div text-center mb-8>
         <h1 font-heading text-4xl dark:text-white>Your settings</h1>
       </div>
-      <FormValidation
-        flex
-        flex-col
-        gap-4
-        :action="() => handleValidation(updateUser, { user: form }, onSuccess)"
-      >
+      <FormValidation flex flex-col gap-4 :action="submit">
         <SuccessMessage v-if="success">
           Your settings have been updated successfully
         </SuccessMessage>

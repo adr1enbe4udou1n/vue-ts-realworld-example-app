@@ -1,18 +1,16 @@
 <script lang="ts" setup>
-import type { ValidationProblemDetails } from "@/api"
+import type { HandleValidation, ValidationProblemDetails } from "@/api"
 
 const props = defineProps<{
-  action: () => Promise<ValidationProblemDetails | undefined>
+  action: (handleValidation: HandleValidation) => void
 }>()
 
-const errors = ref<ValidationProblemDetails | null>(null)
+const errors = ref<ValidationProblemDetails | undefined | null>(null)
 
-const handleValidation = async () => {
-  const errorResponse = await props.action()
-
-  if (errorResponse) {
-    errors.value = errorResponse
-  }
+const handleValidation = () => {
+  props.action((e) => {
+    errors.value = e
+  })
 }
 </script>
 

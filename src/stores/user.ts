@@ -22,9 +22,9 @@ export const useUserStore = defineStore("user", () => {
 
   const fetch = async () => {
     if (!isLoggedIn.value && token.value) {
-      const response = await getUser({})
+      const response = await getUser()
 
-      user.value = response.data.user
+      user.value = response
     }
   }
 

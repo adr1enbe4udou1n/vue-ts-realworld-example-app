@@ -3,7 +3,7 @@ import { getTags } from "@/api"
 import { useQuery } from "@tanstack/vue-query"
 
 const { data } = useQuery({
-  queryFn: () => getTags({}).then(({ data }) => data.tags),
+  queryFn: getTags,
   queryKey: ["tags"],
 })
 

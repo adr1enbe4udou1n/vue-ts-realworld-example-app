@@ -5,7 +5,7 @@ meta:
 </route>
 
 <script setup lang="ts">
-import { updateArticle, getArticle, handleValidation } from "@/api"
+import { updateArticle, getArticle, type HandleValidation } from "@/api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/vue-query"
 
 const queryClient = useQueryClient()
@@ -22,22 +22,19 @@ const form = ref({
 
 const { data } = useQuery({
   queryFn: () =>
-    getArticle({ slug: props.slug }).then(({ data }) => {
-      form.value.title = data.article.title
-      form.value.description = data.article.description
-      form.value.body = data.article.body
+    getArticle(props.slug).then((article) => {
+      form.value.title = article.title
+      form.value.description = article.description
+      form.value.body = article.body
 
-      return data.article
+      return article
     }),
   queryKey: ["articles"],
 })
 
 const mutation = useMutation({
-  mutationFn: () =>
-    handleValidation(updateArticle, {
-      slug: props.slug,
-      article: form.value,
-    }),
+  mutationFn: (handleValidation: HandleValidation) =>
+    updateArticle(props.slug, form.value, handleValidation),
   onSuccess: () => {
     queryClient.invalidateQueries({ queryKey: ["articles", props.slug] })
     router.push(`/articles/${props.slug}`)

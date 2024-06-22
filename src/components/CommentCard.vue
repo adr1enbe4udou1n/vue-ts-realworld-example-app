@@ -12,11 +12,7 @@ const props = defineProps<{
 }>()
 
 const mutation = useMutation({
-  mutationFn: () =>
-    deleteComment({
-      slug: props.slug,
-      commentId: props.comment.id,
-    }),
+  mutationFn: () => deleteComment(props.slug, props.comment.id),
   onSuccess: () => {
     queryClient.invalidateQueries({ queryKey: ["comments", props.slug] })
   },
