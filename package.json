@@ -15,7 +15,7 @@
     "openapi": "openapi-typescript http://localhost:5000/api/v1/docs.json --output src/api/conduit.ts"
   },
   "dependencies": {
-    "@tanstack/vue-query": "^5.48.2",
+    "@tanstack/vue-query": "^5.49.0",
     "@vueuse/core": "^10.11.0",
     "@vueuse/head": "^2.0.0",
     "marked": "^13.0.1",
