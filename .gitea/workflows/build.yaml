@@ -18,7 +18,8 @@ jobs:
         with:
           node-version: 20
           cache: "pnpm"
-      - run: |
+      - name: Build
+        run: |
           sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
           task prepare install lint build test
       - uses: https://gitea.okami101.io/okami101/docker-action@main
