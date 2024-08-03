@@ -13,10 +13,10 @@ jobs:
       - uses: pnpm/action-setup@v4
         with:
           run_install: false
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "pnpm"
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+      #     cache: "pnpm"
       - name: Build test
         run: |
           sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
