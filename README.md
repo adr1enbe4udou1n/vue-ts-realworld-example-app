@@ -2,8 +2,6 @@
 
 The frontend side **Vue 3** codebase containing realworld example that adheres to the [RealWorld](https://github.com/gothinkster/realworld-example-apps) spec and API. Written fully in **Typescript** on **Composition API**
 
-[![CI](https://concourse.okami101.io/api/v1/teams/main/pipelines/conduit-vue-ts/badge)](https://concourse.okami101.io/teams/main/pipelines/conduit-vue-ts)
-
 ## [RealWorld](https://github.com/gothinkster/realworld)
 
 This codebase was created to demonstrate a fully fledged frontend application built with last version of **Vue** that adhere to the conduit API specification.
