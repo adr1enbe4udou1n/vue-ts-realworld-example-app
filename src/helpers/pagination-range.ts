@@ -42,7 +42,7 @@ const usePagesBuilder = (currentPage: number, pageCount: number) => {
 
   paginator = paginator.concat(pages)
 
-  if (pages[pages.length - 1] < pageCount) {
+  if (pages[pages.length - 1] ?? 0 < pageCount) {
     paginator = paginator.concat(withDots(pageCount, ["...", pageCount]))
   }
 
