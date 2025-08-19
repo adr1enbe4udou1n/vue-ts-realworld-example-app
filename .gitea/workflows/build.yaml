@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: 22
           cache: "pnpm"
-      - uses: https://forge.okami101.io/okami101/actions/task@main
+      - uses: https://gitea.okami101.io/okami101/actions/task@main
       - name: Cache sonar
         uses: actions/cache@v4
         with:
@@ -25,7 +25,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
-      - uses: https://forge.okami101.io/okami101/actions/docker@main
+      - uses: https://gitea.okami101.io/okami101/actions/docker@main
         with:
           password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
           gitea-token: ${{ secrets.RELEASE_TOKEN }}
