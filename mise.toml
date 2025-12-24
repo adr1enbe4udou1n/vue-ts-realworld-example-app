@@ -1,0 +1,15 @@
+[tasks.vendor]
+run = "pnpm i"
+
+[tasks.lint]
+run = "pnpm lint"
+
+[tasks.build]
+run = "pnpm build"
+
+[tasks.test]
+run = "pnpm test:unit"
+
+[tools]
+node = "24"
+pnpm = "10"
