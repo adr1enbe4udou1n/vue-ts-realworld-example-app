@@ -10,6 +10,14 @@ run = "pnpm build"
 [tasks.test]
 run = "pnpm test:unit"
 
+[tasks.ci]
+run = [
+  { task = "vendor" },
+  { task = "lint" },
+  { task = "build" },
+  { task = "test" },
+]
+
 [tools]
 node = "24"
 pnpm = "10"
