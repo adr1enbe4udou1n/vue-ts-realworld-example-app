@@ -14,8 +14,8 @@ jobs:
       - name: pnpm cache
         uses: actions/cache@v5
         with:
-          path: /root/.local/share/pnpm/store
-          key: ${{ runner.os }}-pnpm-store
+          path: /app/.pnpm-store
+          key: ${{ runner.os }}-pnpm
       - name: sonar cache
         uses: actions/cache@v5
         with:
