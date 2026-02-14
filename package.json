@@ -24,7 +24,7 @@
     "openapi-fetch": "^0.17.0",
     "pinia": "^3.0.4",
     "vue": "^3.5.28",
-    "vue-router": "^5.0.2"
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
@@ -57,6 +57,7 @@
     "unplugin-vue-router": "^0.19.2",
     "vite": "^7.3.1",
     "vitest": "^4.0.18",
+    "vue-eslint-parser": "^10.4.0",
     "vue-tsc": "3.2.4"
   }
 }
