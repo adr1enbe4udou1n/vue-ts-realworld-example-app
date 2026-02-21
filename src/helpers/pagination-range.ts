@@ -1,7 +1,5 @@
 const getRange = (start: number, end: number) => {
-  return Array(end - start + 1)
-    .fill(null)
-    .map((v, i) => i + start)
+  return new Array(end - start + 1).fill(null).map((v, i) => i + start)
 }
 
 const usePagesBuilder = (currentPage: number, pageCount: number) => {
@@ -32,7 +30,7 @@ const usePagesBuilder = (currentPage: number, pageCount: number) => {
       : getRange(1, Math.min(pageCount, delta + 1))
 
   const withDots = (value: number, pair: (number | string)[]) =>
-    pages.length + 1 !== pageCount ? pair : [value]
+    pages.length + 1 === pageCount ? [value] : pair
 
   let paginator: (number | string)[] = []
 
