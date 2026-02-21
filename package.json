@@ -24,10 +24,10 @@
     "openapi-fetch": "^0.17.0",
     "pinia": "^3.0.4",
     "vue": "^3.5.28",
-    "vue-router": "^4.6.4"
+    "vue-router": "^5.0.3"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.3",
+    "@eslint/js": "^10.0.1",
     "@iconify-json/carbon": "^1.2.18",
     "@tsconfig/node20": "^20.1.9",
     "@types/jsdom": "^27.0.0",
@@ -40,7 +40,7 @@
     "@vue/runtime-core": "^3.5.28",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.8.1",
-    "eslint": "^9.39.3",
+    "eslint": "^10.0.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-vue": "^10.8.0",
@@ -58,6 +58,6 @@
     "vite": "^7.3.1",
     "vitest": "^4.0.18",
     "vue-eslint-parser": "^10.4.0",
-    "vue-tsc": "3.2.4"
+    "vue-tsc": "3.2.5"
   }
 }
