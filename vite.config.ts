@@ -6,8 +6,8 @@ import Vue from "@vitejs/plugin-vue"
 import UnoCSS from "unocss/vite"
 import Components from "unplugin-vue-components/vite"
 import AutoImport from "unplugin-auto-import/vite"
-import VueRouter from "unplugin-vue-router/vite"
-import { VueRouterAutoImports } from "unplugin-vue-router"
+import VueRouter from "vue-router/vite"
+import { VueRouterAutoImports } from "vue-router/unplugin"
 
 // https://vitejs.dev/config/
 export default defineConfig({
