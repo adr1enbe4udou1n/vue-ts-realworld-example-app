@@ -20,8 +20,9 @@ import type {
 
 declare module 'vue-router' {
   interface TypesConfig {
-    ParamParsers:
-      | never
+    _ParamParsers: {}
+    RouteNamedMap: import('vue-router/auto-routes').RouteNamedMap
+    _RouteFileInfoMap: import('vue-router/auto-routes')._RouteFileInfoMap
   }
 }
 
@@ -118,11 +119,15 @@ declare module 'vue-router/auto-routes' {
         | '/'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'src/pages/articles/[slug]/index.vue': {
       routes:
         | '/articles/[slug]/'
       views:
+        | never
+      pathParamNames:
         | never
     }
     'src/pages/articles/[slug]/edit.vue': {
@@ -130,11 +135,15 @@ declare module 'vue-router/auto-routes' {
         | '/articles/[slug]/edit'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'src/pages/articles/create.vue': {
       routes:
         | '/articles/create'
       views:
+        | never
+      pathParamNames:
         | never
     }
     'src/pages/feed.vue': {
@@ -142,11 +151,15 @@ declare module 'vue-router/auto-routes' {
         | '/feed'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'src/pages/login.vue': {
       routes:
         | '/login'
       views:
+        | never
+      pathParamNames:
         | never
     }
     'src/pages/profiles/[username]/index.vue': {
@@ -154,11 +167,15 @@ declare module 'vue-router/auto-routes' {
         | '/profiles/[username]/'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'src/pages/profiles/[username]/favorites.vue': {
       routes:
         | '/profiles/[username]/favorites'
       views:
+        | never
+      pathParamNames:
         | never
     }
     'src/pages/register.vue': {
@@ -166,11 +183,15 @@ declare module 'vue-router/auto-routes' {
         | '/register'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'src/pages/settings.vue': {
       routes:
         | '/settings'
       views:
+        | never
+      pathParamNames:
         | never
     }
   }
