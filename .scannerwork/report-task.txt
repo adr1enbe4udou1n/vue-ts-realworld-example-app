@@ -1,6 +1,0 @@
-projectKey=vue-ts-realworld
-serverUrl=https://sonarqube.okami101.io
-serverVersion=26.8.0.126808
-dashboardUrl=https://sonarqube.okami101.io/dashboard?id=vue-ts-realworld
-ceTaskId=5dc10954-f6e3-477c-9755-6778335fe06d
-ceTaskUrl=https://sonarqube.okami101.io/api/ce/task?id=5dc10954-f6e3-477c-9755-6778335fe06d
