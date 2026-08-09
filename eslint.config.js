@@ -5,6 +5,7 @@ import pluginVue from "eslint-plugin-vue"
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
 
 export default [
+  { ignores: ["src/api/client/**"] },
   { files: ["**/*.{js,mjs,cjs,ts,vue}"] },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,

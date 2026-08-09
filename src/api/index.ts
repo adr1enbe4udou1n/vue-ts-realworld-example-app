@@ -1,37 +1,69 @@
-import createClient, { type Middleware } from "openapi-fetch"
+import { client } from "./client/client.gen"
+import {
+  createArticle as createArticleRequest,
+  createArticleComment,
+  createArticleFavorite,
+  createUser,
+  deleteArticle as deleteArticleRequest,
+  deleteArticleComment,
+  deleteArticleFavorite,
+  followUserByUsername,
+  getArticle as getArticleRequest,
+  getArticleComments,
+  getArticles as getArticlesRequest,
+  getArticlesFeed as getArticlesFeedRequest,
+  getCurrentUser,
+  getProfileByUsername,
+  getTags as getTagsRequest,
+  login as loginRequest,
+  unfollowUserByUsername,
+  updateArticle as updateArticleRequest,
+  updateCurrentUser,
+} from "./client/sdk.gen"
+import type {
+  Article,
+  Comment,
+  HttpValidationProblemDetails as ValidationProblemDetails,
+  LoginUser,
+  NewArticle,
+  NewComment,
+  NewUser,
+  Profile,
+  UpdateArticle,
+  UpdateUser,
+  User,
+} from "./client/types.gen"
 
-import type { components, paths } from "./conduit"
-
-const authenticate: Middleware = {
-  async onRequest({ request }) {
-    const token = useLocalStorage("token", null)
-
-    if (token.value) {
-      request.headers.set("Authorization", `Token ${token.value}`)
-    }
-    return request
-  },
-}
-
-const client = createClient<paths>({
+client.setConfig({
   baseUrl: import.meta.env.VITE_CONDUIT_API || "/api",
 })
 
-client.use(authenticate)
+client.interceptors.request.use((request) => {
+  const token = useLocalStorage("token", null)
+
+  if (token.value) {
+    request.headers.set("Authorization", `Token ${token.value}`)
+  }
+  return request
+})
 
 type HandleValidation = (error: ValidationProblemDetails | undefined) => void
-type Article = components["schemas"]["Article"]
-type Profile = components["schemas"]["Profile"]
-type Comment = components["schemas"]["Comment"]
-type User = components["schemas"]["User"]
-type LoginUser = components["schemas"]["LoginUser"]
-type NewUser = components["schemas"]["NewUser"]
-type UpdateUser = components["schemas"]["UpdateUser"]
-type NewArticle = components["schemas"]["NewArticle"]
-type UpdateArticle = components["schemas"]["UpdateArticle"]
-type NewComment = components["schemas"]["NewComment"]
-type ValidationProblemDetails =
-  components["schemas"]["HttpValidationProblemDetails"]
+
+const handleResponseValidation = <T>(
+  result: {
+    data?: T
+    error?: unknown
+    response?: Response
+  },
+  handleValidation: HandleValidation,
+) => {
+  if (result.response?.status === 400) {
+    handleValidation(result.error as ValidationProblemDetails)
+    return null
+  }
+
+  return result.data!
+}
 
 const getArticles = (query: {
   author?: string
@@ -39,144 +71,71 @@ const getArticles = (query: {
   tag?: string
   limit?: number
   offset?: number
-}) => client.GET("/articles", { params: { query } })
+}) => getArticlesRequest({ query })
 const getArticlesFeed = (query: { limit?: number; offset?: number }) =>
-  client.GET("/articles/feed", { params: { query } })
+  getArticlesFeedRequest({ query })
 const getArticle = (slug: string) =>
-  client
-    .GET("/articles/{slug}", {
-      params: { path: { slug } },
-    })
-    .then(({ data }) => data!.article)
+  getArticleRequest({ path: { slug } }).then(({ data }) => data!.article)
 const getProfile = (username: string) =>
-  client
-    .GET("/profiles/{username}", {
-      params: { path: { username } },
-    })
-    .then(({ data }) => data!.profile)
+  getProfileByUsername({ path: { username } }).then(({ data }) => data!.profile)
 const followProfile = (username: string) =>
-  client
-    .POST("/profiles/{username}/follow", {
-      params: { path: { username } },
-    })
-    .then(({ data }) => data!.profile)
+  followUserByUsername({ path: { username } }).then(({ data }) => data!.profile)
 const unfollowProfile = (username: string) =>
-  client
-    .DELETE("/profiles/{username}/follow", {
-      params: { path: { username } },
-    })
-    .then(({ data }) => data!.profile)
+  unfollowUserByUsername({ path: { username } }).then(
+    ({ data }) => data!.profile,
+  )
 const getComments = (slug: string) =>
-  client
-    .GET("/articles/{slug}/comments", {
-      params: { path: { slug } },
-    })
-    .then(({ data }) => data!.comments)
+  getArticleComments({ path: { slug } }).then(({ data }) => data!.comments)
 const login = (user: LoginUser, handleValidation: HandleValidation) =>
-  client
-    .POST("/users/login", { body: { user } })
-    .then(async ({ data, response, error }) => {
-      if (response.status === 400) {
-        handleValidation(error)
-        return null
-      }
-
-      return data!.user
-    })
+  loginRequest({ body: { user } }).then((result) => {
+    const data = handleResponseValidation(result, handleValidation)
+    return data?.user ?? null
+  })
 const register = (user: NewUser, handleValidation: HandleValidation) =>
-  client
-    .POST("/users", { body: { user } })
-    .then(async ({ data, response, error }) => {
-      if (response.status === 400) {
-        handleValidation(error)
-        return null
-      }
-
-      return data!.user
-    })
-const getUser = () => client.GET("/user").then(({ data }) => data!.user)
+  createUser({ body: { user } }).then((result) => {
+    const data = handleResponseValidation(result, handleValidation)
+    return data?.user ?? null
+  })
+const getUser = () => getCurrentUser().then(({ data }) => data!.user)
 const updateUser = (user: UpdateUser, handleValidation: HandleValidation) =>
-  client
-    .PUT("/user", { body: { user } })
-    .then(async ({ data, response, error }) => {
-      if (response.status === 400) {
-        handleValidation(error)
-        return null
-      }
-
-      return data!.user
-    })
-const getTags = () => client.GET("/tags").then(({ data }) => data!.tags)
+  updateCurrentUser({ body: { user } }).then((result) => {
+    const data = handleResponseValidation(result, handleValidation)
+    return data?.user ?? null
+  })
+const getTags = () => getTagsRequest().then(({ data }) => data!.tags)
 const createArticle = (
   article: NewArticle,
   handleValidation: HandleValidation,
 ) =>
-  client
-    .POST("/articles", { body: { article } })
-    .then(async ({ data, response, error }) => {
-      if (response.status === 400) {
-        handleValidation(error)
-        return null
-      }
-
-      return data!.article
-    })
+  createArticleRequest({ body: { article } }).then((result) => {
+    const data = handleResponseValidation(result, handleValidation)
+    return data?.article ?? null
+  })
 const updateArticle = (
   slug: string,
   article: UpdateArticle,
   handleValidation: HandleValidation,
 ) =>
-  client
-    .PUT("/articles/{slug}", {
-      params: { path: { slug } },
-      body: { article },
-    })
-    .then(async ({ data, response, error }) => {
-      if (response.status === 400) {
-        handleValidation(error)
-        return null
-      }
-
-      return data!.article
-    })
-const deleteArticle = (slug: string) =>
-  client.DELETE("/articles/{slug}", {
-    params: { path: { slug } },
+  updateArticleRequest({ path: { slug }, body: { article } }).then((result) => {
+    const data = handleResponseValidation(result, handleValidation)
+    return data?.article ?? null
   })
+const deleteArticle = (slug: string) => deleteArticleRequest({ path: { slug } })
 const favoriteArticle = (slug: string) =>
-  client
-    .POST("/articles/{slug}/favorite", {
-      params: { path: { slug } },
-    })
-    .then(({ data }) => data!.article)
+  createArticleFavorite({ path: { slug } }).then(({ data }) => data!.article)
 const unfavoriteArticle = (slug: string) =>
-  client
-    .DELETE("/articles/{slug}/favorite", {
-      params: { path: { slug } },
-    })
-    .then(({ data }) => data!.article)
+  deleteArticleFavorite({ path: { slug } }).then(({ data }) => data!.article)
 const createComment = (
   slug: string,
   comment: NewComment,
   handleValidation: HandleValidation,
 ) =>
-  client
-    .POST("/articles/{slug}/comments", {
-      params: { path: { slug } },
-      body: { comment },
-    })
-    .then(async ({ data, response, error }) => {
-      if (response.status === 400) {
-        handleValidation(error)
-        return null
-      }
-
-      return data!.comment
-    })
-const deleteComment = (slug: string, commentId: number) =>
-  client.DELETE("/articles/{slug}/comments/{commentId}", {
-    params: { path: { slug, commentId } },
+  createArticleComment({ path: { slug }, body: { comment } }).then((result) => {
+    const data = handleResponseValidation(result, handleValidation)
+    return data?.comment ?? null
   })
+const deleteComment = (slug: string, commentId: number) =>
+  deleteArticleComment({ path: { slug, commentId } })
 
 const favoriteArticleToggle = async (article: Article) => {
   if (article.favorited) {

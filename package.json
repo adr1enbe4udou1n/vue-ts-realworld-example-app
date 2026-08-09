@@ -12,7 +12,7 @@
     "type-check": "vue-tsc --build --force",
     "lint": "eslint src/**/*.{ts,vue}",
     "format": "prettier --write src/",
-    "openapi": "openapi-typescript http://localhost:5000/api/v1/swagger.json --output src/api/conduit.ts"
+    "openapi": "openapi-ts"
   },
   "dependencies": {
     "@tanstack/vue-query": "^5.101.4",
@@ -20,13 +20,13 @@
     "@vueuse/head": "^2.0.0",
     "marked": "^18.0.9",
     "nprogress": "^0.2.0",
-    "openapi-fetch": "^0.17.0",
     "pinia": "^3.0.4",
     "vue": "^3.5.41",
     "vue-router": "^5.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@hey-api/openapi-ts": "0.99.0",
     "@iconify-json/carbon": "^1.2.25",
     "@tsconfig/node20": "^20.1.9",
     "@types/jsdom": "^30.0.0",
@@ -46,7 +46,6 @@
     "globals": "^17.9.0",
     "jsdom": "^30.0.1",
     "npm-run-all2": "^9.0.3",
-    "openapi-typescript": "^7.13.0",
     "prettier": "^3.9.6",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.66.0",
