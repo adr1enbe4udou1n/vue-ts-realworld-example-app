@@ -13,7 +13,7 @@ import { VueRouterAutoImports } from "vue-router/unplugin"
 export default defineConfig({
   resolve: {
     alias: {
-      "@/": `${path.resolve(__dirname, "src")}/`,
+      "@/": `${path.resolve(import.meta.dirname, "src")}/`,
     },
   },
   plugins: [
