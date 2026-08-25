@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { favoriteArticleToggle, type Article } from "@/api"
+import { favoriteArticleToggle, type ArticlePreview } from "@/api"
 import { useUserStore } from "@/stores/user"
 import { useMutation, useQueryClient } from "@tanstack/vue-query"
 
@@ -8,7 +8,7 @@ const userStore = useUserStore()
 
 const props = withDefaults(
   defineProps<{
-    article: Article
+    article: ArticlePreview
     full?: boolean
   }>(),
   {

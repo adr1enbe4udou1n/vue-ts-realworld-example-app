@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { Article } from "@/api"
+import type { ArticlePreview } from "@/api"
 
 withDefaults(
   defineProps<{
-    article: Article
+    article: ArticlePreview
     tag?: string | null
   }>(),
   {

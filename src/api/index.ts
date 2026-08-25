@@ -23,7 +23,7 @@ import {
 import type {
   Article,
   Comment,
-  HttpValidationProblemDetails as ValidationProblemDetails,
+  GenericErrorModel as ValidationProblemDetails,
   LoginUser,
   NewArticle,
   NewComment,
@@ -135,9 +135,11 @@ const createComment = (
     return data?.comment ?? null
   })
 const deleteComment = (slug: string, commentId: number) =>
-  deleteArticleComment({ path: { slug, commentId } })
+  deleteArticleComment({ path: { slug, id: commentId } })
 
-const favoriteArticleToggle = async (article: Article) => {
+type ArticlePreview = Omit<Article, "body">
+
+const favoriteArticleToggle = async (article: ArticlePreview) => {
   if (article.favorited) {
     await unfavoriteArticle(article.slug)
     return
@@ -155,6 +157,7 @@ const followProfileToggle = async (profile: Profile) => {
 
 export type {
   Article,
+  ArticlePreview,
   Profile,
   Comment,
   User,

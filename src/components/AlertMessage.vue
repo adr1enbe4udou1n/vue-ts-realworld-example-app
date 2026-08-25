@@ -14,9 +14,6 @@ defineEmits(["close"])
       <i i-carbon-close block />
     </button>
 
-    <p font-bold>
-      {{ errors.title }}
-    </p>
     <ul>
       <li v-for="(list, name) in errors.errors" :key="name">
         <strong>{{ name }} :</strong>
