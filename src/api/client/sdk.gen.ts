@@ -2,7 +2,7 @@
 
 import type { Client, ClientMeta, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CreateArticleCommentData, CreateArticleCommentErrors, CreateArticleCommentResponses, CreateArticleData, CreateArticleErrors, CreateArticleFavoriteData, CreateArticleFavoriteResponses, CreateArticleResponses, CreateUserData, CreateUserResponses, DeleteArticleCommentData, DeleteArticleCommentResponses, DeleteArticleData, DeleteArticleFavoriteData, DeleteArticleFavoriteResponses, DeleteArticleResponses, FollowUserByUsernameData, FollowUserByUsernameResponses, GetArticleCommentsData, GetArticleCommentsResponses, GetArticleData, GetArticleResponses, GetArticlesData, GetArticlesFeedData, GetArticlesFeedResponses, GetArticlesResponses, GetCurrentUserData, GetCurrentUserResponses, GetProfileByUsernameData, GetProfileByUsernameResponses, GetTagsData, GetTagsResponses, LoginData, LoginErrors, LoginResponses, UnfollowUserByUsernameData, UnfollowUserByUsernameResponses, UpdateArticleData, UpdateArticleErrors, UpdateArticleResponses, UpdateCurrentUserData, UpdateCurrentUserErrors, UpdateCurrentUserResponses } from './types.gen';
+import type { CreateArticleCommentData, CreateArticleCommentErrors, CreateArticleCommentResponses, CreateArticleData, CreateArticleErrors, CreateArticleFavoriteData, CreateArticleFavoriteErrors, CreateArticleFavoriteResponses, CreateArticleResponses, CreateUserData, CreateUserErrors, CreateUserResponses, DeleteArticleCommentData, DeleteArticleCommentErrors, DeleteArticleCommentResponses, DeleteArticleData, DeleteArticleErrors, DeleteArticleFavoriteData, DeleteArticleFavoriteErrors, DeleteArticleFavoriteResponses, DeleteArticleResponses, FollowUserByUsernameData, FollowUserByUsernameErrors, FollowUserByUsernameResponses, GetArticleCommentsData, GetArticleCommentsErrors, GetArticleCommentsResponses, GetArticleData, GetArticleErrors, GetArticleResponses, GetArticlesData, GetArticlesErrors, GetArticlesFeedData, GetArticlesFeedErrors, GetArticlesFeedResponses, GetArticlesResponses, GetCurrentUserData, GetCurrentUserErrors, GetCurrentUserResponses, GetProfileByUsernameData, GetProfileByUsernameErrors, GetProfileByUsernameResponses, GetTagsData, GetTagsErrors, GetTagsResponses, LoginData, LoginErrors, LoginResponses, UnfollowUserByUsernameData, UnfollowUserByUsernameErrors, UnfollowUserByUsernameResponses, UpdateArticleData, UpdateArticleErrors, UpdateArticleResponses, UpdateCurrentUserData, UpdateCurrentUserErrors, UpdateCurrentUserResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -23,7 +23,11 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
  *
  * Gets the currently logged-in user
  */
-export const getCurrentUser = <ThrowOnError extends boolean = false>(options?: Options<GetCurrentUserData, ThrowOnError>): RequestResult<GetCurrentUserResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetCurrentUserResponses, unknown, ThrowOnError>({ url: '/user', ...options });
+export const getCurrentUser = <ThrowOnError extends boolean = false>(options?: Options<GetCurrentUserData, ThrowOnError>): RequestResult<GetCurrentUserResponses, GetCurrentUserErrors, ThrowOnError> => (options?.client ?? client).get<GetCurrentUserResponses, GetCurrentUserErrors, ThrowOnError>({
+    security: [{ name: 'Authorization', type: 'apiKey' }],
+    url: '/user',
+    ...options
+});
 
 /**
  * Update current user
@@ -31,6 +35,7 @@ export const getCurrentUser = <ThrowOnError extends boolean = false>(options?: O
  * Updated user information for current user
  */
 export const updateCurrentUser = <ThrowOnError extends boolean = false>(options: Options<UpdateCurrentUserData, ThrowOnError>): RequestResult<UpdateCurrentUserResponses, UpdateCurrentUserErrors, ThrowOnError> => (options.client ?? client).put<UpdateCurrentUserResponses, UpdateCurrentUserErrors, ThrowOnError>({
+    security: [{ name: 'Authorization', type: 'apiKey' }],
     url: '/user',
     ...options,
     headers: {
@@ -44,7 +49,7 @@ export const updateCurrentUser = <ThrowOnError extends boolean = false>(options:
  *
  * Register a new user
  */
-export const createUser = <ThrowOnError extends boolean = false>(options: Options<CreateUserData, ThrowOnError>): RequestResult<CreateUserResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateUserResponses, unknown, ThrowOnError>({
+export const createUser = <ThrowOnError extends boolean = false>(options: Options<CreateUserData, ThrowOnError>): RequestResult<CreateUserResponses, CreateUserErrors, ThrowOnError> => (options.client ?? client).post<CreateUserResponses, CreateUserErrors, ThrowOnError>({
     url: '/users',
     ...options,
     headers: {
@@ -72,35 +77,43 @@ export const login = <ThrowOnError extends boolean = false>(options: Options<Log
  *
  * Get a profile of a user of the system. Auth is optional
  */
-export const getProfileByUsername = <ThrowOnError extends boolean = false>(options: Options<GetProfileByUsernameData, ThrowOnError>): RequestResult<GetProfileByUsernameResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetProfileByUsernameResponses, unknown, ThrowOnError>({ url: '/profiles/{username}', ...options });
+export const getProfileByUsername = <ThrowOnError extends boolean = false>(options: Options<GetProfileByUsernameData, ThrowOnError>): RequestResult<GetProfileByUsernameResponses, GetProfileByUsernameErrors, ThrowOnError> => (options.client ?? client).get<GetProfileByUsernameResponses, GetProfileByUsernameErrors, ThrowOnError>({ url: '/profiles/{username}', ...options });
 
 /**
  * Unfollow a user
  *
  * Unfollow a user by username
  */
-export const unfollowUserByUsername = <ThrowOnError extends boolean = false>(options: Options<UnfollowUserByUsernameData, ThrowOnError>): RequestResult<UnfollowUserByUsernameResponses, unknown, ThrowOnError> => (options.client ?? client).delete<UnfollowUserByUsernameResponses, unknown, ThrowOnError>({ url: '/profiles/{username}/follow', ...options });
+export const unfollowUserByUsername = <ThrowOnError extends boolean = false>(options: Options<UnfollowUserByUsernameData, ThrowOnError>): RequestResult<UnfollowUserByUsernameResponses, UnfollowUserByUsernameErrors, ThrowOnError> => (options.client ?? client).delete<UnfollowUserByUsernameResponses, UnfollowUserByUsernameErrors, ThrowOnError>({
+    security: [{ name: 'Authorization', type: 'apiKey' }],
+    url: '/profiles/{username}/follow',
+    ...options
+});
 
 /**
  * Follow a user
  *
  * Follow a user by username
  */
-export const followUserByUsername = <ThrowOnError extends boolean = false>(options: Options<FollowUserByUsernameData, ThrowOnError>): RequestResult<FollowUserByUsernameResponses, unknown, ThrowOnError> => (options.client ?? client).post<FollowUserByUsernameResponses, unknown, ThrowOnError>({ url: '/profiles/{username}/follow', ...options });
+export const followUserByUsername = <ThrowOnError extends boolean = false>(options: Options<FollowUserByUsernameData, ThrowOnError>): RequestResult<FollowUserByUsernameResponses, FollowUserByUsernameErrors, ThrowOnError> => (options.client ?? client).post<FollowUserByUsernameResponses, FollowUserByUsernameErrors, ThrowOnError>({
+    security: [{ name: 'Authorization', type: 'apiKey' }],
+    url: '/profiles/{username}/follow',
+    ...options
+});
 
 /**
  * Get tags
  *
  * Get tags. Auth not required
  */
-export const getTags = <ThrowOnError extends boolean = false>(options?: Options<GetTagsData, ThrowOnError>): RequestResult<GetTagsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetTagsResponses, unknown, ThrowOnError>({ url: '/tags', ...options });
+export const getTags = <ThrowOnError extends boolean = false>(options?: Options<GetTagsData, ThrowOnError>): RequestResult<GetTagsResponses, GetTagsErrors, ThrowOnError> => (options?.client ?? client).get<GetTagsResponses, GetTagsErrors, ThrowOnError>({ url: '/tags', ...options });
 
 /**
  * Get recent articles globally
  *
  * Get most recent articles globally. Use query parameters to filter results. Auth is optional
  */
-export const getArticles = <ThrowOnError extends boolean = false>(options?: Options<GetArticlesData, ThrowOnError>): RequestResult<GetArticlesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetArticlesResponses, unknown, ThrowOnError>({ url: '/articles', ...options });
+export const getArticles = <ThrowOnError extends boolean = false>(options?: Options<GetArticlesData, ThrowOnError>): RequestResult<GetArticlesResponses, GetArticlesErrors, ThrowOnError> => (options?.client ?? client).get<GetArticlesResponses, GetArticlesErrors, ThrowOnError>({ url: '/articles', ...options });
 
 /**
  * Create an article
@@ -108,6 +121,7 @@ export const getArticles = <ThrowOnError extends boolean = false>(options?: Opti
  * Create an article. Auth is required
  */
 export const createArticle = <ThrowOnError extends boolean = false>(options: Options<CreateArticleData, ThrowOnError>): RequestResult<CreateArticleResponses, CreateArticleErrors, ThrowOnError> => (options.client ?? client).post<CreateArticleResponses, CreateArticleErrors, ThrowOnError>({
+    security: [{ name: 'Authorization', type: 'apiKey' }],
     url: '/articles',
     ...options,
     headers: {
@@ -121,21 +135,29 @@ export const createArticle = <ThrowOnError extends boolean = false>(options: Opt
  *
  * Get most recent articles from users you follow. Use query parameters to limit. Auth is required
  */
-export const getArticlesFeed = <ThrowOnError extends boolean = false>(options?: Options<GetArticlesFeedData, ThrowOnError>): RequestResult<GetArticlesFeedResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetArticlesFeedResponses, unknown, ThrowOnError>({ url: '/articles/feed', ...options });
+export const getArticlesFeed = <ThrowOnError extends boolean = false>(options?: Options<GetArticlesFeedData, ThrowOnError>): RequestResult<GetArticlesFeedResponses, GetArticlesFeedErrors, ThrowOnError> => (options?.client ?? client).get<GetArticlesFeedResponses, GetArticlesFeedErrors, ThrowOnError>({
+    security: [{ name: 'Authorization', type: 'apiKey' }],
+    url: '/articles/feed',
+    ...options
+});
 
 /**
  * Delete an article
  *
  * Delete an article. Auth is required
  */
-export const deleteArticle = <ThrowOnError extends boolean = false>(options: Options<DeleteArticleData, ThrowOnError>): RequestResult<DeleteArticleResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteArticleResponses, unknown, ThrowOnError>({ url: '/articles/{slug}', ...options });
+export const deleteArticle = <ThrowOnError extends boolean = false>(options: Options<DeleteArticleData, ThrowOnError>): RequestResult<DeleteArticleResponses, DeleteArticleErrors, ThrowOnError> => (options.client ?? client).delete<DeleteArticleResponses, DeleteArticleErrors, ThrowOnError>({
+    security: [{ name: 'Authorization', type: 'apiKey' }],
+    url: '/articles/{slug}',
+    ...options
+});
 
 /**
  * Get an article
  *
  * Get an article. Auth not required
  */
-export const getArticle = <ThrowOnError extends boolean = false>(options: Options<GetArticleData, ThrowOnError>): RequestResult<GetArticleResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetArticleResponses, unknown, ThrowOnError>({ url: '/articles/{slug}', ...options });
+export const getArticle = <ThrowOnError extends boolean = false>(options: Options<GetArticleData, ThrowOnError>): RequestResult<GetArticleResponses, GetArticleErrors, ThrowOnError> => (options.client ?? client).get<GetArticleResponses, GetArticleErrors, ThrowOnError>({ url: '/articles/{slug}', ...options });
 
 /**
  * Update an article
@@ -143,6 +165,7 @@ export const getArticle = <ThrowOnError extends boolean = false>(options: Option
  * Update an article. Auth is required
  */
 export const updateArticle = <ThrowOnError extends boolean = false>(options: Options<UpdateArticleData, ThrowOnError>): RequestResult<UpdateArticleResponses, UpdateArticleErrors, ThrowOnError> => (options.client ?? client).put<UpdateArticleResponses, UpdateArticleErrors, ThrowOnError>({
+    security: [{ name: 'Authorization', type: 'apiKey' }],
     url: '/articles/{slug}',
     ...options,
     headers: {
@@ -156,21 +179,29 @@ export const updateArticle = <ThrowOnError extends boolean = false>(options: Opt
  *
  * Unfavorite an article. Auth is required
  */
-export const deleteArticleFavorite = <ThrowOnError extends boolean = false>(options: Options<DeleteArticleFavoriteData, ThrowOnError>): RequestResult<DeleteArticleFavoriteResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteArticleFavoriteResponses, unknown, ThrowOnError>({ url: '/articles/{slug}/favorite', ...options });
+export const deleteArticleFavorite = <ThrowOnError extends boolean = false>(options: Options<DeleteArticleFavoriteData, ThrowOnError>): RequestResult<DeleteArticleFavoriteResponses, DeleteArticleFavoriteErrors, ThrowOnError> => (options.client ?? client).delete<DeleteArticleFavoriteResponses, DeleteArticleFavoriteErrors, ThrowOnError>({
+    security: [{ name: 'Authorization', type: 'apiKey' }],
+    url: '/articles/{slug}/favorite',
+    ...options
+});
 
 /**
  * Favorite an article
  *
  * Favorite an article. Auth is required
  */
-export const createArticleFavorite = <ThrowOnError extends boolean = false>(options: Options<CreateArticleFavoriteData, ThrowOnError>): RequestResult<CreateArticleFavoriteResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateArticleFavoriteResponses, unknown, ThrowOnError>({ url: '/articles/{slug}/favorite', ...options });
+export const createArticleFavorite = <ThrowOnError extends boolean = false>(options: Options<CreateArticleFavoriteData, ThrowOnError>): RequestResult<CreateArticleFavoriteResponses, CreateArticleFavoriteErrors, ThrowOnError> => (options.client ?? client).post<CreateArticleFavoriteResponses, CreateArticleFavoriteErrors, ThrowOnError>({
+    security: [{ name: 'Authorization', type: 'apiKey' }],
+    url: '/articles/{slug}/favorite',
+    ...options
+});
 
 /**
  * Get comments for an article
  *
  * Get the comments for an article. Auth is optional
  */
-export const getArticleComments = <ThrowOnError extends boolean = false>(options: Options<GetArticleCommentsData, ThrowOnError>): RequestResult<GetArticleCommentsResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetArticleCommentsResponses, unknown, ThrowOnError>({ url: '/articles/{slug}/comments', ...options });
+export const getArticleComments = <ThrowOnError extends boolean = false>(options: Options<GetArticleCommentsData, ThrowOnError>): RequestResult<GetArticleCommentsResponses, GetArticleCommentsErrors, ThrowOnError> => (options.client ?? client).get<GetArticleCommentsResponses, GetArticleCommentsErrors, ThrowOnError>({ url: '/articles/{slug}/comments', ...options });
 
 /**
  * Create a comment for an article
@@ -178,6 +209,7 @@ export const getArticleComments = <ThrowOnError extends boolean = false>(options
  * Create a comment for an article. Auth is required
  */
 export const createArticleComment = <ThrowOnError extends boolean = false>(options: Options<CreateArticleCommentData, ThrowOnError>): RequestResult<CreateArticleCommentResponses, CreateArticleCommentErrors, ThrowOnError> => (options.client ?? client).post<CreateArticleCommentResponses, CreateArticleCommentErrors, ThrowOnError>({
+    security: [{ name: 'Authorization', type: 'apiKey' }],
     url: '/articles/{slug}/comments',
     ...options,
     headers: {
@@ -191,4 +223,8 @@ export const createArticleComment = <ThrowOnError extends boolean = false>(optio
  *
  * Delete a comment for an article. Auth is required
  */
-export const deleteArticleComment = <ThrowOnError extends boolean = false>(options: Options<DeleteArticleCommentData, ThrowOnError>): RequestResult<DeleteArticleCommentResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteArticleCommentResponses, unknown, ThrowOnError>({ url: '/articles/{slug}/comments/{commentId}', ...options });
+export const deleteArticleComment = <ThrowOnError extends boolean = false>(options: Options<DeleteArticleCommentData, ThrowOnError>): RequestResult<DeleteArticleCommentResponses, DeleteArticleCommentErrors, ThrowOnError> => (options.client ?? client).delete<DeleteArticleCommentResponses, DeleteArticleCommentErrors, ThrowOnError>({
+    security: [{ name: 'Authorization', type: 'apiKey' }],
+    url: '/articles/{slug}/comments/{id}',
+    ...options
+});

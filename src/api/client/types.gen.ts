@@ -5,10 +5,10 @@ export type ClientOptions = {
 };
 
 export type Article = {
+    body: string;
     title: string;
     slug: string;
     description: string;
-    body: string;
     createdAt: string;
     updatedAt: string;
     tagList: Array<string>;
@@ -25,13 +25,8 @@ export type Comment = {
     author: Profile;
 };
 
-export type HttpValidationProblemDetails = {
-    type?: null | string;
-    title?: null | string;
-    status?: null | number;
-    detail?: null | string;
-    instance?: null | string;
-    errors?: {
+export type GenericErrorModel = {
+    errors: {
         [key: string]: Array<string>;
     };
 };
@@ -41,19 +36,6 @@ export type LoginUser = {
     password: string;
 };
 
-export type LoginUserRequest = {
-    user: LoginUser;
-};
-
-export type MultipleArticlesResponse = {
-    articles: Array<Article>;
-    articlesCount: number;
-};
-
-export type MultipleCommentsResponse = {
-    comments: Array<Comment>;
-};
-
 export type NewArticle = {
     title: string;
     description: string;
@@ -61,16 +43,8 @@ export type NewArticle = {
     tagList?: Array<string>;
 };
 
-export type NewArticleRequest = {
-    article: NewArticle;
-};
-
 export type NewComment = {
     body: string;
-};
-
-export type NewCommentRequest = {
-    comment: NewComment;
 };
 
 export type NewUser = {
@@ -79,64 +53,86 @@ export type NewUser = {
     username: string;
 };
 
-export type NewUserRequest = {
-    user: NewUser;
-};
-
 export type Profile = {
     username: string;
-    bio?: null | string;
-    image?: null | string;
-    following?: boolean;
-};
-
-export type ProfileResponse = {
-    profile: Profile;
-};
-
-export type SingleArticleResponse = {
-    article: Article;
-};
-
-export type SingleCommentResponse = {
-    comment: Comment;
-};
-
-export type TagsResponse = {
-    tags: Array<string>;
+    bio: null | string;
+    image: null | string;
+    following: boolean;
 };
 
 export type UpdateArticle = {
-    title?: null | string;
-    description?: null | string;
-    body?: null | string;
-};
-
-export type UpdateArticleRequest = {
-    article: UpdateArticle;
+    title?: string;
+    description?: string;
+    body?: string;
+    tagList?: Array<string>;
 };
 
 export type UpdateUser = {
-    username?: null | string;
-    email?: null | string;
+    username?: string;
+    email?: string;
+    password?: string;
     bio?: null | string;
     image?: null | string;
-};
-
-export type UpdateUserRequest = {
-    user: UpdateUser;
 };
 
 export type User = {
     email: string;
     username: string;
-    bio?: null | string;
-    image?: null | string;
+    bio: null | string;
+    image: null | string;
     token: string;
 };
 
-export type UserResponse = {
-    user: User;
+/**
+ * The numbers of items to return.
+ */
+export type LimitParam = number;
+
+/**
+ * The number of items to skip before starting to collect the result set.
+ */
+export type OffsetParam = number;
+
+/**
+ * User details to update. At least **one** field is required.
+ */
+export type UpdateUserRequest = {
+    user: UpdateUser;
+};
+
+/**
+ * Details of the new user to register
+ */
+export type NewUserRequest = {
+    user: NewUser;
+};
+
+/**
+ * Credentials to use
+ */
+export type LoginUserRequest = {
+    user: LoginUser;
+};
+
+/**
+ * Article to create
+ */
+export type NewArticleRequest = {
+    article: NewArticle;
+};
+
+/**
+ * Article to update
+ */
+export type UpdateArticleRequest = {
+    article: UpdateArticle;
+};
+
+/**
+ * Comment you want to create
+ */
+export type NewCommentRequest = {
+    comment: NewComment;
 };
 
 export type GetCurrentUserData = {
@@ -146,18 +142,41 @@ export type GetCurrentUserData = {
     url: '/user';
 };
 
+export type GetCurrentUserErrors = {
+    /**
+     * Unauthorized
+     */
+    401: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+};
+
+export type GetCurrentUserError = GetCurrentUserErrors[keyof GetCurrentUserErrors];
+
 export type GetCurrentUserResponses = {
     /**
-     * OK
+     * User
      */
-    200: UserResponse;
+    200: {
+        user: User;
+    };
 };
 
 export type GetCurrentUserResponse = GetCurrentUserResponses[keyof GetCurrentUserResponses];
 
 export type UpdateCurrentUserData = {
     /**
-     * User details to update. At least <strong>one</strong> field is required.
+     * User details to update. At least **one** field is required.
      */
     body: UpdateUserRequest;
     path?: never;
@@ -167,18 +186,32 @@ export type UpdateCurrentUserData = {
 
 export type UpdateCurrentUserErrors = {
     /**
-     * Bad Request
+     * Unauthorized
      */
-    400: HttpValidationProblemDetails;
+    401: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
 };
 
 export type UpdateCurrentUserError = UpdateCurrentUserErrors[keyof UpdateCurrentUserErrors];
 
 export type UpdateCurrentUserResponses = {
     /**
-     * OK
+     * User
      */
-    200: UserResponse;
+    200: {
+        user: User;
+    };
 };
 
 export type UpdateCurrentUserResponse = UpdateCurrentUserResponses[keyof UpdateCurrentUserResponses];
@@ -193,11 +226,34 @@ export type CreateUserData = {
     url: '/users';
 };
 
+export type CreateUserErrors = {
+    /**
+     * Conflict - resource already exists
+     */
+    409: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+};
+
+export type CreateUserError = CreateUserErrors[keyof CreateUserErrors];
+
 export type CreateUserResponses = {
     /**
-     * OK
+     * User
      */
-    200: UserResponse;
+    201: {
+        user: User;
+    };
 };
 
 export type CreateUserResponse = CreateUserResponses[keyof CreateUserResponses];
@@ -214,18 +270,32 @@ export type LoginData = {
 
 export type LoginErrors = {
     /**
-     * Bad Request
+     * Unauthorized
      */
-    400: HttpValidationProblemDetails;
+    401: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
 };
 
 export type LoginError = LoginErrors[keyof LoginErrors];
 
 export type LoginResponses = {
     /**
-     * OK
+     * User
      */
-    200: UserResponse;
+    200: {
+        user: User;
+    };
 };
 
 export type LoginResponse = LoginResponses[keyof LoginResponses];
@@ -233,17 +303,51 @@ export type LoginResponse = LoginResponses[keyof LoginResponses];
 export type GetProfileByUsernameData = {
     body?: never;
     path: {
+        /**
+         * Username of the profile to get
+         */
         username: string;
     };
     query?: never;
     url: '/profiles/{username}';
 };
 
+export type GetProfileByUsernameErrors = {
+    /**
+     * Unauthorized
+     */
+    401: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Not Found. The error key identifies the resource type (article, profile, comment, etc.)
+     */
+    404: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+};
+
+export type GetProfileByUsernameError = GetProfileByUsernameErrors[keyof GetProfileByUsernameErrors];
+
 export type GetProfileByUsernameResponses = {
     /**
-     * OK
+     * Profile
      */
-    200: ProfileResponse;
+    200: {
+        profile: Profile;
+    };
 };
 
 export type GetProfileByUsernameResponse = GetProfileByUsernameResponses[keyof GetProfileByUsernameResponses];
@@ -260,11 +364,42 @@ export type UnfollowUserByUsernameData = {
     url: '/profiles/{username}/follow';
 };
 
+export type UnfollowUserByUsernameErrors = {
+    /**
+     * Unauthorized
+     */
+    401: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Not Found. The error key identifies the resource type (article, profile, comment, etc.)
+     */
+    404: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+};
+
+export type UnfollowUserByUsernameError = UnfollowUserByUsernameErrors[keyof UnfollowUserByUsernameErrors];
+
 export type UnfollowUserByUsernameResponses = {
     /**
-     * OK
+     * Profile
      */
-    200: ProfileResponse;
+    200: {
+        profile: Profile;
+    };
 };
 
 export type UnfollowUserByUsernameResponse = UnfollowUserByUsernameResponses[keyof UnfollowUserByUsernameResponses];
@@ -281,11 +416,42 @@ export type FollowUserByUsernameData = {
     url: '/profiles/{username}/follow';
 };
 
+export type FollowUserByUsernameErrors = {
+    /**
+     * Unauthorized
+     */
+    401: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Not Found. The error key identifies the resource type (article, profile, comment, etc.)
+     */
+    404: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+};
+
+export type FollowUserByUsernameError = FollowUserByUsernameErrors[keyof FollowUserByUsernameErrors];
+
 export type FollowUserByUsernameResponses = {
     /**
-     * OK
+     * Profile
      */
-    200: ProfileResponse;
+    200: {
+        profile: Profile;
+    };
 };
 
 export type FollowUserByUsernameResponse = FollowUserByUsernameResponses[keyof FollowUserByUsernameResponses];
@@ -297,11 +463,26 @@ export type GetTagsData = {
     url: '/tags';
 };
 
+export type GetTagsErrors = {
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+};
+
+export type GetTagsError = GetTagsErrors[keyof GetTagsErrors];
+
 export type GetTagsResponses = {
     /**
-     * OK
+     * Tags
      */
-    200: TagsResponse;
+    200: {
+        tags: Array<string>;
+    };
 };
 
 export type GetTagsResponse = GetTagsResponses[keyof GetTagsResponses];
@@ -323,22 +504,56 @@ export type GetArticlesData = {
          */
         tag?: string;
         /**
-         * Limit number of articles returned (default is 20)
+         * The numbers of items to return.
          */
         limit?: number;
         /**
-         * Offset/skip number of articles (default is 0)
+         * The number of items to skip before starting to collect the result set.
          */
         offset?: number;
     };
     url: '/articles';
 };
 
+export type GetArticlesErrors = {
+    /**
+     * Unauthorized
+     */
+    401: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+};
+
+export type GetArticlesError = GetArticlesErrors[keyof GetArticlesErrors];
+
 export type GetArticlesResponses = {
     /**
-     * OK
+     * Multiple articles
      */
-    200: MultipleArticlesResponse;
+    200: {
+        articles: Array<{
+            title: string;
+            slug: string;
+            description: string;
+            createdAt: string;
+            updatedAt: string;
+            tagList: Array<string>;
+            author: Profile;
+            favorited: boolean;
+            favoritesCount: number;
+        }>;
+        articlesCount: number;
+    };
 };
 
 export type GetArticlesResponse = GetArticlesResponses[keyof GetArticlesResponses];
@@ -355,18 +570,40 @@ export type CreateArticleData = {
 
 export type CreateArticleErrors = {
     /**
-     * Bad Request
+     * Unauthorized
      */
-    400: HttpValidationProblemDetails;
+    401: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Conflict - resource already exists
+     */
+    409: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
 };
 
 export type CreateArticleError = CreateArticleErrors[keyof CreateArticleErrors];
 
 export type CreateArticleResponses = {
     /**
-     * OK
+     * Single article
      */
-    200: SingleArticleResponse;
+    201: {
+        article: Article;
+    };
 };
 
 export type CreateArticleResponse = CreateArticleResponses[keyof CreateArticleResponses];
@@ -376,22 +613,56 @@ export type GetArticlesFeedData = {
     path?: never;
     query?: {
         /**
-         * Limit number of articles returned (default is 20)
+         * The numbers of items to return.
          */
         limit?: number;
         /**
-         * Offset/skip number of articles (default is 0)
+         * The number of items to skip before starting to collect the result set.
          */
         offset?: number;
     };
     url: '/articles/feed';
 };
 
+export type GetArticlesFeedErrors = {
+    /**
+     * Unauthorized
+     */
+    401: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+};
+
+export type GetArticlesFeedError = GetArticlesFeedErrors[keyof GetArticlesFeedErrors];
+
 export type GetArticlesFeedResponses = {
     /**
-     * OK
+     * Multiple articles
      */
-    200: MultipleArticlesResponse;
+    200: {
+        articles: Array<{
+            title: string;
+            slug: string;
+            description: string;
+            createdAt: string;
+            updatedAt: string;
+            tagList: Array<string>;
+            author: Profile;
+            favorited: boolean;
+            favoritesCount: number;
+        }>;
+        articlesCount: number;
+    };
 };
 
 export type GetArticlesFeedResponse = GetArticlesFeedResponses[keyof GetArticlesFeedResponses];
@@ -408,12 +679,51 @@ export type DeleteArticleData = {
     url: '/articles/{slug}';
 };
 
+export type DeleteArticleErrors = {
+    /**
+     * Unauthorized
+     */
+    401: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Forbidden. The error key identifies the resource type (article, comment, etc.)
+     */
+    403: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Not Found. The error key identifies the resource type (article, profile, comment, etc.)
+     */
+    404: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+};
+
+export type DeleteArticleError = DeleteArticleErrors[keyof DeleteArticleErrors];
+
 export type DeleteArticleResponses = {
     /**
-     * OK
+     * No content
      */
-    200: unknown;
+    204: void;
 };
+
+export type DeleteArticleResponse = DeleteArticleResponses[keyof DeleteArticleResponses];
 
 export type GetArticleData = {
     body?: never;
@@ -427,11 +737,34 @@ export type GetArticleData = {
     url: '/articles/{slug}';
 };
 
+export type GetArticleErrors = {
+    /**
+     * Not Found. The error key identifies the resource type (article, profile, comment, etc.)
+     */
+    404: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+};
+
+export type GetArticleError = GetArticleErrors[keyof GetArticleErrors];
+
 export type GetArticleResponses = {
     /**
-     * OK
+     * Single article
      */
-    200: SingleArticleResponse;
+    200: {
+        article: Article;
+    };
 };
 
 export type GetArticleResponse = GetArticleResponses[keyof GetArticleResponses];
@@ -453,18 +786,48 @@ export type UpdateArticleData = {
 
 export type UpdateArticleErrors = {
     /**
-     * Bad Request
+     * Unauthorized
      */
-    400: HttpValidationProblemDetails;
+    401: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Forbidden. The error key identifies the resource type (article, comment, etc.)
+     */
+    403: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Not Found. The error key identifies the resource type (article, profile, comment, etc.)
+     */
+    404: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
 };
 
 export type UpdateArticleError = UpdateArticleErrors[keyof UpdateArticleErrors];
 
 export type UpdateArticleResponses = {
     /**
-     * OK
+     * Single article
      */
-    200: SingleArticleResponse;
+    200: {
+        article: Article;
+    };
 };
 
 export type UpdateArticleResponse = UpdateArticleResponses[keyof UpdateArticleResponses];
@@ -481,11 +844,42 @@ export type DeleteArticleFavoriteData = {
     url: '/articles/{slug}/favorite';
 };
 
+export type DeleteArticleFavoriteErrors = {
+    /**
+     * Unauthorized
+     */
+    401: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Not Found. The error key identifies the resource type (article, profile, comment, etc.)
+     */
+    404: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+};
+
+export type DeleteArticleFavoriteError = DeleteArticleFavoriteErrors[keyof DeleteArticleFavoriteErrors];
+
 export type DeleteArticleFavoriteResponses = {
     /**
-     * OK
+     * Single article
      */
-    200: SingleArticleResponse;
+    200: {
+        article: Article;
+    };
 };
 
 export type DeleteArticleFavoriteResponse = DeleteArticleFavoriteResponses[keyof DeleteArticleFavoriteResponses];
@@ -502,11 +896,42 @@ export type CreateArticleFavoriteData = {
     url: '/articles/{slug}/favorite';
 };
 
+export type CreateArticleFavoriteErrors = {
+    /**
+     * Unauthorized
+     */
+    401: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Not Found. The error key identifies the resource type (article, profile, comment, etc.)
+     */
+    404: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+};
+
+export type CreateArticleFavoriteError = CreateArticleFavoriteErrors[keyof CreateArticleFavoriteErrors];
+
 export type CreateArticleFavoriteResponses = {
     /**
-     * OK
+     * Single article
      */
-    200: SingleArticleResponse;
+    200: {
+        article: Article;
+    };
 };
 
 export type CreateArticleFavoriteResponse = CreateArticleFavoriteResponses[keyof CreateArticleFavoriteResponses];
@@ -523,20 +948,54 @@ export type GetArticleCommentsData = {
     url: '/articles/{slug}/comments';
 };
 
+export type GetArticleCommentsErrors = {
+    /**
+     * Unauthorized
+     */
+    401: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Not Found. The error key identifies the resource type (article, profile, comment, etc.)
+     */
+    404: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+};
+
+export type GetArticleCommentsError = GetArticleCommentsErrors[keyof GetArticleCommentsErrors];
+
 export type GetArticleCommentsResponses = {
     /**
-     * OK
+     * Multiple comments
      */
-    200: MultipleCommentsResponse;
+    200: {
+        comments: Array<Comment>;
+    };
 };
 
 export type GetArticleCommentsResponse = GetArticleCommentsResponses[keyof GetArticleCommentsResponses];
 
 export type CreateArticleCommentData = {
+    /**
+     * Comment you want to create
+     */
     body: NewCommentRequest;
     path: {
         /**
-         * Slug of the article that you want to create a comments for
+         * Slug of the article that you want to create a comment for
          */
         slug: string;
     };
@@ -546,18 +1005,40 @@ export type CreateArticleCommentData = {
 
 export type CreateArticleCommentErrors = {
     /**
-     * Bad Request
+     * Unauthorized
      */
-    400: HttpValidationProblemDetails;
+    401: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Not Found. The error key identifies the resource type (article, profile, comment, etc.)
+     */
+    404: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
 };
 
 export type CreateArticleCommentError = CreateArticleCommentErrors[keyof CreateArticleCommentErrors];
 
 export type CreateArticleCommentResponses = {
     /**
-     * OK
+     * Single comment
      */
-    200: SingleCommentResponse;
+    201: {
+        comment: Comment;
+    };
 };
 
 export type CreateArticleCommentResponse = CreateArticleCommentResponses[keyof CreateArticleCommentResponses];
@@ -566,21 +1047,60 @@ export type DeleteArticleCommentData = {
     body?: never;
     path: {
         /**
-         * Slug of the article that you want to delete a comments for
+         * Slug of the article that you want to delete a comment for
          */
         slug: string;
         /**
          * ID of the comment you want to delete
          */
-        commentId: number;
+        id: number;
     };
     query?: never;
-    url: '/articles/{slug}/comments/{commentId}';
+    url: '/articles/{slug}/comments/{id}';
 };
+
+export type DeleteArticleCommentErrors = {
+    /**
+     * Unauthorized
+     */
+    401: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Forbidden. The error key identifies the resource type (article, comment, etc.)
+     */
+    403: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Not Found. The error key identifies the resource type (article, profile, comment, etc.)
+     */
+    404: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+    /**
+     * Unexpected error
+     */
+    422: {
+        errors: {
+            [key: string]: Array<string>;
+        };
+    };
+};
+
+export type DeleteArticleCommentError = DeleteArticleCommentErrors[keyof DeleteArticleCommentErrors];
 
 export type DeleteArticleCommentResponses = {
     /**
-     * OK
+     * No content
      */
-    200: unknown;
+    204: void;
 };
+
+export type DeleteArticleCommentResponse = DeleteArticleCommentResponses[keyof DeleteArticleCommentResponses];
